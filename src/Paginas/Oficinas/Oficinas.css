@@ -1,0 +1,195 @@
+  /*Campos de Musicalização*/
+  .musicalizacao-container {
+    max-width: 900px;
+    margin: 80px auto;
+    background-color: #000;
+    padding: 30px;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #000;
+    text-align: center;
+  }
+
+  .musicalizacao-imagem {
+    width: 100%;
+    max-height: 600px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+  
+  .musicalizacao-container h2 {
+    color: #b89720;
+    margin-bottom: 20px;
+  }
+  
+  .musicalizacao-container p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    text-align: justify;
+  }
+  
+  .botao-voltar-musicalizacao {
+    margin-top: 30px;
+    background-color: #b89720;
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .botao-voltar-musicalizacao:hover {
+    background-color: #d4af37;
+  }
+
+  /*Campos de Instrumentalizacao*/
+  .instrumental-container {
+    max-width: 900px;
+    margin: 80px auto;
+    background-color: #000;
+    padding: 30px;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #000;
+    text-align: center;
+  }
+
+  .instrumental-imagem {
+    width: 100%;
+    max-height: 600px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+  
+  .instrumental-container h2 {
+    color: #b89720;
+    margin-bottom: 20px;
+  }
+  
+  .instrumental-container p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    text-align: justify;
+  }
+  
+  .botao-voltar-instrumental {
+    margin-top: 30px;
+    background-color: #b89720;
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .botao-voltar-instrumental:hover {
+    background-color: #d4af37;
+  }
+
+/*Campos de Percussão*/
+.percussao-container {
+    max-width: 900px;
+    margin: 80px auto;
+    background-color: #000;
+    padding: 30px;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #000;
+    text-align: center;
+  }
+
+  .percussao-imagem {
+    width: 100%;
+    max-height: 600px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+  
+  .percussao-container h2 {
+    color: #b89720;
+    margin-bottom: 20px;
+  }
+  
+  .percussao-container p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    text-align: justify;
+  }
+  
+  .botao-voltar-percussao {
+    margin-top: 30px;
+    background-color: #b89720;
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .botao-voltar-percussao:hover {
+    background-color: #d4af37;
+  }
+
+  /*Campos de Dança*/
+.danca-container {
+    max-width: 900px;
+    margin: 80px auto;
+    background-color: #000;
+    padding: 30px;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #000;
+    text-align: center;
+  }
+
+  .danca-imagem {
+    width: 100%;
+    max-height: 600px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+  
+  .danca-container h2 {
+    color: #b89720;
+    margin-bottom: 20px;
+  }
+  
+  .danca-container p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    text-align: justify;
+  }
+  
+  .botao-voltar-danca {
+    margin-top: 30px;
+    background-color: #b89720;
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .botao-voltar-danca:hover {
+    background-color: #d4af37;
+  }

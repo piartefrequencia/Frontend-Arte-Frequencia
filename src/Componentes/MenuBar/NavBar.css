@@ -1,0 +1,104 @@
+.menu-bar-horizontal {
+  background-color: #000000;
+  border-top: 2px solid #ba0000;
+  border-bottom: 2px solid #b89720;
+  padding: 0.8rem 1rem;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+  z-index: 1000; /* Garante que a barra de menu fique acima de outros elementos */
+}
+
+.menu-bar-lista {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-bar-lista > li {
+  position: relative;
+  padding: 5px 0;
+  z-index: 1001; /* Aumentado para ficar acima da barra de menu */
+}
+
+.menu-bar-lista button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.menu-bar-lista button:hover {
+  color: #b89720;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.submenu-horizontal li:hover {
+  background-color: #770000;
+  border-radius: 5px;
+  padding: 5px;
+  /* Garante que o hover funcione corretamente */
+  transition: background-color 0.2s ease-in-out;
+}
+
+.submenu-horizontal {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 248px;
+  background-color: #000000 !important;
+  border: 1px solid #cccccc00;
+  padding: 10px;
+  margin: 5px 0 0 0;
+  z-index: 1002; /* Aumentado para ficar acima do menu e do carrossel */
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  font-weight: bold;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.submenu-horizontal li {
+  margin: 5px 0;
+}
+
+.submenu-horizontal a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.submenu-horizontal a:hover {
+  color: #b89720;
+}
+
+/* Botões */
+.botoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-voltar {
+  background-color: #555;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  flex: 1;
+  transition: background-color 0.1s;
+}
+
+.btn-voltar:hover {
+  background-color: #777;
+}

@@ -1,0 +1,71 @@
+.form-container-editar {
+  max-width: 1000px;
+  margin: 50px auto;
+  background-color: #000;
+  color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #000;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  margin-top: 5px;
+}
+
+.linha,
+.linha-filiacao,
+.linha-radio {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.oficinas-group {
+  margin-bottom: 20px;
+}
+
+.checkbox-group {
+  margin-top: 15px;
+}
+
+.botoes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-salvar {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-voltar {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

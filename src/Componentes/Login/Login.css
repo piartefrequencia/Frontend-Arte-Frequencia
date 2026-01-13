@@ -1,0 +1,109 @@
+/* Container Principal */
+.login-container {
+    background-color: white;
+    padding: 20px;
+    width: 350px;
+    margin: 100px auto;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+/* Título */
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333; /* Adicionando uma cor escura */
+}
+
+/* Ajuste para inputs (exceto o ícone de senha) */
+.login-container input {
+    width: 100%;
+    padding: 10px; /* Aumentado um pouco o padding para melhor visual */
+    margin-bottom: 15px; /* Adiciona espaçamento após cada input */
+    border-radius: 10px;
+    border: 2px solid gray;
+    box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+}
+
+/* Removendo .botoes e .btn-fechar, pois o código atual só tem o botão Entrar */
+/* Se precisar de outro botão, reintroduza essas classes e a estrutura HTML */
+
+/* Botão de Entrar */
+.btn-entrar {
+    width: 100%; /* Faz o botão ocupar a largura total */
+    padding: 10px 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #e0c65b;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px; /* Espaço entre o último campo e o botão */
+}
+
+.btn-entrar:hover {
+    background-color: #18d5128e;
+}
+
+.btn-fechar {
+    padding: 8px 16px;
+    background-color: #e0c65b;
+    border-radius: 10px;
+    border-color: none;
+    border: none;
+    color: rgb(0, 0, 0);
+    margin-top: 10px
+  }
+  
+  .btn-fechar:hover {
+    background-color: #cc0000ce;
+    border-radius: 8px;
+  }
+
+/* --- REGRAS PARA O ÍCONE DE SENHA --- */
+
+/* 1. Container que envolve o input de senha e o ícone */
+.password-input-container {
+    position: relative; 
+    margin-bottom: 15px; /* Espaçamento padrão para se alinhar com o input de email */
+    /* Garante que a div ocupe a largura completa */
+    width: 100%; 
+}
+
+/* 2. Aplica o estilo de input DENTRO do container de senha */
+.password-input-container input {
+    /* Herda todos os estilos de input acima, mas ajusta o padding */
+    padding-right: 40px; /* Espaço para o ícone */
+    margin-bottom: 0; /* Remove a margem inferior para não duplicar o espaçamento da div */
+}
+
+/* 3. Estilo para o ícone (Posicionamento Absoluto) */
+.password-toggle-icon {
+    position: absolute; 
+    top: 50%; /* Centraliza verticalmente o ícone */
+    right: 15px; /* Distância da borda direita do container */
+    transform: translateY(-50%); /* Ajuste fino para o centro exato */
+    cursor: pointer; 
+    color: #888; /* Cor um pouco mais suave */
+    font-size: 1.1em;
+}
+
+/* Estilos de link e recuperação */
+.recuperar-senha {
+    text-align: center;
+    margin: 15px 0 0; /* Espaço entre o botão e o link */
+}
+
+.link-ajuda {
+    font-size: 14px;
+    color: #b79820;
+    text-decoration: none; /* Muda para sublinhado apenas no hover */
+    cursor: pointer;
+}
+
+.link-ajuda:hover {
+    color: #ae0d0d;
+    text-decoration: underline; /* Sublinhado no hover */
+}

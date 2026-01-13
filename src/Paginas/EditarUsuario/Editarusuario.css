@@ -1,0 +1,42 @@
+.editar-container {
+  width: 400px;
+  margin: 30px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+    background: #030303;
+}
+
+.form-editar label {
+  display: block;
+  margin-top: 10px;
+  color: white;
+}
+
+.form-editar input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.botoes {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-salvar {
+  background-color: #008cff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+.btn-voltar {
+  background-color: #777;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+}

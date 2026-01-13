@@ -1,0 +1,89 @@
+.galeria-container {
+  max-width: 900px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 80px auto;
+  padding: 20px;
+  background-color: #000000;
+  border-radius: 10px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 0 15px #000;
+}
+
+.carrossel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.seta {
+  font-size: 32px;
+  background: none;
+  border: none;
+  color: #b89720;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.seta:hover {
+  transform: scale(1.2);
+}
+
+.item-galeria {
+  max-width: 600px;
+  max-height: 400px;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+.item-galeria img {
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  border-radius: 8px;
+}
+
+.item-galeria.zoom {
+  transform: scale(1.6);
+  cursor: zoom-out;
+}
+
+.item-galeria.video iframe {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  position: relative;
+  border-radius: 8px;
+}
+
+.instrucao {
+  font-size: 10px;
+  color: #ff0000;
+  margin-top: 10px;
+}
+
+.fechar-container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.botao-voltar-galeria {
+  background-color: #b89720;
+  color: #000;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.botao-voltar-galeria:hover {
+  background-color: #d4af37;
+}

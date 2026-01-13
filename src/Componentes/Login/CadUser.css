@@ -1,0 +1,124 @@
+.usuario-container {
+    max-width: 600px;
+    margin: 80px auto;
+    background-color: #222;
+    color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #000;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #b89720;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input, select {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 5px;
+  }
+  
+  .botoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .btn-salvar {
+    background-color: #b89720;
+    color: #000;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    flex: 1;
+  }
+  
+  .btn-salvar:hover {
+    background-color: #daa520;
+  }
+  
+  .btn-alterar {
+    background-color: #1e90ff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    flex: 1;
+  }
+  
+  .btn-alterar:hover {
+    background-color: #4682b4;
+  }
+  
+  .btn-voltar {
+    background-color: #555;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    flex: 1;
+  }
+  
+  .btn-voltar:hover {
+    background-color: #777;
+  }
+  /* Container que envolve o input e o ícone */
+.password-input-container {
+    position: relative; /* Essencial para que o ícone seja posicionado em relação a ele */
+    display: flex; /* Garante que o input e o ícone se alinhem, embora o ícone seja absoluto */
+    align-items: center; /* Alinha verticalmente */
+    width: 100%; /* Ajuste a largura conforme o necessário */
+}
+
+/* Garante que o input preencha o espaço dentro do container */
+.password-input-container input {
+    width: 100%;
+    padding-right: 40px; /* Adiciona espaço à direita para o ícone */
+}
+
+/* Estilo para o ícone */
+.password-toggle-icon {
+    position: absolute; /* Posiciona o ícone sobre o input */
+    right: 10px; /* Distância da borda direita do container */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    color: #555; /* Cor do ícone */
+    font-size: 1.2em; /* Tamanho do ícone */
+    padding: 5px; /* Adiciona um padding para facilitar o clique */
+}
+
+/* Exemplo de como pode ser sua label1 (apenas para contexto) */
+label1 {
+    display: block; /* Faz com que a label ocupe toda a linha */
+    margin-bottom: 15px;
+}
+
+.msg-sucesso{
+
+  color: rgb(61, 250, 4);
+
+}
+.msg-erro{
+
+  color: rgb(245, 3, 3);
+
+}

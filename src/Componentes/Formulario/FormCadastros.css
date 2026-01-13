@@ -1,0 +1,299 @@
+/* ======== CONTAINER PRINCIPAL ======== */
+.form-container {
+  max-width: 1000px;
+  width: 1500px;
+  margin: 40px auto;
+  padding: 25px 35px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+}
+
+/* ======== TÍTULO ======== */
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #003366;
+  font-weight: 700;
+}
+
+/* ======== LABELS E INPUTS ======== */
+form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+form input[type="text"],
+form input[type="email"],
+form select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 4px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+  border-color: #004c91;
+  outline: none;
+}
+
+/* ======== LINHAS COM CAMPOS LADO A LADO ======== */
+.linha {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.linha label {
+  flex: 1;
+  min-width: 240px;
+}
+
+/* ======== FOTO 3x4 ======== */
+.foto3x4-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.foto3x4-placeholder,
+.foto3x4-preview {
+  width: 200px;
+  height: 250px;
+  border-radius: 8px;
+  border: 2px solid #999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  color: #777;
+  background: #f5f5f5;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+/* imagem anexada */
+.foto3x4-preview {
+  object-fit: cover;
+}
+
+/* ======== BOTÕES DE FOTO ======== */
+.botoes-foto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* Estilo comum para ambos os botões */
+.botoes-foto button,
+.upload-btn {
+  display: inline-flex;           /* mantém comportamento consistente */
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 42px;
+  background-color: #004c91;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* Efeito hover */
+.botoes-foto button:hover,
+.upload-btn:hover {
+  background-color: #003366;
+  transform: scale(1.03);
+}
+
+/* Força o label do upload a se comportar exatamente como um botão */
+.upload-btn {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Oculta o input real */
+.upload-btn input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* ======== CÂMERA ======== */
+.camera-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.camera-container video {
+  width: 200px;
+  height: 250px;
+  border: 2px solid #777;
+  border-radius: 8px;
+  background: #000;
+  object-fit: cover;
+}
+
+.botoes-camera {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.botoes-camera button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.botoes-camera button:first-child {
+  background-color: #28a745;
+}
+
+.botoes-camera button:last-child {
+  background-color: #dc3545;
+}
+
+.botoes-camera button:hover {
+  opacity: 0.9;
+}
+
+/* ======== OFICINAS ======== */
+.oficinas-group {
+  margin-bottom: 25px;
+}
+
+.oficinas-group h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #003366;
+  font-weight: 700;
+}
+
+.oficinas-group .oficinas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 25px;
+}
+
+.oficinas-group .oficinas-grid label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+}
+
+.oficinas-group input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #004c91;
+  border-radius: 50%;
+  position: relative;
+}
+
+.oficinas-group input[type="checkbox"]:checked {
+  background-color: #004c91;
+  border-color: #004c91;
+}
+
+/* ======== RADIO / CHECKBOX PADRÃO ======== */
+.linha-radio {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+}
+
+
+.linha-radio label {
+  font-weight: 500;
+  color: #333;
+}
+
+/* ======== BOTÕES GERAIS ======== */
+.botoes {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.btn-salvar,
+.btn-voltar {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: background 0.3s;
+}
+
+.btn-salvar {
+  background-color: #004c91;
+}
+
+.btn-voltar {
+  background-color: #6c757d;
+}
+
+.btn-salvar:hover {
+  background-color: #003366;
+}
+
+.btn-voltar:hover {
+  background-color: #545b62;
+}
+
+/* ======== RESPONSIVIDADE ======== */
+@media (max-width: 768px) {
+  .linha {
+    flex-direction: column;
+  }
+
+  .oficinas-group .oficinas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .botoes-foto {
+    flex-direction: column;
+  }
+
+  .foto3x4-placeholder,
+  .foto3x4-preview {
+    width: 180px;
+    height: 220px;
+  }
+}

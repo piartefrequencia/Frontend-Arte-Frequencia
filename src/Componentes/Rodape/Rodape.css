@@ -1,0 +1,268 @@
+    /*- - -RODAPÉ- - -*/
+    /*.footer {
+      font-family: 'Arial', sans-serif;
+      width: 100%;
+      background-color: #000000;
+      color: #ddd;
+      padding: 30px 20px 50px;
+      position: relative; 
+      text-align: center;
+      padding-bottom: 10px; /* Espaço para o player não sobrepor 
+      bottom: 0;
+      z-index: 1000;
+    }
+
+    .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+      
+    .footer .social-icons {
+        display: flex;
+        gap: 20px;
+      }
+      
+    .footer .social-icons a {
+        color: #ddd;
+        font-size: 35px;
+        transition: color 0.3s;
+      }
+      
+    .footer .social-icons a:hover {
+        color: #b89720;
+      }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* Distancia entre o texto e Logo do Rodapé 
+    }
+
+    .footer-logo img {
+      width: 200px;
+      height: 70px;
+    }
+
+    .footer-info p {
+      font-family: Lucida Sans, 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
+      margin: 0px;
+      font-size: 25px;
+    }
+    
+    .logos-apoio-nome {
+      font-family: Lucida Sans, 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
+      display: flex;
+      position: absolute;
+      top: 200px;
+      left: 30px;      
+    }
+
+    .logos-apoio {
+      display: flex;
+      gap: 30px;
+      position: absolute;
+      top: 250px;
+      left: 30px;
+      z-index: 1001;
+    }
+    
+    .logos-apoio img {
+      height: 80px;
+      width: auto;
+      filter: grayscale(100%);
+      transition: transform 0.3s, filter 0.3s;
+      cursor: pointer;
+    }
+    
+    .logos-apoio img:hover {
+      transform: scale(1.1);
+      filter: grayscale(0%);
+    }
+    
+    .texto-rodape {
+      font-size: 14px;
+    }
+    
+    @media (max-width: 600px) {
+      .rodape {
+        flex-direction: column;
+        text-align: center;
+      }
+    
+      .logos-apoio {
+        justify-content: center;
+        margin-top: 10px;
+      }
+    }
+
+    /* ==== Animação de barras áudio ==== *
+    .playing-animation {
+        display: flex;
+        gap: 5px;
+      }
+      
+      .playing-animation div {
+        width: 3px;
+        height: 10px;
+        background-color: #ffffff;
+        animation: bounce 1s infinite ease-in-out;
+      }
+      
+      .playing-animation div:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      
+      .playing-animation div:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      
+      @keyframes bounce {
+        0%, 100% {
+          transform: scaleY(1);
+        }
+        50% {
+          transform: scaleY(1.8);
+        }
+      }
+
+  /* CONTROLES DE MÚSICA *
+.track-info {
+  display: flex;               /* Corrigido *
+  align-items: center;         /* Centraliza na vertical *
+  gap: 10px;
+  color: #000000;
+  background-color: #b89720;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  justify-content: flex-start;
+}
+
+.track-info span {
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+/* Texto de direitos autorais no rodapé *
+.footer-copy {
+  font-size: 12px;
+  color: #888;
+  margin-top: 10px;
+  text-align: center;
+}*/
+
+.footer {
+  font-family: 'Arial', sans-serif;
+  width: 100%;
+  background-color: #000;
+  color: #ddd;
+  padding: 30px 20px 50px;
+  text-align: center;
+  position: relative;
+  z-index: 1000;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo img {
+  width: 160px;
+  height: auto;
+}
+
+.footer-info p {
+  margin: 0;
+  font-size: 18px;
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.social-icons a {
+  color: #ddd;
+  font-size: 30px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #b89720;
+}
+
+/* Logos de Apoio */
+.logos-apoio-nome {
+  margin-top: 30px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.logos-apoio {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.logos-apoio img {
+  height: 100px;
+  width: auto;
+  filter: grayscale(100%);
+  transition: transform 0.3s, filter 0.3s;
+  cursor: pointer;
+}
+
+.logos-apoio img:hover {
+  transform: scale(1.1);
+  filter: grayscale(0%);
+}
+
+.footer-copy {
+  font-size: 12px;
+  color: #888;
+  margin-top: 15px;
+}
+
+.footer-player {
+  margin-top: 20px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .footer-logo {
+    flex-direction: column;
+  }
+
+  .footer-info p {
+    font-size: 16px;
+  }
+
+  .logos-apoio img {
+    height: 50px;
+  }
+
+  .footer {
+    padding: 20px 10px 30px;
+  }
+
+  .social-icons {
+    font-size: 24px;
+  }
+}
+

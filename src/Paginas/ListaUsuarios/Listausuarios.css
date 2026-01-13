@@ -1,0 +1,100 @@
+.lista-container2 {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #000; 
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  color: #b38f00;
+  font-weight: bold;
+}
+
+
+.cards-container2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  justify-items: center;
+}
+
+/* CARD DO USUÁRIO */
+.usuario-card1 {
+  width: 100%;
+  max-width: 360px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 25px 30px;
+  border-radius: 14px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.usuario-card1:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.25);
+}
+
+.usuario-card1 p {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+
+.card-buttons {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-editar,
+.btn-excluir {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.botao-voltar{
+
+  background-color: #b89720;
+  color: #000;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  margin-top: 15px;
+}
+.btn-editar {
+  background: #0d6efd;
+  color: white;
+}
+
+.btn-editar:hover {
+  background: #0b5ed7;
+}
+
+.btn-excluir {
+  background: #d63333;
+  color: white;
+}
+
+.btn-excluir:hover {
+  background: #b02a2a;
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .card-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
