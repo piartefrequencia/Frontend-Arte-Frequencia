@@ -25,20 +25,17 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response) {
-      const status = error.response.status;
-
-      if (status === 401) {
-        alert("Sua sessão expirou. Faça login novamente.");
-
-        sessionStorage.clear();
-
-        <Link to="/"></Link>
-      }
+    if (error.response && error.response.status === 401) {
+      
+      sessionStorage.removeItem("token");
+      
+      alert("Sua sessão expirou. Faça login novamente.");
+      
     }
-
     return Promise.reject(error);
   }
 );
 
 export default api;
+
+ 

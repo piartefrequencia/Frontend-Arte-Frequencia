@@ -32,7 +32,8 @@ function ListaAlunos() {
         }));
         setAlunos(alunosFormatados);
       } catch (error) {
-        console.error("Erro ao buscar alunos:", error);
+          console.error(error);
+          alert('Erro ao carregar arquivos.');
       }
     }
     getAlunos();

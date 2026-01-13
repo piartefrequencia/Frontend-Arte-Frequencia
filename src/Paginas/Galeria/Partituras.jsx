@@ -28,12 +28,10 @@ function Biblioteca() {
           setArquivos(response.data);
         } else if (response.status === 204) {
           alert('Nenhum arquivo encontrado.');
-        } else {
-          alert('Erro ao carregar arquivos.');
-        }
-      } catch (error) {
-        console.error(error);
-        alert('Erro ao carregar arquivos: ' + (error.response?.data || error.message));
+        } 
+          } catch (error) {
+            console.error(error);
+            alert('Erro ao carregar arquivos. ');
       }
     };
     carregarArquivos();
