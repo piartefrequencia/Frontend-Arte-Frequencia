@@ -21,8 +21,7 @@ function CadUser() {
   const [erro, setErro] = useState('');
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData });
   };
 
 

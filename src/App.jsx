@@ -305,7 +305,7 @@ function App() {
             path="/editar-usuario/:id"
             element={
               <RotasPrivadas perfisPermitidos={['ADMIN']}>
-                <Listausuario />
+                <Editarusuario />
               </RotasPrivadas>
             }
        
