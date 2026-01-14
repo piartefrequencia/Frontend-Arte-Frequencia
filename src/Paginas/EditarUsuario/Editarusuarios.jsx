@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Api from "../../Servico/APIservico";
@@ -10,26 +11,24 @@ function EditarUsuario() {
   const [formData, setFormData] = useState({
     usuario: "",
     email: "",
-    
   });
 
   useEffect(() => {
-    carregarUsuario();
-  }, []);
+    const carregarUsuario = async () => {
+      try {
+        const resposta = await Api.get(`/usuario/${id}`);
+        setFormData({
+          usuario: resposta.data.usuario,
+          email: resposta.data.email,
+        });
+      } catch (error) {
+        console.error("Erro ao carregar usuário:", error);
+        alert("Erro ao carregar usuário.");
+      }
+    };
 
-  const carregarUsuario = async () => {
-    try {
-      const resposta = await Api.get(`/usuario/${id}`);
-      setFormData({
-        usuario: resposta.data.usuario,
-        email: resposta.data.email,
-       
-      });
-    } catch (error) {
-      console.error("Erro ao carregar usuário:", error);
-      alert("Erro ao carregar usuário.");
-    }
-  };
+    carregarUsuario();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,14 +42,12 @@ function EditarUsuario() {
       const payload = {
         usuario: formData.usuario,
         email: formData.email,
-      
       };
 
       await Api.put(`/usuario/${id}`, payload);
 
       alert("Usuário atualizado com sucesso!");
       navigate("/Listausuario");
-
     } catch (error) {
       console.error("Erro ao atualizar usuário:", error);
       alert("Erro ao atualizar usuário.");
@@ -62,7 +59,6 @@ function EditarUsuario() {
       <h2>Editar Usuário</h2>
 
       <form onSubmit={handleSalvar} className="form-editar">
-
         <label>Usuário:</label>
         <input
           type="text"
@@ -80,8 +76,6 @@ function EditarUsuario() {
           onChange={handleChange}
           required
         />
-
-      
 
         <div className="botoes">
           <button type="submit" className="btn-salvar">

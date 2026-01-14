@@ -19,7 +19,7 @@ function FormCadColaborador() {
 
  // 🔥 Função genérica para máscara de data
  const handleData = (e) => {
-  const { name, value } = e.target;
+  const { value } = e.target;
   let dataFormatada = value.replace(/\D/g, '');
 
   if (dataFormatada.length >= 2) {

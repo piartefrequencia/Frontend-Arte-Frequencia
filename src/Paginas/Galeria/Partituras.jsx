@@ -10,7 +10,7 @@ function Biblioteca() {
 
   const navigate = useNavigate();
   const [arquivos, setArquivos] = useState([]);
-  const [busca, setBusca] = useState('');
+  const [busca] = useState('');
   const [modal, setModal] = useState({ aberto: false, url: '', tipo: '' });
   const [blobUrl, setBlobUrl] = useState('');
 
