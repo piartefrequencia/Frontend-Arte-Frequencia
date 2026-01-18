@@ -14,11 +14,6 @@ function Biblioteca() {
   const [modal, setModal] = useState({ aberto: false, url: '', tipo: '' });
   const [blobUrl, setBlobUrl] = useState('');
 
-
-  const API_BASE_URL = process.env.REACT_APP_API_URL;
-
-
-
   // Carregar arquivos do backend
   useEffect(() => {
     const carregarArquivos = async () => {
@@ -88,6 +83,38 @@ const fecharModal = () => {
   setBlobUrl('');
 };
 
+// --- FUNÇÃO DE DOWNLOAD ---
+  const handleDownload = async (id, nomeArquivo) => {
+    try {
+      // 1. Faz a requisição ao backend esperando um 'blob' (binário do arquivo)
+      const response = await Api.get(`/partitura/${id}/download`, {
+        responseType: 'blob', 
+      });
+
+      // 2. Cria uma URL temporária na memória do navegador para esse binário
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      
+      // 3. Cria um elemento "<a>" (link) invisível para disparar o download
+      const link = document.createElement('a');
+      link.href = url;
+      
+      // 4. Define o nome que o arquivo terá ao ser salvo no PC do usuário
+      link.setAttribute('download', nomeArquivo); 
+      
+      // 5. Simula o clique e remove o elemento em seguida
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+
+      // 6. Limpa a memória liberando a URL criada
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Erro ao baixar:", error);
+      alert("Não foi possível baixar o arquivo.");
+    }
+  };
+
+
   return (
     <div className="galeria-container">
       <h2>Partituras Banda Heitor Villa Lobos</h2>
@@ -111,14 +138,11 @@ const fecharModal = () => {
                   {icone} {arq.nome}
                 </p>
 
-                  <a
-                   href={`${API_BASE_URL}/partitura/${arq.id}/download`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                  
-                    <button className="btn-download">📥 Download de Partitura</button>
-                  </a>
+                <button 
+                  className="btn-download" 
+                    onClick={() => handleDownload(arq.id, arq.nome)} >
+                  📥 Download
+                </button>
                
               </div>
             );
@@ -149,3 +173,6 @@ const fecharModal = () => {
 }
 
 export default Biblioteca;
+
+
+

@@ -21,8 +21,13 @@ function CadUser() {
   const [erro, setErro] = useState('');
 
   const handleChange = (e) => {
-    setFormData({ ...formData });
-  };
+  const { name, value } = e.target;
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value
+  }));
+};
 
 
   const togglePasswordVisibility = () => {

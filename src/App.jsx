@@ -166,7 +166,7 @@ ROTAS PRIVADAS – QUALQUER USUÁRIO LOGADO ALUNO , COLADORADOR E ADMINISTARDOR
             path="/editar-usuario/:id"
             element={
               <RotasPrivadas perfisPermitidos={['ADMIN']}>
-                <Listausuario />
+                <Editarusuario />
               </RotasPrivadas>
             }
           />
@@ -207,7 +207,6 @@ function App() {
             }
           />
 
-
           <Route
             path="/Listapublico"
             element={
@@ -216,7 +215,6 @@ function App() {
               </RotasPrivadas>
             }
           />
-
 
           <Route
             path="/biblioteca"
@@ -308,10 +306,9 @@ function App() {
                 <Editarusuario />
               </RotasPrivadas>
             }
-       
-           />
-  
-        
+          />
+
+
         </Routes>
 
       </BrowserRouter>
