@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FormCadastros.css';
 
+
 import Api from "../../Servico/APIservico";
 
 
@@ -80,11 +81,15 @@ function FormCadColaborador() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const [loading, setLoading] = useState(false);
   
      // 💾 Submeter BACKEND SPRING BOOT 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+          setLoading(true);
     try {
       const response = await Api.post("/colaborador",
         formData,
@@ -109,6 +114,8 @@ function FormCadColaborador() {
     alert("Erro na conexão com o servidor.");
   }
  }
+  finally 
+  { setLoading(false); }
 };
 
   const handleVoltar = () => {
@@ -202,7 +209,9 @@ function FormCadColaborador() {
         </label>
 
         <div className="botoes">
-          <button type="submit" className="btn-salvar">SALVAR</button>
+          <button type="submit"className="btn-salvar"disabled={loading}>
+               {loading ? "Salvando Dados" : "SALVAR"}
+          </button>
           <button type="button" className="btn-voltar" onClick={handleVoltar}>FECHAR</button>
         </div>
       </form>

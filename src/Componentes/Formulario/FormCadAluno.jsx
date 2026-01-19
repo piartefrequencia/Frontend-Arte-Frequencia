@@ -206,10 +206,8 @@ const handleSubmit = async (e) => {
       alert("Erro na conexão com o servidor.");
     }
   }
-  finally {
-    
-    setLoading(false); 
-  }
+  finally 
+  { setLoading(false); }
 };
 
 

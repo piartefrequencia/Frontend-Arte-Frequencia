@@ -10,6 +10,7 @@ import './Login.css';
 function Login() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false); 
   
@@ -21,6 +22,9 @@ function Login() {
 
     const handleLogin = async e => {
     e.preventDefault();
+
+      if (loading) return;
+          setLoading(true);
     try {
       await login(email, senha);
       alert('Login realizado com sucesso!');
@@ -28,6 +32,8 @@ function Login() {
     } catch {
       alert('Login inválido');
     }
+    finally 
+      { setLoading(false); }
   };
 
    const handleFechar = () => {
@@ -67,7 +73,8 @@ function Login() {
                 </div>
                 
              
-                <button type="submit" className="btn-entrar">Entrar</button>
+                <button type="submit" className="btn-entrar" disabled={loading}>
+                {loading ? "Autenticando login" : "ENTER"}</button>
                 <button type="button" className="btn-fechar" onClick={handleFechar}>FECHAR</button>
               
             </form>
