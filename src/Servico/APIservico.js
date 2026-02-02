@@ -9,7 +9,7 @@ const api = axios.create({
   },
 });
 
-// 🔐 INTERCEPTA REQUEST → envia o token
+//  INTERCEPTA REQUEST → envia o token
 api.interceptors.request.use(
   (config) => {
     const token = sessionStorage.getItem("token");

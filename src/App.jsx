@@ -308,7 +308,6 @@ function App() {
             }
           />
 
-
         </Routes>
 
       </BrowserRouter>
