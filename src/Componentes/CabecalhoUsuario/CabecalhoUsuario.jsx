@@ -10,17 +10,17 @@ function CabecalhoUsuario() {
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
 
-  
+  // 1. Hook useMemo: Corrigido com a dependência 'user' para o deploy passar
   const initials = useMemo(() => {
-    if (!user) return ""; // Lógica interna segura
+    if (!user) return ""; 
     const nome = user.usuario || "";
     const parts = nome.trim().split(/\s+/);
     const first = parts[0]?.[0] || "";
     const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
     return (first + last).toUpperCase();
-  }, [user?.usuario]);
+  }, [user]); // Dependência completa 'user' conforme exigido pelo ESLint
 
-
+  // 2. Hook useEffect: Sempre chamado, independente do estado do usuário
   useEffect(() => {
     function handleClickOutside(e) {
       if (
@@ -35,15 +35,17 @@ function CabecalhoUsuario() {
     function handleEsc(e) {
       if (e.key === "Escape") setOpen(false);
     }
+
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEsc);
+    
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEsc);
     };
   }, [open]);
 
-  
+  // 3. Early Return: Só acontece DEPOIS de todos os Hooks serem declarados
   if (!user) return null;
 
   const handleToggle = () => setOpen((v) => !v);
@@ -74,7 +76,9 @@ function CabecalhoUsuario() {
             <div className="uh-username">{user.usuario}</div>
             <div className="uh-sep" />
             <div className="uh-email" title={user.email}>{user.email}</div>
+            
             <div className="uh-divider" />
+            
             <button className="uh-logout" onClick={logout}>
               Sair
             </button>
@@ -86,5 +90,3 @@ function CabecalhoUsuario() {
 }
 
 export default CabecalhoUsuario;
-
-
