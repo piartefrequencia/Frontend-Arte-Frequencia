@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from 'react';
+
+
+import React, { useState, useEffect, useContext } from 'react';
 import './MenuLateral.css';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthContext';
 
 function MenuLateral() {
+  const { user } = useContext(AuthContext); 
   const [menuAberto, setMenuAberto] = useState(false);
   const [submenuAberto, setSubmenuAberto] = useState({});
-
-  // Fecha o menu clicando fora
+  const verificarLogin = (e) => {
+  if (!user) {
+    e.preventDefault();
+    alert("Pagina apenas para alunos matriculados na Instituição Pró-Cidadania.");
+  }
+};
+  
   useEffect(() => {
     const fecharMenu = (e) => {
       if (!e.target.closest('.menu-lateral') && !e.target.closest('.botao-hamburguer')) {
@@ -15,21 +24,34 @@ function MenuLateral() {
       }
     };
     document.addEventListener('click', fecharMenu);
-    return () => {
-      document.removeEventListener('click', fecharMenu);
-    };
+    return () => document.removeEventListener('click', fecharMenu);
   }, []);
 
-  const alternarSubmenu = (item) => {
-    setSubmenuAberto((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
-  };
+ const alternarSubmenu = (item) => {
+ const menusProtegidos = ['controle', 'cadastro'];
+ 
+  if (menusProtegidos.includes(item) && !user) {
+    return;
+  }
+ 
+  if (item === 'controle' && user?.perfil !== 'ADMIN') {
+    alert("Apenas administradores podem acessar.");
+    return;
+  }
+
+  if (item === 'cadastro' && !['ADMIN', 'COLAB'].includes(user?.perfil)) {
+    alert("Acesso restrito.");
+    return;
+  }
+
+  setSubmenuAberto((prev) => ({
+    ...prev,
+    [item]: !prev[item],
+  }));
+};
 
   return (
     <>
-      {/* Botão hamburguer */}
       <div 
         className={`botao-hamburguer ${menuAberto ? 'ativo' : ''}`} 
         onClick={(e) => {
@@ -40,10 +62,9 @@ function MenuLateral() {
         ☰
       </div>
 
-      {/* Menu lateral */}
       <nav className={`menu-lateral ${menuAberto ? 'aberto' : ''}`}>
-        <ul>
-          <li>
+        <ul>       
+           <li>
             <button onClick={() => alternarSubmenu('sobre')}>Sobre ▾</button>
             {submenuAberto['sobre'] && (
               <ul className="submenu">
@@ -51,13 +72,17 @@ function MenuLateral() {
                 <li><Link to="/missao">Nossa Missão</Link></li>
                 <li><Link to="/nossos-colaboradores">Nossos Colaboradores</Link></li>
                 <li><Link to="/galeria">Galeria de Imagens e Vídeos</Link></li>
-                <li><Link to="/Partituras">Biblioteca Partituras</Link></li>
+                <li>
+                  <Link to="/partituras" onClick={verificarLogin}>
+                        Biblioteca Partituras
+                  </Link>
+                </li>
               
               </ul>
             )}
           </li>
 
-          <li>
+           <li>
             <button onClick={() => alternarSubmenu('oficinas')}>Oficinas ▾</button>
             {submenuAberto['oficinas'] && (
               <ul className="submenu">
@@ -71,31 +96,33 @@ function MenuLateral() {
               </ul>
             )}
           </li>
-          <li>
-          <button onClick={() => alternarSubmenu('cadastro')}>Painel Administrativo ▾</button>
-            {submenuAberto['cadastro'] && (
-              <ul className="submenu">
-                
-                <li><Link to="/cadastro-aluno">Cadastro Alunos</Link></li>
-                <li><Link to="/cadastro-colaborador">Cadastro Educadores</Link></li>
-                <li><Link to="/cadastro-usuarios">Cadastro Usuarios</Link></li>
-                <li><Link to="/ListaAlunos">Lista dos Alunos</Link></li>
-                <li><Link to="/ListaColaborador">Lista dos Educadores</Link></li>
-                <li><Link to="/Listausuario">Lista dos Usuarios</Link></li>
-                <li><Link to="/Biblioteca">Biblioteca</Link></li>
-                
-              </ul>
-            )}
-          </li>
-          
-         <li>
-          <button onClick={() => alternarSubmenu('acompfreq')}>Acompanhamento Frequência ▾</button>
-            {submenuAberto['acompfreq'] && (
-              <ul className="submenu">
-                <li><Link to="/form-frequencia">Frequência Alunos</Link></li>                
-              </ul>
-            )}
-          </li> 
+
+           <li>
+             <button onClick={() => alternarSubmenu('controle')}>Controle ▾</button>
+             {submenuAberto['controle'] && (
+               <ul className="submenu">
+                 <li><Link to="/cadastro-usuarios">Cadastro de Usuarios</Link></li>
+                 <li><Link to="/Listausuario">Lista dos Usuarios</Link></li>
+               </ul>
+             )}
+           </li>
+
+           <li>
+            
+             <button onClick={() => alternarSubmenu('cadastro')}>Painel Administrativo ▾</button>
+             {submenuAberto['cadastro'] && (
+               <ul className="submenu">
+                 <li><Link to="/cadastro-aluno">Cadastro Alunos</Link></li>
+                 <li><Link to="/cadastro-colaborador">Cadastro Educadores</Link></li>
+                 <li><Link to="/ListaAlunos">Lista dos Alunos</Link></li>
+                 <li><Link to="/ListaColaborador">Lista dos Educadores</Link></li>
+                 <li><Link to="/Biblioteca">Biblioteca</Link></li>
+                 <li><Link to="/form-frequencia">Frequência Alunos</Link></li>                 
+               
+               </ul>
+             )}
+           </li>
+           
           
         </ul>
       </nav>
