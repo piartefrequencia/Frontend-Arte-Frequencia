@@ -39,6 +39,7 @@ import Listacolaborador from './Paginas/ListaColaborador/Listacolaborador';
 
 
 import Listapublico from './Paginas/ListaAlunos/Listapublico';
+import Documentacao from './Paginas/Documentacao/Documentacao';
 
 
 import Listausuario from './Paginas/ListaUsuarios/Listausuarios';
@@ -207,24 +208,91 @@ function App() {
             }
           />
 
+
           <Route
-            path="/Listapublico"
+            path="/listapublico"
             element={
-              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
+              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB', 'ESTAG', 'PROF' ]}>
                  <Listapublico />
               </RotasPrivadas>
             }
           />
 
+
           <Route
             path="/biblioteca"
             element={
-              <RotasPrivadas perfisPermitidos={['ADMIN']}>
+              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
                 <BibliotecaPartituras />
               </RotasPrivadas>
             }
           />
 
+          <Route
+            path="/documentacao"
+            element={
+              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
+                <Documentacao />
+              </RotasPrivadas>
+            }
+          />
+
+          <Route
+            path="/cadastro-aluno"
+            element={
+              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
+                <FormCadAluno />
+              </RotasPrivadas>
+            }
+          />
+
+          <Route
+            path="/cadastro-colaborador"
+            element={
+              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
+                <FormCadColaborador />
+              </RotasPrivadas>
+            }
+          />
+
+         
+          <Route
+            path="/listaalunos"
+            element={
+              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
+                <Listaalunos />
+              </RotasPrivadas>
+            }
+          />
+
+          <Route
+            path="/editar-aluno/:matricula"
+            element={
+              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
+                <Editaraluno />
+              </RotasPrivadas>
+            }
+          />
+
+          <Route
+            path="/listacolaborador"
+            element={
+              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
+                <Listacolaborador />
+              </RotasPrivadas>
+            }
+          />
+
+          <Route
+            path="/editar-colaborador/:matricula"
+            element={
+              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
+                <Editarcolaborador />
+              </RotasPrivadas>
+            }
+          />
+
+          
           <Route
             path="/cadastro-usuarios"
             element={
@@ -236,62 +304,7 @@ function App() {
 
 
           <Route
-            path="/cadastro-aluno"
-            element={
-              <RotasPrivadas perfisPermitidos={['ADMIN']}>
-                <FormCadAluno />
-              </RotasPrivadas>
-            }
-          />
-
-          <Route
-            path="/cadastro-colaborador"
-            element={
-              <RotasPrivadas perfisPermitidos={['ADMIN']}>
-                <FormCadColaborador />
-              </RotasPrivadas>
-            }
-          />
-
-         
-          <Route
-            path="/listaalunos"
-            element={
-              <RotasPrivadas perfisPermitidos={['ADMIN']}>
-                <Listaalunos />
-              </RotasPrivadas>
-            }
-          />
-
-          <Route
-            path="/editar-aluno/:matricula"
-            element={
-              <RotasPrivadas perfisPermitidos={['ADMIN']}>
-                <Editaraluno />
-              </RotasPrivadas>
-            }
-          />
-
-          <Route
-            path="/listacolaborador"
-            element={
-              <RotasPrivadas perfisPermitidos={['ADMIN']}>
-                <Listacolaborador />
-              </RotasPrivadas>
-            }
-          />
-
-          <Route
-            path="/editar-colaborador/:matricula"
-            element={
-              <RotasPrivadas perfisPermitidos={['ADMIN']}>
-                <Editarcolaborador />
-              </RotasPrivadas>
-            }
-          />
-
-          <Route
-            path="/Listausuario"
+            path="/listausuario"
             element={
               <RotasPrivadas perfisPermitidos={['ADMIN']}>
                 <Listausuario />
@@ -306,7 +319,7 @@ function App() {
                 <Editarusuario />
               </RotasPrivadas>
             }
-          />
+          />  
 
         </Routes>
 

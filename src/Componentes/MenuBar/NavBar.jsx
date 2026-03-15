@@ -22,7 +22,7 @@ function NavBar() {
               <li><Link to="/missao">Nossa Missão</Link></li>
               <li><Link to="/nossos-colaboradores">Nossos Colaboradores</Link></li>
               <li><Link to="/galeria">Galeria de Imagens e Vídeos</Link></li>
-              <li><Link to="/Partituras">Biblioteca Partituras</Link></li>
+              <li><Link to="/partituras">Biblioteca Partituras</Link></li>
             
             </ul>
           )}
@@ -36,6 +36,7 @@ function NavBar() {
               <li><Link to="/instrumental">Prática Instrumental</Link></li>
               <li><Link to="/percussao">Percussão Popular</Link></li>
               <li><Link to="/danca">Danças</Link></li>
+              <li><Link to="/listapublico">Lista dos Alunos nas Oficinas</Link></li>
             </ul>
           )}
         </li>

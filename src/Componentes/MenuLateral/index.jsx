@@ -91,7 +91,7 @@ function MenuLateral() {
                 <li><Link to="/instrumental">Prática Instrumental</Link></li>
                 <li><Link to="/percussao">Percussão Popular e Rudimentar</Link></li>
                 <li><Link to="/danca">Danças</Link></li>
-                <li><Link to="/Listapublico">Lista dos Alunos nas Oficinas</Link></li>
+                <li><Link to="/listapublico">Lista dos Alunos nas Oficinas</Link></li>
               
               </ul>
             )}
@@ -102,7 +102,7 @@ function MenuLateral() {
              {submenuAberto['controle'] && (
                <ul className="submenu">
                  <li><Link to="/cadastro-usuarios">Cadastro de Usuarios</Link></li>
-                 <li><Link to="/Listausuario">Lista dos Usuarios</Link></li>
+                 <li><Link to="/listausuario">Lista dos Usuarios</Link></li>
                </ul>
              )}
            </li>
@@ -114,9 +114,9 @@ function MenuLateral() {
                <ul className="submenu">
                  <li><Link to="/cadastro-aluno">Cadastro Alunos</Link></li>
                  <li><Link to="/cadastro-colaborador">Cadastro Educadores</Link></li>
-                 <li><Link to="/ListaAlunos">Lista dos Alunos</Link></li>
-                 <li><Link to="/ListaColaborador">Lista dos Educadores</Link></li>
-                 <li><Link to="/Biblioteca">Biblioteca</Link></li>
+                 <li><Link to="/listaalunos">Lista dos Alunos</Link></li>
+                 <li><Link to="/listacolaborador">Lista dos Educadores</Link></li>
+                 <li><Link to="/biblioteca">Biblioteca</Link></li>
                  <li><Link to="/form-frequencia">Frequência Alunos</Link></li>                 
                
                </ul>
