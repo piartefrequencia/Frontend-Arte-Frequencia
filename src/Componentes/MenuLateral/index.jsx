@@ -117,7 +117,8 @@ function MenuLateral() {
                  <li><Link to="/listaalunos">Lista dos Alunos</Link></li>
                  <li><Link to="/listacolaborador">Lista dos Educadores</Link></li>
                  <li><Link to="/biblioteca">Biblioteca</Link></li>
-                 <li><Link to="/form-frequencia">Frequência Alunos</Link></li>                 
+                 <li><Link to="/form-frequencia">Frequência Alunos</Link></li> 
+                 <li><Link to="/documentacao">Documentacão</Link></li>                    
                
                </ul>
              )}

@@ -1,0 +1,146 @@
+
+.doc-container{
+padding:30px;
+max-width:1100px;
+margin:auto;
+font-family:Arial;
+background: black;
+
+}
+
+.doc-header{
+margin-bottom:20px;
+border-radius:10px;
+}
+
+.doc-header h2{
+font-size: 50px;
+color: black;
+}
+
+.doc-header p{
+font-size: 30px;
+color:#b89720;
+}
+
+.tabela-card{
+background:white;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+padding:20px;
+}
+
+.tabela-alunos{
+width:100%;
+border-collapse:collapse;
+}
+
+.tabela-alunos th,
+.tabela-alunos td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+.tabela-alunos tr:hover{
+background:#f8f8f8;
+}
+
+.btn-action{
+border:1px solid #4a90e2;
+background:none;
+padding:6px 12px;
+border-radius:6px;
+cursor:pointer;
+color:#4a90e2;
+}
+
+.btn-action:hover{
+background:#4a90e2;
+color:white;
+}
+
+.btn-filled{
+background:#4a90e2;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.btn-voltar{
+margin-top:15px;
+padding:10px 16px;
+border:none;
+background:#444;
+color:white;
+border-radius:8px;
+cursor:pointer;
+}
+
+.acoes-topo{
+margin-bottom:15px;
+}
+
+/* MODAL */
+
+.modal-backdrop{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.4);
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.modal-content{
+background:white;
+padding:20px;
+border-radius:12px;
+max-width:500px;
+width:100%;
+}
+
+.modal-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+.btn-close{
+border:none;
+background:none;
+font-size:22px;
+cursor:pointer;
+}
+
+.modal-body{
+text-align:center;
+}
+
+.cracha-preview{
+display:flex;
+justify-content:center;
+margin-bottom:15px;
+}
+
+.cracha-preview img{
+max-width:320px;
+width:100%;
+border-radius:8px;
+}
+
+.barra-pesquisa{
+margin-bottom:20px;
+}
+
+.barra-pesquisa input{
+
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:16px;
+
+}
