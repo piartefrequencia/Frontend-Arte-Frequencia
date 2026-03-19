@@ -69,7 +69,6 @@ const handleFotoUpload = (e) => {
     return () => pararCamera();
   }, []);
 
- 
   const [formData, setFormData] = useState({
     oficinas: {
       musicalizacao: false,
@@ -77,31 +76,13 @@ const handleFotoUpload = (e) => {
       danca: false,
       percussaoPopular: false,
     },
-    nome: '',
-    cpf: '',
-    rg: '',
-    orgaoExp: '',
-    dataExpedRg: '',
-    rn: '',
-    dataNascimento: '',
-    idade: '',
-    escola: '',
-    estado: '',
-    cidade: '',
-    bairro: '',
-    filiacaoPai: '',
-    filiacaoMae: '',
-    telefonePai: '',
-    telefoneMae: '',
-    responsavel: '',
-    telefoneResponsavel: '',
-    emailResponsavel: '',
-    possuiDoenca: '',
-    qualDoenca: '',
-    medicacao: '',
-    tipoSanguineo: '',
-    serieturma: '',
-    turnoesc: '',
+    nome: '', cpf: '', rg: '', orgaoExp: '', dataExpedRg: '',
+    rn: '', dataNascimento: '', idade: '', escola: '',
+    estado: '', cidade: '', bairro: '', filiacaoPai: '',
+    filiacaoMae: '', telefonePai: '', telefoneMae: '',
+    responsavel: '', telefoneResponsavel: '', emailResponsavel: '',
+    possuiDoenca: '', qualDoenca: '', medicacao: '', tipoSanguineo: '',
+    serieturma: '', turnoesc: '',
     autorizacaoImagem: false,
     atividadesExtras: false,
     descricaoAtividadesExtras: '',
@@ -146,6 +127,15 @@ const handleFotoUpload = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: aplicarMascaraTelefone(value) });
   };
+    //  Máscara do CPF 
+    const cpfMask = value => {
+      return value
+    .replace(/\D/g, '') 
+    .replace(/(\d{3})(\d)/, '$1.$2') 
+    .replace(/(\d{3})(\d)/, '$1.$2') 
+    .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+    .replace(/(-\d{2})\d+?$/, '$1'); 
+};
 
   //  Alterar campos
   const handleChange = (e) => {
@@ -161,8 +151,16 @@ const handleFotoUpload = (e) => {
         ...formData,
         [name]: type === 'checkbox' ? checked : value,
       });
-    }
-  };
+      
+      let maskedValue = value;
+        if (name === "cpf") maskedValue = cpfMask(value);
+
+      setFormData({
+        ...formData,
+        [name]: maskedValue
+      });
+    }   
+};
 
 
   const handleVoltar = () => navigate("/");
@@ -272,7 +270,8 @@ const handleSubmit = async (e) => {
 
         <div className="linha">
           <label>CPF:
-            <input type="text" name="cpf" value={formData.cpf} onChange={handleChange} />
+            <input type="text" name="cpf" value={formData.cpf} 
+            placeholder="999.999.999-99" onChange={handleChange} />
           </label>
 
           <label>RG:
@@ -346,7 +345,15 @@ const handleSubmit = async (e) => {
         {/* 🏫 Escola e endereço */}
         <label>Nome da Escola:
           <input type="text" name="escola" value={formData.escola} onChange={handleChange}  />
-        </label>
+        </label>  
+        <div className="linha">
+          <label>Turma:
+            <input type="text" name="turma" value={formData.serieturma} onChange={handleChange}/>
+          </label>
+          <label>Turno:
+            <input type="text" name="turnoesc" value={formData.turnoesc} onChange={handleChange}/>
+          </label>
+        </div>
 
         <div className="linha">
           <label>Estado:

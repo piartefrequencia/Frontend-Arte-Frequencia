@@ -30,7 +30,7 @@ function FormCadAlunoEdit() {
     medicacao: "",
     tipoSanguineo: "",
     escola: "",
-    turma: "",
+    serieturma: "",
     turnoesc: "",
     autorizacaoImagem: false,
     atividadesExtras: false,
@@ -328,7 +328,7 @@ function FormCadAlunoEdit() {
             <input
               type="text"
               name="turma"
-              value={formData.turma}
+              value={formData.serieturma}
               onChange={handleChange}
             />
           </label>
