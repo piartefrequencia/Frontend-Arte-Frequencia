@@ -144,3 +144,212 @@ border:1px solid #ccc;
 font-size:16px;
 
 }
+.doc-container {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+  font-family: Arial;
+  background: black;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* HEADER */
+.doc-header {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.doc-header h2 {
+  font-size: clamp(24px, 5vw, 50px);
+  color: rgb(10, 10, 10);
+}
+
+.doc-header p {
+  font-size: clamp(16px, 3vw, 30px);
+  color: #b89720;
+}
+
+/* CARD */
+.tabela-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  padding: 15px;
+  overflow-x: auto; /* 🔥 resolve tabela em celular */
+}
+
+/* TABELA */
+.tabela-alunos {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px; /* 🔥 força scroll em telas pequenas */
+}
+
+.tabela-alunos th,
+.tabela-alunos td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.tabela-alunos tr:hover {
+  background: #f8f8f8;
+}
+
+/* BOTÕES */
+.btn-action {
+  border: 1px solid #4a90e2;
+  background: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #4a90e2;
+  font-size: 14px;
+}
+
+.btn-action:hover {
+  background: #4a90e2;
+  color: white;
+}
+
+.btn-filled {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 250px;
+}
+
+.btn-filled:hover {
+  background: #33f702;
+  color: black;
+}
+
+.btn-voltar2 {
+  margin-top: 15px;
+  padding: 10px 16px;
+  border: none;
+  background: #444;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 250px;
+}
+.btn-voltar2:hover {
+  background: #fa0909;
+  color: black;
+}
+
+/* TOPO */
+.acoes-topo {
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* MODAL */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.btn-close {
+  border: none;
+  background: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+/* CRACHÁ */
+.cracha-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.cracha-preview img {
+  max-width: 100%;
+  width: 300px;
+  border-radius: 8px;
+}
+
+/* PESQUISA */
+.barra-pesquisa {
+  margin-bottom: 20px;
+}
+
+.barra-pesquisa input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+/* 📱 RESPONSIVIDADE EXTRA */
+@media (max-width: 768px) {
+  .doc-container {
+    padding: 10px;
+  }
+
+  .tabela-alunos th,
+  .tabela-alunos td {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .btn-action {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  .modal-content {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .doc-header h2 {
+    font-size: 22px;
+  }
+
+  .doc-header p {
+    font-size: 14px;
+  }
+
+  .btn-filled,
+  .btn-voltar {
+    width: 100%;
+  }
+}

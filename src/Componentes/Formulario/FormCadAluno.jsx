@@ -69,6 +69,7 @@ const handleFotoUpload = (e) => {
     return () => pararCamera();
   }, []);
 
+ 
   const [formData, setFormData] = useState({
     oficinas: {
       musicalizacao: false,
@@ -127,41 +128,51 @@ const handleFotoUpload = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: aplicarMascaraTelefone(value) });
   };
-    //  Máscara do CPF 
-    const cpfMask = value => {
-      return value
+
+
+  const cpfMask = value => {
+  return value
     .replace(/\D/g, '') 
     .replace(/(\d{3})(\d)/, '$1.$2') 
     .replace(/(\d{3})(\d)/, '$1.$2') 
-    .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+    .replace(/(\d{3})(\d{1,2})/, '$1-$2') 
     .replace(/(-\d{2})\d+?$/, '$1'); 
 };
 
-  //  Alterar campos
+
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    if (name.startsWith('oficinas.')) {
-      const key = name.split('.')[1];
-      setFormData({
-        ...formData,
-        oficinas: { ...formData.oficinas, [key]: checked },
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: type === 'checkbox' ? checked : value,
-      });
-      
-      let maskedValue = value;
-        if (name === "cpf") maskedValue = cpfMask(value);
+  const { name, value, type, checked } = e.target;
 
-      setFormData({
-        ...formData,
-        [name]: maskedValue
-      });
-    }   
+  // OFICINAS
+  if (name.startsWith('oficinas.')) {
+    const key = name.split('.')[1];
+
+    setFormData((prev) => ({
+      ...prev,
+      oficinas: {
+        ...prev.oficinas,
+        [key]: checked
+      }
+    }));
+    return;
+  }
+  if (type === "checkbox") {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: checked
+    }));
+    return;
+  }
+  let newValue = value;
+
+  if (name === "cpf") {
+    newValue = cpfMask(value);
+  }
+  setFormData((prev) => ({
+    ...prev,
+    [name]: newValue
+  }));
 };
-
 
   const handleVoltar = () => navigate("/");
 
@@ -204,8 +215,10 @@ const handleSubmit = async (e) => {
       alert("Erro na conexão com o servidor.");
     }
   }
-  finally 
-  { setLoading(false); }
+  finally {
+    
+    setLoading(false); 
+  }
 };
 
 
@@ -275,7 +288,8 @@ const handleSubmit = async (e) => {
           </label>
 
           <label>RG:
-            <input type="text" name="rg" value={formData.rg} onChange={handleChange}  />
+            <input type="text" name="rg" value={formData.rg} maxLength="9" 
+             onChange={handleChange}  />
           </label>
 
           <label>Org. Exp.:
@@ -345,16 +359,18 @@ const handleSubmit = async (e) => {
         {/* 🏫 Escola e endereço */}
         <label>Nome da Escola:
           <input type="text" name="escola" value={formData.escola} onChange={handleChange}  />
-        </label>  
+        </label>
+
         <div className="linha">
-          <label>Turma:
-            <input type="text" name="turma" value={formData.serieturma} onChange={handleChange}/>
+          <label>
+            Turma:
+            <input type="text" name="serieturma" value={formData.serieturma} onChange={handleChange}/>
           </label>
           <label>Turno:
             <input type="text" name="turnoesc" value={formData.turnoesc} onChange={handleChange}/>
           </label>
         </div>
-
+        
         <div className="linha">
           <label>Estado:
             <input type="text" name="estado" value={formData.estado} onChange={handleChange} />
@@ -385,20 +401,28 @@ const handleSubmit = async (e) => {
 
         {/* ⚕️ Doença crônica */}
         <div className="linha-radio">
-          <label>Possui doença crônica?</label>
-          <label><input type="radio" name="possuiDoenca" value="sim"
-            checked={formData.possuiDoenca === 'sim'} onChange={handleChange} /> Sim</label>
-          <label><input type="radio" name="possuiDoenca" value="nao"
-            checked={formData.possuiDoenca === 'nao'} onChange={handleChange} /> Não</label>
+        <label>Possui alguma doença crônica?</label>
+          <label>
+            <input type="radio" name="possuiDoenca" value="sim"
+              checked={formData.possuiDoenca === 'sim'} onChange={handleChange}/> Sim
+          </label>
+          <label>
+            <input type="radio" name="possuiDoenca" value="nao"
+              checked={formData.possuiDoenca === 'nao'} onChange={handleChange}/> Não
+          </label>
         </div>
-
+  
         {formData.possuiDoenca === 'sim' && (
           <>
-            <label>Qual(is) doença(s)?
-              <input type="text" name="qualDoenca" value={formData.qualDoenca} onChange={handleChange}  />
+            <label> Qual(ais) Doença(s)?
+              <input type="text" name="qualDoenca"
+                value={formData.qualDoenca} onChange={handleChange}/>
             </label>
-            <label>Medicação necessária:
-              <input type="text" name="medicacao" value={formData.medicacao} onChange={handleChange}  />
+
+            <label>
+              Necessidade da(s) Medicação(ções):
+              <input type="text" name="medicacao"
+                value={formData.medicacao} onChange={handleChange}/>
             </label>
           </>
         )}
