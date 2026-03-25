@@ -15,8 +15,8 @@
   justify-content: center;
   gap: 100px;
   list-style: none;
-  margin: 0;
-  padding: 0;
+  margin: 10px;
+  padding: 10px 0;
 }
 
 .menu-bar-lista > li {
@@ -43,7 +43,7 @@
 .submenu-horizontal li:hover {
   background-color: #770000;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
   /* Garante que o hover funcione corretamente */
   transition: background-color 0.2s ease-in-out;
 }
@@ -69,6 +69,7 @@
 
 .submenu-horizontal li {
   margin: 5px 0;
+  padding: 0px 15px;
 }
 
 .submenu-horizontal a {
