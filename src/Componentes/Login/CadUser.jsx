@@ -9,6 +9,7 @@ function CadUser() {
 
   const [formData, setFormData] = useState({
     email: '',
+    login: '',
     usuario: '',
     senha: '',
     perfil: 'ADMIN'
