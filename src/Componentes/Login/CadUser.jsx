@@ -82,6 +82,16 @@ function CadUser() {
           />
         </label1>
 
+        <label1>Login:
+          <input
+            type="text"
+            name="login"
+            value={formData.login}
+            onChange={handleChange}
+            required
+          />
+        </label1>
+
         <label1>Email:
           <input
             type="email"
