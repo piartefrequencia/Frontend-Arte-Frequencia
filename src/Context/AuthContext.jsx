@@ -1,6 +1,7 @@
 
 
 import React, { createContext, useEffect, useMemo, useState } from 'react';
+import { setLogout } from '../Servico/authService';
 import  api from '../Servico/APIservico';
 
 export const AuthContext = createContext();
@@ -58,6 +59,11 @@ export const AuthProvider = ({ children }) => {
     logout,
     loading,
   }), [user, loading]);
+
+   // REMOVE O USUÁRIO DA PAGINA HOME
+  useEffect(() => {
+  setLogout(logout);
+}, []);
 
   return (
     <AuthContext.Provider value={value}>
