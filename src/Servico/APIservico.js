@@ -42,7 +42,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
      alert("Sua sessão expirou. Faça login novamente.");
 
-      triggerLogout(); // 🔥 chama logout real
+      triggerLogout(); 
     }
 
     return Promise.reject(error);

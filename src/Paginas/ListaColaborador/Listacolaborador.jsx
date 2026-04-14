@@ -49,7 +49,6 @@ function ListaColaboradores() {
     }
   };
 
-
   const colaboradoresOrdenados = [...colaboradores].sort((a, b) =>
     a.nome.localeCompare(b.nome, "pt", { sensitivity: "base" })
   );
@@ -133,7 +132,7 @@ function ListaColaboradores() {
     
       {colaboradorSelecionadoModal && (
         <div className="modal-overlay" onClick={fecharModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content1" onClick={(e) => e.stopPropagation()}>
             <h2>Dados do Colaborador</h2>
             <hr />
             <p><strong>Matrícula:</strong> {colaboradorSelecionadoModal.matricula}</p>
