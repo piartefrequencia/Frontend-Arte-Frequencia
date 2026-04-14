@@ -1,6 +1,7 @@
 
 
 import axios from "axios";
+import { triggerLogout } from "./authService";
 
 const api = axios.create({
   baseURL:"https://apiartefrequencia.onrender.com/api/artefrequencia",
@@ -27,11 +28,23 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       
-      sessionStorage.removeItem("token");
-      
-      alert("Sua sessão expirou. Faça login novamente.");
-      
+      sessionStorage.removeItem("token");  
     }
+    return Promise.reject(error);
+  }
+);
+
+  // REMOVE O USUÁRIO DO CABEÇALHO
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+     alert("Sua sessão expirou. Faça login novamente.");
+
+      triggerLogout(); 
+    }
+
     return Promise.reject(error);
   }
 );

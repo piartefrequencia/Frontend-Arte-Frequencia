@@ -10,39 +10,21 @@ function FormCadAlunoEdit() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    nome: "",
-    cpf: "",
-    rg: "",
-    dataExpedRg: "",
-    orgaoExp: "",
-    rn: "",
-    dataNascimento: "",
-    idade: "",
-    filiacaoPai: "",
-    telefonePai: "",
-    filiacaoMae: "",
-    telefoneMae: "",
-    responsavel: "",
-    telefoneResponsavel: "",
-    emailResponsavel: "",
-    possuiDoenca: false,
-    qualDoenca: "",
-    medicacao: "",
-    tipoSanguineo: "",
-    escola: "",
-    serieturma: "",
-    turnoesc: "",
-    autorizacaoImagem: false,
-    atividadesExtras: false,
-    descricaoAtividadesExtras: "",
-    necessidadesEspeciais: false,
-    descricaoNecessidadesEspeciais: "",
+    nome: "", cpf: "", rg: "", dataExpedRg: "", orgaoExp: "",
+    rn: "", dataNascimento: "", idade: "", filiacaoPai: "",
+    telefonePai: "", filiacaoMae: "", telefoneMae: "",
+    responsavel: "", telefoneResponsavel: "",
+    emailResponsavel: "", possuiDoenca: false, qualDoenca: "",
+    medicacao: "", tipoSanguineo: "", escola: "", serieturma: "",
+    turnoesc: "", autorizacaoImagem: false,
+    atividadesExtras: false, descricaoAtividadesExtras: "",
+    necessidadesEspeciais: false, descricaoNecessidadesEspeciais: "",
     oficinas: "",
   });
 
   const [loading, setLoading] = useState(true);
 
-  // 🔹 Buscar aluno por matricula
+  //  Buscar aluno por matricula
   useEffect(() => {
     const fetchAluno = async () => {
       try {
@@ -64,7 +46,7 @@ function FormCadAlunoEdit() {
     fetchAluno();
   }, [matricula]);
 
-  // 🔹 Atualizar estado dos inputs
+  //  Atualizar estado dos inputs
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -88,7 +70,7 @@ function FormCadAlunoEdit() {
     setFormData((prev) => ({ ...prev, [name]: formatado }));
   };
 
-  // 🔹 Calcular idade
+  //  Calcular idade
   useEffect(() => {
     if (formData.dataNascimento) {
       const hoje = new Date();
@@ -100,7 +82,7 @@ function FormCadAlunoEdit() {
     }
   }, [formData.dataNascimento]);
 
-  // 🔹 Submeter form
+  //  SUBMETE  BACKEND 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
