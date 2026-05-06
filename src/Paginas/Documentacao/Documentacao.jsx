@@ -1,14 +1,16 @@
+
+
 import React, { useEffect, useState } from "react";
 import api from "../../Servico/APIservico";
 import "./Documentacao.css";
 import { useNavigate } from "react-router-dom";
 
-export default function Documentacao() {
+function Documentacao() {
+  
   const [alunos, setAlunos] = useState([]);
   const [filtro, setFiltro] = useState("");
   const [carregandoCracha, setCarregandoCracha] = useState(false);
 
-  // Paginação Frontend
   const [paginaAtual, setPaginaAtual] = useState(1);
   const alunosPorPagina = 20;
 
@@ -19,17 +21,16 @@ export default function Documentacao() {
   const navigate = useNavigate();
 
   useEffect(() => {
-  const carregarAlunos = async () => {
-  
-    try {
-      const response = await api.get("/aluno");
-      setAlunos(response.data || []);
-    } catch {
-      console.error("Erro ao carregar alunos.");
-    } 
-  };
-  carregarAlunos();
-}, []);
+    const carregarAlunos = async () => {
+      try {
+        const response = await api.get("/aluno");
+        setAlunos(response.data || []);
+      } catch {
+        console.error("Erro ao carregar alunos.");
+      }
+    };
+    carregarAlunos();
+  }, []);
 
   const alunosFiltrados = alunos.filter((aluno) =>
     aluno.nome?.toLowerCase().includes(filtro.toLowerCase())
@@ -45,12 +46,11 @@ export default function Documentacao() {
     setPaginaAtual(1);
   };
 
-  // --- FUNÇÃO ATUALIZADA COM FEEDBACK ---
   const abrirModalCracha = async (aluno) => {
-    setCarregandoCracha(true); // Inicia o carregamento
-    setAlunoSelecionado(aluno); // Define o aluno antes para o modal mostrar o nome
-    setModalOpen(true);        // Abre o modal imediatamente
-    
+    setCarregandoCracha(true);
+    setAlunoSelecionado(aluno);
+    setModalOpen(true);
+
     try {
       const response = await api.get(`/aluno/${aluno.id}/cracha.png`, {
         responseType: "blob",
@@ -59,9 +59,9 @@ export default function Documentacao() {
       setCrachaUrl(urlLocal);
     } catch (err) {
       alert("Erro ao carregar a prévia do crachá.");
-      fecharModal(); // Fecha se der erro
+      fecharModal();
     } finally {
-      setCarregandoCracha(false); // Finaliza o carregamento
+      setCarregandoCracha(false);
     }
   };
 
@@ -86,9 +86,45 @@ export default function Documentacao() {
       document.body.appendChild(link);
       link.click();
       link.remove();
+      window.URL.revokeObjectURL(url);
     } catch {
       alert("Erro ao baixar o crachá");
     }
+  };
+
+  const baixarSelecionados = async () => {
+    if (selecionados.length === 0) {
+      alert("Selecione alunos para baixar os crachás.");
+      return;
+    }
+
+    setCarregandoCracha(true);
+
+    for (const aluno of selecionados) {
+      try {
+        const response = await api.get(`/aluno/${aluno.id}/cracha.png`, {
+          responseType: "blob",
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `cracha-${aluno.nome}.png`);
+        document.body.appendChild(link);
+        link.click();
+
+        link.remove();
+        window.URL.revokeObjectURL(url);
+
+        await new Promise((resolve) => setTimeout(resolve, 400));
+      } catch (err) {
+        console.error(`Erro no crachá de: ${aluno.nome}`);
+      }
+    }
+
+    setCarregandoCracha(false);
+    setSelecionados([]); 
+    alert("Downloads concluídos! A seleção foi limpa.");
   };
 
   const toggleSelecionado = (aluno) => {
@@ -98,44 +134,6 @@ export default function Documentacao() {
     } else {
       setSelecionados([...selecionados, aluno]);
     }
-  };
-
-  const imprimirSelecionados = () => {
-    if (selecionados.length === 0) {
-      alert("Selecione alunos para imprimir.");
-      return;
-    }
-    const win = window.open("", "_blank");
-    const cards = selecionados
-      .map(
-        (aluno) => `
-        <div class="card">
-          <img src="${api.defaults.baseURL}/aluno/${aluno.id}/cracha.png" />
-          <p><strong>${aluno.nome}</strong></p>
-          <p>Matrícula: ${aluno.matricula}</p>
-        </div>
-      `
-      )
-      .join("");
-
-    win.document.write(`
-      <html>
-      <head>
-        <title>Imprimir Crachás</title>
-        <style>
-          body { font-family: Arial; padding: 20px; }
-          .container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-          .card { border: 1px solid #000; padding: 10px; text-align: center; border-radius: 8px; }
-          img { max-width: 150px; display: block; margin: 0 auto 10px; }
-        </style>
-      </head>
-      <body>
-        <button onclick="window.print()">Confirmar Impressão</button>
-        <div class="container">${cards}</div>
-      </body>
-      </html>
-    `);
-    win.document.close();
   };
 
   return (
@@ -158,8 +156,12 @@ export default function Documentacao() {
 
       <div className="tabela-card">
         <div className="acoes-topo">
-          <button className="btn-filled" onClick={imprimirSelecionados}>
-            Imprimir Selecionados ({selecionados.length})
+          <button 
+            className="btn-filled" 
+            onClick={baixarSelecionados}
+            disabled={carregandoCracha || selecionados.length === 0}
+          >
+            {carregandoCracha ? "Baixando Crachás..." : `Baixar Crachás Selecionados (${selecionados.length})`}
           </button>
         </div>
 
@@ -183,36 +185,48 @@ export default function Documentacao() {
                     onChange={() => toggleSelecionado(aluno)}
                   />
                 </td>
-                <td style={{ fontWeight: 'bold', color: '#666' }}>{aluno.id}</td> 
+                <td style={{ fontWeight: "bold", color: "#666" }}>{aluno.id}</td>
                 <td>{aluno.matricula}</td>
                 <td>{aluno.nome}</td>
                 <td>
-                  <button 
-                    className="btn-action" 
+                  <button
+                    className="btn-action"
                     onClick={() => abrirModalCracha(aluno)}
-                    disabled={carregandoCracha} 
+                    disabled={carregandoCracha}
                   >
-                    {carregandoCracha && alunoSelecionado?.id === aluno.id ? "..." : "Visualizar"}
+                    {carregandoCracha && alunoSelecionado?.id === aluno.id
+                      ? "..."
+                      : "Visualizar"}
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        
+
         {totalPaginas > 1 && (
           <div className="paginacao-footer">
-            <button disabled={paginaAtual === 1} onClick={() => setPaginaAtual(paginaAtual - 1)}>
+            <button
+              disabled={paginaAtual === 1}
+              onClick={() => setPaginaAtual(paginaAtual - 1)}
+            >
               Anterior
             </button>
-            <span>Página {paginaAtual} de {totalPaginas}</span>
-            <button disabled={paginaAtual === totalPaginas} onClick={() => setPaginaAtual(paginaAtual + 1)}>
+            <span>
+              Página {paginaAtual} de {totalPaginas}
+            </span>
+            <button
+              disabled={paginaAtual === totalPaginas}
+              onClick={() => setPaginaAtual(paginaAtual + 1)}
+            >
               Próxima
             </button>
           </div>
         )}
 
-        <button className="btn-voltar" onClick={() => navigate("/")}>Fechar</button>
+        <button className="btn-voltar" onClick={() => navigate("/")}>
+          Fechar
+        </button>
       </div>
 
       {modalOpen && alunoSelecionado && (
@@ -226,7 +240,7 @@ export default function Documentacao() {
               <div className="cracha-preview">
                 {carregandoCracha ? (
                   <div className="loader-container">
-                    <div className="spinner"></div> 
+                    <div className="spinner"></div>
                     <p>Gerando crachá digital...</p>
                   </div>
                 ) : (
@@ -235,9 +249,9 @@ export default function Documentacao() {
               </div>
             </div>
             <div className="modal-footer">
-              <button 
-                className="btn-filled" 
-                onClick={baixarCracha} 
+              <button
+                className="btn-filled"
+                onClick={baixarCracha}
                 disabled={carregandoCracha}
               >
                 Baixar Crachá
@@ -249,3 +263,5 @@ export default function Documentacao() {
     </div>
   );
 }
+
+export default  Documentacao;
