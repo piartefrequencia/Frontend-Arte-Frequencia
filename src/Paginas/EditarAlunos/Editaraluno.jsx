@@ -24,7 +24,6 @@ function FormCadAlunoEdit() {
 
   const [loading, setLoading] = useState(true);
 
-  //  Buscar aluno por matricula
   useEffect(() => {
     const fetchAluno = async () => {
       try {
@@ -46,7 +45,6 @@ function FormCadAlunoEdit() {
     fetchAluno();
   }, [matricula]);
 
-  //  Atualizar estado dos inputs
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -70,7 +68,6 @@ function FormCadAlunoEdit() {
     setFormData((prev) => ({ ...prev, [name]: formatado }));
   };
 
-  //  Calcular idade
   useEffect(() => {
     if (formData.dataNascimento) {
       const hoje = new Date();
@@ -82,7 +79,7 @@ function FormCadAlunoEdit() {
     }
   }, [formData.dataNascimento]);
 
-  //  SUBMETE  BACKEND 
+  //  SUBMETE AO BACKEND 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -388,8 +385,7 @@ function FormCadAlunoEdit() {
             ATUALIZAR
           </button>
           <button
-            type="button"
-            className="btn-voltar"
+            type="button" className="btn-voltar"
             onClick={() => navigate("/listaalunos")}
           >
             FECHAR
