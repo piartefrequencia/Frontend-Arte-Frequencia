@@ -114,6 +114,7 @@ function MenuLateral() {
                <ul className="submenu">
                  <li><Link to="/cadastro-aluno">Cadastro Alunos</Link></li>
                  <li><Link to="/cadastro-colaborador">Cadastro Educadores</Link></li>
+                 <li><Link to="/telegram">Cadastro Mensagem Telegram</Link></li> 
                  <li><Link to="/listaalunos">Lista dos Alunos</Link></li>
                  <li><Link to="/listacolaborador">Lista dos Educadores</Link></li>
                  <li><Link to="/biblioteca">Biblioteca</Link></li>
