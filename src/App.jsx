@@ -25,6 +25,7 @@ import Percussao from './Paginas/Oficinas/Percussao';
 import FormCadAluno from './Componentes/Formulario/FormCadAluno';
 import FormCadColaborador from './Componentes/Formulario/FormCadColaborador';
 import CadUser from './Componentes/Login/CadUser';
+import Telegram from './Componentes/Formulario/GestaoTelegram';
 
 
 import BibliotecaPartituras from './Paginas/Galeria/Biblioteca';
@@ -224,6 +225,15 @@ function App() {
             element={
               <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
                 <BibliotecaPartituras />
+              </RotasPrivadas>
+            }
+          />
+
+           <Route
+            path="/telegram"
+            element={
+              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
+                <Telegram />
               </RotasPrivadas>
             }
           />
