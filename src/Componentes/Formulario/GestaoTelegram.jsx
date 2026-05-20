@@ -71,7 +71,7 @@ return (
     <div className="gestao-container">
         <h2>Gestão de Notificações Telegram</h2>
         <p className="subtitulo">
-            Clique no botão correspondente para abrir o Telegram ou clique em 📋 para copiar o link e enviar manualmente via Whatshapp.
+            Clique no botão correspondente para abrir o Telegram ou clique em 🟢💬 para copiar o link e enviar manualmente via Whatshapp.
         </p>
     <div className="search-bar">
         <input type="text" placeholder="Buscar aluno por nome..."
@@ -103,7 +103,7 @@ return (
                        className="btn-telegram btn-pai"> Vincular PAI
                 </a>
                 <button onClick={() => copiarLink(aluno.id, "PAI")} 
-                    className="btn-copy" title="Copiar Link do Pai">📋
+                    className="btn-copy" title="Copiar Link do Pai">🟢💬
                 </button>
             </div>
                                     
@@ -112,7 +112,7 @@ return (
                     target="_blank" rel="noopener noreferrer"
                     className="btn-telegram btn-mae">📱 Vincular MÃE</a>
                 <button onClick={() => copiarLink(aluno.id, "MAE")} 
-                        className="btn-copy" title="Copiar Link da Mãe">📋
+                        className="btn-copy" title="Copiar Link da Mãe">🟢💬
                 </button>
             </div>
                     
@@ -123,7 +123,7 @@ return (
                 </a>
                     <button onClick={() => copiarLink(aluno.id, "RESPONSAVEL")} 
                         className="btn-copy" 
-                        title="Copiar Link do Responsável">📋
+                        title="Copiar Link do Responsável">🟢💬
                     </button>
             </div>
         </div>

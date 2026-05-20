@@ -5,12 +5,13 @@
     font-family: Arial, sans-serif;
     background: #0a0a0a;
     margin-top: 20px;
-    border-radius: 5px;
+    border-radius: 15px;
+    color:  rgb(255, 0, 0);
    
 }
 
 .subtitulo {
-    color: #ec0f0f;
+    color: #faf7f7;
     padding: 10px;
     margin-bottom: 20px;
     text-align: center;
