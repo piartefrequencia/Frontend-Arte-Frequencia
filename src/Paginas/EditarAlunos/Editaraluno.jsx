@@ -107,7 +107,7 @@ function FormCadAlunoEdit() {
 
   return (
     <div className="form-container-editar">
-      <h2>Editar Aluno</h2>
+      <h2>Atualizar os dados do Aluno</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Nome Completo:

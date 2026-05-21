@@ -113,7 +113,7 @@ function EditarColaborador() {
 
   return (
     <div className="form-container-editar">
-      <h2>Editar Colaborador</h2>
+      <h2>Atualizar os dados do Colaborador</h2>
       <form onSubmit={handleSubmit}>
         <label>Nome:</label>
         <input name="nome" value={formData.nome} onChange={handleChange} required />
