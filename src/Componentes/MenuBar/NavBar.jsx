@@ -1,50 +1,38 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+
+
+import React, { useState } from "react";
 import './NavBar.css';
+import { NavLink } from "react-router-dom";
+
+
 
 function NavBar() {
-  const [submenuAberto, setSubmenuAberto] = useState(null);
-  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+ 
 
-  const alternarSubmenu = (item) => {
-    setSubmenuAberto((prev) => (prev === item ? null : item));
+  const irParaFinalDaPagina = (e) => {
+    e.preventDefault(); 
+    setOpen(false);
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
   };
 
   return (
-    <nav className="menu-bar-horizontal">
-      <ul className="menu-bar-lista">
-        <li>
-          <button onClick={() => alternarSubmenu('sobre')}
-                        >Sobre ▾</button>
-          {submenuAberto === 'sobre' && (
-            <ul className="submenu-horizontal dropdown-menu show">
-              
-              <li><Link to="/missao">Nossa Missão</Link></li>
-              <li><Link to="/nossos-colaboradores">Nossos Colaboradores</Link></li>
-              <li><Link to="/galeria">Galeria de Imagens e Vídeos</Link></li>
-              <li><Link to="/partituras">Biblioteca Partituras</Link></li>
-            
-            </ul>
-          )}
-        </li>
+    <nav className={`navbar ${open ? "navbar-open" : ""}`}>
 
-        <li onClick={() => alternarSubmenu('oficinas')} >
-          <button>Oficinas ▾</button>
-          {submenuAberto === 'oficinas' && (
-            <ul className="submenu-horizontal">
-              <li><Link to="/musicalizacao">Musicalização Infantil</Link></li>
-              <li><Link to="/instrumental">Prática Instrumental</Link></li>
-              <li><Link to="/percussao">Percussão Popular</Link></li>
-              <li><Link to="/danca">Danças</Link></li>
-              <li><Link to="/listapublico">Lista dos Alunos nas Oficinas</Link></li>
-            </ul>
-          )}
-        </li>
-        <li>
-       
-          <button onClick={() => navigate('/login')}>Login</button> 
-       
-        </li>
+      <button
+        className={`hamburger ${open ? "open" : ""}`}
+        onClick={() => setOpen(!open)}
+        aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul className={`menu ${open ? "menu-open" : ""}`}>
+   
+        <li><NavLink to="/" onClick={() => setOpen(false)}>Ínicio</NavLink></li>
+        <li><NavLink to="/quemsomos" onClick={() => setOpen(false)}>Quem Somos</NavLink></li>
+        <li><NavLink to="/partituras" onClick={() => setOpen(false)}>Biblioteca Partituras</NavLink></li>
+        <li><a href="#" onClick={irParaFinalDaPagina}>Informações</a></li>
+        <li><NavLink to="/login" onClick={() => setOpen(false)}>Login</NavLink></li>
         
       </ul>
     </nav>
