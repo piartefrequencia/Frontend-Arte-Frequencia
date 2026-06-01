@@ -31,7 +31,7 @@ function NavBar() {
         <li><NavLink to="/" onClick={() => setOpen(false)}>Ínicio</NavLink></li>
         <li><NavLink to="/quemsomos" onClick={() => setOpen(false)}>Quem Somos</NavLink></li>
         <li><NavLink to="/partituras" onClick={() => setOpen(false)}>Biblioteca Partituras</NavLink></li>
-        <li><a href="#" onClick={irParaFinalDaPagina}>Informações</a></li>
+        <li><NavLink to="#" onClick={irParaFinalDaPagina}>Informações</NavLink></li>
         <li><NavLink to="/login" onClick={() => setOpen(false)}>Login</NavLink></li>
         
       </ul>
