@@ -30,7 +30,7 @@ import Telegram from './Componentes/Formulario/GestaoTelegram';
 
 import BibliotecaPartituras from './Paginas/Galeria/Biblioteca';
 import Partituras from './Paginas/Galeria/Partituras';
-
+import Frequencia from './Paginas/FrequenciaAPK/FrequenciaAPK';
 
 import Editaraluno from './Paginas/EditarAlunos/Editaraluno';
 import Listaalunos from './Paginas/ListaAlunos/Listaalunos';
@@ -234,6 +234,15 @@ function App() {
             element={
               <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
                 <Telegram />
+              </RotasPrivadas>
+            }
+          />
+
+          <Route
+            path="/form-frequencia"
+            element={
+              <RotasPrivadas perfisPermitidos={['ADMIN', 'COLAB']}>
+                <Frequencia />
               </RotasPrivadas>
             }
           />
