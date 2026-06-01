@@ -67,7 +67,7 @@ function ListaColaboradores() {
   return (
     <div className="lista-wrapper">
       <div className="filtro-navbar">
-        <h2 className="titulo-navbar">Lista de Colaboradores</h2>
+        <h2 className="titulo-navbar">Lista de Cadastro dos nossos Educadores</h2>
       </div>
 
       <div className="lista-container">

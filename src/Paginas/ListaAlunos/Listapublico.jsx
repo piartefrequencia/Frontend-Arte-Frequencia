@@ -1,6 +1,6 @@
+
 import React, { useEffect, useState } from "react";
 import "./Listaalunos.css";
-import { useNavigate } from "react-router-dom";
 
 import Api from "../../Servico/APIservico";
 
@@ -11,7 +11,6 @@ function ListaPublico () {
       const [oficinaSelecionada, setOficinaSelecionada] = useState("Todas");
       const [alunoSelecionadoModal, setAlunoSelecionadoModal] = useState(null);
       const [paginaAtual, setPaginaAtual] = useState(1);
-      const navigate = useNavigate();
       const cardsPorPagina = 12;
     
      
@@ -65,15 +64,9 @@ function ListaPublico () {
       return (
           <div>
             <div className="filtro-navbar1">
-              <h2 className="titulo-navbar1">OFICINAS</h2>
+              <h2 className="titulo-navbar1">Lista dos Alunos Matriculados nas Oficinas</h2>
       
               <div className="botoes-navbar">
-                <button
-                  className="botao-voltar-galeria"
-                  onClick={() => navigate("/")}
-                >
-                  SAIR DESSA PAGINA
-                </button>
       
                 {oficinas.map((oficina) => (
                   <button
@@ -165,10 +158,7 @@ function ListaPublico () {
                 ))}
               </div>
             </div>
-      
-            <button className="botao-voltar-galeria" onClick={() => navigate("/")}>
-              SAIR DESSA PAGINA
-            </button>
+    
       
             {/* MODAL */}
             {alunoSelecionadoModal && (
