@@ -77,15 +77,9 @@ function ListaAlunos() {
   return (
     <div>
       <div className="filtro-navbar1">
-        <h2 className="titulo-navbar1">OFICINAS</h2>
+        <h2 className="titulo-navbar1">Lista dos Alunos Matriculados nas Oficinas</h2>
 
         <div className="botoes-navbar">
-          <button
-            className="botao-voltar-galeria"
-            onClick={() => navigate("/")}
-          >
-            SAIR DESSA PAGINA
-          </button>
 
           {oficinas.map((oficina) => (
             <button
@@ -197,10 +191,6 @@ function ListaAlunos() {
           ))}
         </div>
       </div>
-
-      <button className="botao-voltar-galeria" onClick={() => navigate("/")}>
-        SAIR DESSA PAGINA
-      </button>
 
       {/* MODAL */}
       {alunoSelecionadoModal && (
