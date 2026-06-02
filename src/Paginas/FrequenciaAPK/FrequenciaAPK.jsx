@@ -35,7 +35,10 @@ function FrequenciaAPK() {
     carregarAlunos();
   }, []);
 
+
   function abrirModal(aluno) {
+    console.log("Abrindo modal");
+    console.log(aluno);
     setAlunoSelecionado(aluno);
     setModalOpen(true);
   }
