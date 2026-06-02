@@ -38,8 +38,8 @@ export default function ModalFrequencia({ aluno, onClose }) {
   }, [aluno]);
 
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <div className="modal-frequencia">
+      <div className="modal-frequencia-content">
         <h2>{aluno.nome}</h2>
 
         {loading ? (

@@ -1,4 +1,3 @@
-
 .container-modal {
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -8,9 +7,9 @@
   margin-top: 10px;
   border-radius: 12px;
   box-shadow: 0 0 20px #000;
-
 }
-.container-modal h2{
+
+.container-modal h2 {
   color: #b89720;
   font-size: 20px;
 }
@@ -27,38 +26,55 @@
   font-size: 16px;
 }
 
+/* FUNDO ESCURO DO MODAL */
 .modal {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.7);
+
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+
   z-index: 9999;
-  
+
+  padding: 20px;
+  box-sizing: border-box;
 }
 
+/* CAIXA DO MODAL */
 .modal-content {
   background: white;
   padding: 30px;
   border-radius: 8px;
   position: relative;
+
   width: 100%;
   max-width: 1100px;
+
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
+/* BOTÃO FECHAR */
 .close {
   position: absolute;
-  top: 10px; right: 20px;
+  top: 10px;
+  right: 20px;
+
   font-size: 24px;
   font-weight: bold;
   cursor: pointer;
 }
 
+/* CONTEÚDO INTERNO */
 .modal-body {
   display: flex;
-  flex-direction: row; /* imagem do lado do texto */
+  flex-direction: row;
   gap: 20px;
   align-items: flex-start;
 }
@@ -74,7 +90,22 @@
   flex: 1;
 }
 
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .container-modal {
+    width: 100%;
+  }
 
+  .modal-body {
+    flex-direction: column;
+  }
 
+  .modal-body img {
+    width: 100%;
+  }
 
-
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+}
