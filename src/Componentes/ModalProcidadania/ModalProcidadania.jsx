@@ -33,9 +33,9 @@ function ModalProcidadania() {
             <span className="close" onClick={fecharModal}>&times;</span>            
             	
               <div className="modal-body">
-  <img src={img1} alt="imagem 3"/>
-  <div className="texto">
-<h3>Musicalização Infantil</h3>
+               <img src={img1} alt="imagem 3"/>
+                <div className="texto">
+                <h3>Musicalização Infantil</h3>
         
         <p className="texto-livro">
               O Projeto Música, Dança e Teatro Instrumentos de Cidadania 
