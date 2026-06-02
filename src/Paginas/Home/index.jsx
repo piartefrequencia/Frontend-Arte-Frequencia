@@ -1,20 +1,18 @@
 import React, { Suspense } from 'react';
 import MenuLateral from '../../Componentes/MenuLateral';
-import MenuBar from '../../Componentes/MenuBar/NavBar';
 import Rodape from '../../Componentes/Rodape';
 import Carousel from '../../Componentes/Carousel';
-import Cabecalho from '../../Componentes/Cabecalho';
-import CabecalhoUsuario from '../../Componentes/CabecalhoUsuario/CabecalhoUsuario';
+
+
 
 
 function Home() {
   return (
     <><div className="home-container">
       <MenuLateral />
-      <Cabecalho />
-      <CabecalhoUsuario />
+
       <main className="home-heading">
-        <MenuBar />
+        
         <h2>
           Bem-vindos ao Arte & Frequência!
         </h2>

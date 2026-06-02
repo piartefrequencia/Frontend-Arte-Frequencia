@@ -1,0 +1,155 @@
+
+
+  
+  .container-mvv {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px 20px;
+}
+
+.card-mvv {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 350px;
+  flex: 1;
+  border: 5px solid  #b89720;
+  
+}
+
+.cards-header {
+  color: #b89720;
+  font-weight: bold;
+  text-align: center;
+  padding: 16px;
+  font-size: 20px;
+}
+
+.card-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.card-body p {
+  color: #333;
+  font-weight: 500;
+}
+
+.card-body ul {
+  list-style: none;
+  padding-left: 0;
+  text-align: left;
+}
+
+.card-body li {
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.icon {
+  font-size: 30px;
+  color:  #ff0000;
+  margin-bottom: 10px;
+}
+
+  
+  .missao-container {
+    max-width: 820px;
+    margin: 80px auto;
+    padding: 30px;
+    background-color: #111;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #000;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    margin-top: -280px;
+  }
+  
+  .missao-container img  {
+    width: 85%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 12px;
+    margin: 20px 0 40px 0;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    border: 5px solid white;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+    
+    
+  }
+  
+  h2 {
+    color: #b89720;
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  
+  .missao-bloco {
+    background-color: #1c1c1c;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+    text-align: center;
+  }
+  
+  .missao-bloco h3 {
+    color: #b89720;
+    margin-top: 10px;
+  }
+  
+  .missao-bloco p {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 750px;
+    margin: 10px auto;
+    font-size: 20px;
+  }
+  
+  .missao-bloco ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+  }
+  
+  .missao-bloco ul li {
+    font-size: 16px;
+    margin: 5px 0;
+    font-size: 20px;
+  }
+  
+  .icone {
+    font-size: 36px;
+    color: #b89720;    
+  }
+
+  .botao-voltar-missao {
+    margin-top: 30px;
+    background-color: #b89720;
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .botao-voltar-missao:hover {
+    background-color: #d4af37;
+  }
+
+  .texto-livro {
+  text-align: justify;      /* Justifica o texto como em livros */
+  text-indent: 2em;         /* Indenta a primeira linha do parágrafo */
+  line-height: 1.8;         
+
+           
+  margin: 1em 0;           
+  max-width: 700px;         
+}

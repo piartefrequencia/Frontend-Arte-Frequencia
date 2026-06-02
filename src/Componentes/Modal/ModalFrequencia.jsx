@@ -5,6 +5,9 @@ import TabelaFrequencia from "../Tabela/TabelaFrequencia";
 import "./ModalFrequencia.css";
 
 export default function ModalFrequencia({ aluno, onClose }) {
+  console.log("Modal renderizado");
+  console.log(aluno);
+
   const [dados, setDados] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -18,6 +21,8 @@ export default function ModalFrequencia({ aluno, onClose }) {
         const response = await Api.get(
           `/presenca/aluno/${aluno.id}?ano=${anoAtual}`
         );
+        console.log("API retornou:");
+        console.log(response.data);
 
         setDados(response.data);
       } catch (error) {
