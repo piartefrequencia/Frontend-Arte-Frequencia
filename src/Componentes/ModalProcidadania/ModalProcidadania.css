@@ -1,4 +1,4 @@
-.container-modal {
+.container-modal-procidadania {
   padding: 20px;
   font-family: Arial, sans-serif;
   background: rgb(20, 19, 19);
@@ -9,7 +9,7 @@
   box-shadow: 0 0 20px #000;
 }
 
-.container-modal h2 {
+.container-modal-procidadania h2 {
   color: #b89720;
   font-size: 20px;
 }
@@ -27,7 +27,7 @@
 }
 
 /* FUNDO ESCURO DO MODAL */
-.modal {
+.modal-procidadania {
   position: fixed;
   top: 0;
   left: 0;
@@ -47,7 +47,7 @@
 }
 
 /* CAIXA DO MODAL */
-.modal-content {
+.modal-content-procidadania {
   background: white;
   padding: 30px;
   border-radius: 8px;
@@ -72,14 +72,14 @@
 }
 
 /* CONTEÚDO INTERNO */
-.modal-body {
+.modal-body-procidadania {
   display: flex;
   flex-direction: row;
   gap: 20px;
   align-items: flex-start;
 }
 
-.modal-body img {
+.modal-body-procidadania img {
   width: 500px;
   height: auto;
   border-radius: 8px;
@@ -92,19 +92,19 @@
 
 /* RESPONSIVO */
 @media (max-width: 768px) {
-  .container-modal {
+  .container-modal-procidadania {
     width: 100%;
   }
 
-  .modal-body {
+  .modal-body-procidadania {
     flex-direction: column;
   }
 
-  .modal-body img {
+  .modal-body-procidadania img {
     width: 100%;
   }
 
-  .modal-content {
+  .modal-content-procidadania {
     width: 95%;
     padding: 20px;
   }

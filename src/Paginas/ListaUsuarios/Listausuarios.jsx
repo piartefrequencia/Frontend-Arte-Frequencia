@@ -71,12 +71,9 @@ function ListaUsuarios() {
         )}
 
       </div>
-       <button className="botao-voltar" 
-      onClick={() => navigate("/")}>CLIQUE AQUI PARA SAIR DA PAGINA
-      </button>
+      
     </div>
 
-    
   );
 }
 

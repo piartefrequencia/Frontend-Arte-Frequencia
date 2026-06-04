@@ -1,7 +1,7 @@
 
 
 import React, { useState } from 'react';
-import './Modal.css';
+import './ModalProcidadania.css';
 
 const img1 = "/Assets/img/musucalizacaoinfantil.png";
 const img2 = "/Assets/img/percurssao.webp";
@@ -16,7 +16,7 @@ function ModalProcidadania() {
   const fecharModal = () => setModalAberto(null);
 
   return (
-    <div className="container-modal">
+    <div className="container-modal-procidadania">
       <h2>Nossos Projetos</h2>
       <ul className="lista">
         <li onClick={() => abrirModal('musica')}>🎵 Musicalização Infantil</li>
@@ -28,11 +28,11 @@ function ModalProcidadania() {
       </ul>
 
       {modalAberto === 'musica' && (
-        <div className="modal" onClick={fecharModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-procidadania" onClick={fecharModal}>
+          <div className="modal-content-procidadania" onClick={(e) => e.stopPropagation()}>
             <span className="close" onClick={fecharModal}>&times;</span>            
             	
-              <div className="modal-body">
+              <div className="modal-body-procidadania">
                <img src={img1} alt="imagem 3"/>
                 <div className="texto">
                 <h3>Musicalização Infantil</h3>
@@ -54,11 +54,11 @@ function ModalProcidadania() {
       )}
 
       {modalAberto === 'instrumental' && (
-        <div className="modal" onClick={fecharModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-procidadania" onClick={fecharModal}>
+          <div className="modal-content-procidadania" onClick={(e) => e.stopPropagation()}>
             <span className="close" onClick={fecharModal}>&times;</span>
 
-		<div className="modal-body">
+		<div className="modal-body-procidadania">
   <img src={img2} alt="imagem 3"/>
   <div className="texto">
 <h3>Pratica Instrumental</h3>
@@ -81,10 +81,10 @@ function ModalProcidadania() {
 
       
       {modalAberto === 'percurssao' && (
-        <div className="modal" onClick={fecharModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-procidadania" onClick={fecharModal}>
+          <div className="modal-content-procidadania" onClick={(e) => e.stopPropagation()}>
             <span className="close" onClick={fecharModal}>&times;</span>
-                  <div className="modal-body">
+                  <div className="modal-body-procidadania">
   <img src={img3} alt="imagem 3"/>
   <div className="texto">
 	<h3>Percussão Popular</h3>
@@ -109,10 +109,10 @@ function ModalProcidadania() {
 
       
       {modalAberto === 'danca' && (
-        <div className="modal" onClick={fecharModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-procidadania" onClick={fecharModal}>
+          <div className="modal-content-procidadania" onClick={(e) => e.stopPropagation()}>
             <span className="close" onClick={fecharModal}>&times;</span>
-            <div className="modal-body">
+            <div className="modal-body-procidadania">
   <img src={img4} alt="imagem 3"/>
   <div className="texto">
 	<h3>Danças e Teatro</h3>
@@ -139,11 +139,11 @@ function ModalProcidadania() {
 
 
         {modalAberto === 'banda' && (
-        <div className="modal" onClick={fecharModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-procidadania" onClick={fecharModal}>
+          <div className="modal-content-procidadania" onClick={(e) => e.stopPropagation()}>
             <span className="close" onClick={fecharModal}>&times;</span>
             
-		<div className="modal-body">
+		<div className="modal-body-procidadania">
   <img src={img6} alt="imagem 3"/>
   <div className="texto">
     <p className="texto-livro">
