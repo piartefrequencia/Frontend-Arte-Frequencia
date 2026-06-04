@@ -183,8 +183,6 @@ function ListaPublico () {
                   <h3>Informações do Aluno</h3>
                   <p><strong>Matrícula:</strong> {alunoSelecionadoModal.matricula}</p>
                   <p><strong>Nome:</strong> {alunoSelecionadoModal.nome}</p>
-                  <p><strong>CPF:</strong> {alunoSelecionadoModal.cpf}</p>
-                  <p><strong>RG:</strong> {alunoSelecionadoModal.rg}</p>
                   <p><strong>Data Nascimento:</strong> {alunoSelecionadoModal.dataNascimento}</p>
                   <p><strong>Idade:</strong> {alunoSelecionadoModal.idade}</p>
                   <p><strong>Filiação Mãe:</strong> {alunoSelecionadoModal.filiacaoMae}</p>

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import "./Frequencia.css";
-import ModalFrequencia from "../../Componentes/Modal/ModalFrequencia";
+import ModalFrequencia from "../../Componentes/ModalFrequencia/ModalFrequencia";
 import Api from "../../Servico/APIservico";
 
 function FrequenciaAPK() {

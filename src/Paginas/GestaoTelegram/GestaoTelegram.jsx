@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Api from "../../Servico/APIservico";
 import './GestaoTelegram.css';
-import { useNavigate } from "react-router-dom";
+;
 
 function GestaoTelegram() {
 
@@ -11,7 +11,7 @@ function GestaoTelegram() {
 
     const [paginaAtual, setPaginaAtual] = useState(1);
     const alunosPorPagina = 20;
-    const navigate = useNavigate();
+  
  
     const BOT_USERNAME = "pro_cid_frequencia_bot";
 
@@ -159,9 +159,6 @@ return (
                 </div>
             )}
 
-            <button className="botao-voltar-galeria" onClick={() => navigate("/")}>
-                SAIR DESSA PAGINA
-            </button>
         </div>
     );
 }

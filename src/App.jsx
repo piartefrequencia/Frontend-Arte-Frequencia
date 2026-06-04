@@ -13,14 +13,13 @@ import CabecalhoUsuario from '././Componentes/CabecalhoUsuario/CabecalhoUsuario'
 
 import Login from './Componentes/Login/Login';
 import Equipe from './Paginas/Equipe';
-import Galeria from './Paginas/Galeria';
 import Home from './Paginas/Home';
 import Missao from './Paginas/Missao';
 import Danca from './Paginas/Oficinas/Danca';
 import Instrumental from './Paginas/Oficinas/Instrumental';
 import Musicalizacao from './Paginas/Oficinas/Musicalizacao';
 import Percussao from './Paginas/Oficinas/Percussao';
-import Partituras from './Paginas/Galeria/Partituras';
+import Partituras from './Paginas/BibliotecaPartituras/Partituras';
 import ProCidadania from './Paginas/QuemSomos/ProCidadania';
 
 //  PAGINAS  PRIVADAS
@@ -28,10 +27,10 @@ import ProCidadania from './Paginas/QuemSomos/ProCidadania';
 import FormCadAluno from './Componentes/Formulario/FormCadAluno';
 import FormCadColaborador from './Componentes/Formulario/FormCadColaborador';
 import CadUser from './Componentes/Login/CadUser';
-import Telegram from './Componentes/Formulario/GestaoTelegram';
+import Telegram from './Paginas/GestaoTelegram/GestaoTelegram';
 
 
-import BibliotecaPartituras from './Paginas/Galeria/Biblioteca';
+import BibliotecaPartituras from './Paginas/BibliotecaPartituras/Biblioteca';
 import Frequencia from './Paginas/FrequenciaAPK/FrequenciaAPK';
 
 import Editaraluno from './Paginas/EditarAlunos/Editaraluno';
@@ -67,7 +66,6 @@ function App() {
 
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/galeria" element={<Galeria />} />
           <Route path="/nossos-colaboradores" element={<Equipe />} />
           <Route path="/missao" element={<Missao />} />
           <Route path="/musicalizacao" element={<Musicalizacao />} />

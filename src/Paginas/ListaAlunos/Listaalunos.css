@@ -40,20 +40,6 @@
  
 }
 
-/*.card-aluno h3 {
-  margin: 0 0 8px;
-  font-size: 25px;
-  color: #050202;
-}
-
-.card-aluno p {
-    
- color: #0c0505;
- font-size: 20px;
-}
-
-*/
-
 .card-aluno:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
@@ -269,6 +255,7 @@
   background-color: white;
   cursor: pointer;
   transition: all 0.2s;
+  color: rgb(8, 8, 8);
 }
 
 .paginacao button:hover {

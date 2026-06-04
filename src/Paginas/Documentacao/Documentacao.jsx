@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../Servico/APIservico";
 import "./Documentacao.css";
-import { useNavigate } from "react-router-dom";
 
 function Documentacao() {
   
@@ -18,7 +17,7 @@ function Documentacao() {
   const [alunoSelecionado, setAlunoSelecionado] = useState(null);
   const [crachaUrl, setCrachaUrl] = useState("");
   const [selecionados, setSelecionados] = useState([]);
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     const carregarAlunos = async () => {
@@ -224,9 +223,6 @@ function Documentacao() {
           </div>
         )}
 
-        <button className="btn-voltar" onClick={() => navigate("/")}>
-          Fechar
-        </button>
       </div>
 
       {modalOpen && alunoSelecionado && (

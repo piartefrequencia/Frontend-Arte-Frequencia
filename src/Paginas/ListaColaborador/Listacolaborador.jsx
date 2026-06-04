@@ -124,9 +124,6 @@ function ListaColaboradores() {
           </button>
         </div>
 
-        <button className="fechar" onClick={() => navigate("/")}>
-          Fechar
-        </button>
       </div>
 
     
