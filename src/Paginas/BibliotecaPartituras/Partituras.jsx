@@ -1,37 +1,49 @@
 
 
-
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../../Context/AuthContext';
 import Api from "../../Servico/APIservico";
 import './GaleriaPart.css';
 
-function Biblioteca() {
+function Partitura() {
+ 
+  const { isAuthenticated, loading } = useContext(AuthContext);
 
-  const navigate = useNavigate();
   const [arquivos, setArquivos] = useState([]);
-  const [busca] = useState('');
-  const [modal, setModal] = useState({ aberto: false, url: '', tipo: '' });
+  const [busca, setBusca] = useState('');
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const itensPorPagina = 12; 
+
+  const [modal, setModal] = useState({
+    aberto: false,
+    url: '',
+    tipo: ''
+  });
   const [blobUrl, setBlobUrl] = useState('');
 
-  // Carregar arquivos do backend
   useEffect(() => {
+    if (loading) return;
+
     const carregarArquivos = async () => {
       try {
         const response = await Api.get('/partitura');
+
         if (response.status === 200) {
           setArquivos(response.data);
         } else if (response.status === 204) {
           alert('Nenhum arquivo encontrado.');
-        } 
-          } catch (error) {
-            console.error(error);
-            alert('Erro ao carregar arquivos. ');
+        }
+      } catch (error) {
+        console.error(error);
+        alert(
+          'Erro ao carregar arquivos: ' +
+          (error.response?.data || error.message)
+        );
       }
     };
+
     carregarArquivos();
 
-    // Proteção contra print e copiar
     const handleKeyDown = (e) => {
       if (
         e.key === 'PrintScreen' ||
@@ -41,92 +53,122 @@ function Biblioteca() {
         alert('Ação desabilitada por segurança.');
       }
     };
+
     const handleContextMenu = (e) => e.preventDefault();
 
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('contextmenu', handleContextMenu);
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('contextmenu', handleContextMenu);
     };
-  }, []);
+  }, [loading]);
 
-  // Filtra arquivos
-  const arquivosFiltrados = arquivos.filter(arq =>
-    arq.nome.toLowerCase().includes(busca.toLowerCase())
-  );
+  useEffect(() => {
+    setPaginaAtual(1);
+  }, [busca]);
 
-const abrirModal = async (id, tipo) => {
-  try {
-   
-    const response = await Api.get(`/partitura/${id}/visualizar`, {
-      responseType: 'blob', 
-    });
+  const abrirModal = async (id, tipo) => {
+    if (!isAuthenticated) {
+      alert('O conteúdo das partituras é exclusivo para Alunos Matriculados e Professores da Associação Pró-Cidadania.');
+      return;
+    }
 
-
-    const url = window.URL.createObjectURL(new Blob([response.data], { type: tipo }));
-    
-    setBlobUrl(url);
-    setModal({ aberto: true, url: url, tipo: tipo });
-  } catch (error) {
-    console.error("Erro ao carregar visualização:", error);
-    alert("Erro ao carregar o arquivo. Verifique se você está logado.");
-  }
-};
-
-
-const fecharModal = () => {
-  if (blobUrl) {
-    window.URL.revokeObjectURL(blobUrl); 
-  }
-  setModal({ aberto: false, url: '', tipo: '' });
-  setBlobUrl('');
-};
-
-// --- FUNÇÃO DE DOWNLOAD ---
-  const handleDownload = async (id, nomeArquivo) => {
     try {
-      // 1. Faz a requisição ao backend esperando um 'blob' (binário do arquivo)
-      const response = await Api.get(`/partitura/${id}/download`, {
-        responseType: 'blob', 
+      const response = await Api.get(`/partitura/${id}/visualizar`, {
+        responseType: 'blob',
       });
 
-      // 2. Cria uma URL temporária na memória do navegador para esse binário
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      
-      // 3. Cria um elemento "<a>" (link) invisível para disparar o download
-      const link = document.createElement('a');
-      link.href = url;
-      
-      // 4. Define o nome que o arquivo terá ao ser salvo no PC do usuário
-      link.setAttribute('download', nomeArquivo); 
-      
-      // 5. Simula o clique e remove o elemento em seguida
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
+      const url = window.URL.createObjectURL(
+        new Blob([response.data], { type: tipo })
+      );
 
-      // 6. Limpa a memória liberando a URL criada
-      window.URL.revokeObjectURL(url);
+      setBlobUrl(url);
+      setModal({
+        aberto: true,
+        url,
+        tipo,
+      });
     } catch (error) {
-      console.error("Erro ao baixar:", error);
-      alert("Não foi possível baixar o arquivo.");
+      console.error(error);
+      alert('Erro ao carregar arquivo.');
     }
   };
 
+  const baixarArquivo = async (id, nomeArquivo) => {
+    if (!isAuthenticated) {
+      alert('O conteúdo das partituras é exclusivo para Alunos Matriculados e Professores da Associação Pró-Cidadania.');
+      return;
+    }
+
+    try {
+      const response = await Api.get(`/partitura/${id}/download`, {
+        responseType: 'blob',
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = nomeArquivo;
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error(error);
+      alert('Erro ao baixar arquivo.');
+    }
+  };
+
+  const fecharModal = () => {
+    if (blobUrl) {
+      window.URL.revokeObjectURL(blobUrl);
+    }
+    setModal({ aberto: false, url: '', tipo: '' });
+    setBlobUrl('');
+  };
+
+
+  const arquivosFiltrados = arquivos.filter((arq) =>
+    arq.nome.toLowerCase().includes(busca.toLowerCase())
+  );
+
+  const indiceUltimoItem = paginaAtual * itensPorPagina;
+  const indicePrimeiroItem = indiceUltimoItem - itensPorPagina;
+  const itensDaPaginaAtual = arquivosFiltrados.slice(indicePrimeiroItem, indiceUltimoItem);
+  const totalPaginas = Math.ceil(arquivosFiltrados.length / itensPorPagina);
+
+  if (loading) {
+    return <div className="loading-container">Carregando...</div>;
+  }
 
   return (
     <div className="galeria-container">
       <h2>Partituras Banda Heitor Villa Lobos</h2>
 
+      <input
+        type="text"
+        placeholder="Pesquisar..."
+        value={busca}
+        onChange={(e) => setBusca(e.target.value)}
+        className="campo-busca"
+      />
 
       <div className="lista-arquivos">
-        {arquivosFiltrados.length > 0 ? (
-          arquivosFiltrados.map((arq) => {
+        {itensDaPaginaAtual.length > 0 ? (
+          itensDaPaginaAtual.map((arq) => {
             const ext = arq.nome.split('.').pop().toLowerCase();
             let icone = '📄';
-            if (ext === 'pdf') icone = '📕';
-            else if (['jpg', 'jpeg', 'png'].includes(ext)) icone = '🖼️';
+
+            if (ext === 'pdf') {
+              icone = '📕';
+            } else if (['jpg', 'jpeg', 'png'].includes(ext)) {
+              icone = '🖼️';
+            }
 
             return (
               <div key={arq.id} className="arquivo">
@@ -138,12 +180,12 @@ const fecharModal = () => {
                   {icone} {arq.nome}
                 </p>
 
-                <button 
-                  className="btn-download" 
-                    onClick={() => handleDownload(arq.id, arq.nome)} >
-                  📥 Download
+                <button
+                  className="btn-download"
+                  onClick={() => baixarArquivo(arq.id, arq.nome)}
+                >
+                  📥 Download de Partitura
                 </button>
-               
               </div>
             );
           })
@@ -151,6 +193,31 @@ const fecharModal = () => {
           <p>Nenhum arquivo encontrado.</p>
         )}
       </div>
+
+
+      {totalPaginas > 1 && (
+        <div className="paginacao-container-partituras">
+          <button 
+            className="btn-paginacao-partituras" 
+            onClick={() => setPaginaAtual(prev => Math.max(prev - 1, 1))}
+            disabled={paginaAtual === 1}
+          >
+            Anterior
+          </button>
+          
+          <span className="info-paginacao-partituras">
+            Página <strong>{paginaAtual}</strong> de {totalPaginas}
+          </span>
+
+          <button 
+            className="btn-paginacao-partituras" 
+            onClick={() => setPaginaAtual(prev => Math.min(prev + 1, totalPaginas))}
+            disabled={paginaAtual === totalPaginas}
+          >
+            Próxima
+          </button>
+        </div>
+      )}
 
       {modal.aberto && (
         <div className="modal-overlay" onClick={fecharModal}>
@@ -166,13 +233,10 @@ const fecharModal = () => {
       )}
 
       <div className="fechar-container">
-        <button className="btn-voltar" onClick={() => navigate("/")}>FECHAR</button>
+       
       </div>
     </div>
   );
 }
 
-export default Biblioteca;
-
-
-
+export default Partitura;
