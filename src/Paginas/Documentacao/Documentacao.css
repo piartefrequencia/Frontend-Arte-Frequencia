@@ -1,50 +1,91 @@
+/* ==========================================================================
+   CONFIGURAÇÕES GERAIS E CONTAINER
+   ========================================================================== */
 .doc-container {
   padding: 20px;
   max-width: 1100px;
-  margin: auto;
-  font-family: Arial;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
   background: black;
   border-radius: 10px;
-  margin-top: 20px;
+  box-sizing: border-box;
 }
 
 /* HEADER */
 .doc-header {
+  padding: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
   text-align: center;
-  background:   #b89720;
+  background: #b89720;
 }
 
 .doc-header h2 {
-  font-size: clamp(24px, 5vw, 50px);
+  /* Mínimo: 28px | Fluido: 5vw (5% da largura da tela) | Máximo: 54px */
+  font-size: clamp(32px, 6vw, 62px); 
   color: rgb(253, 252, 252);
+  margin: 0 0 12px 0;
+  font-weight: bold; /* Garante que o título tenha peso visual */
 }
 
 .doc-header p {
-  font-size: clamp(16px, 3vw, 30px);
+  /* Mínimo: 16px | Fluido: 2.5vw | Máximo: 26px */
+  font-size: clamp(20px, 3.5vw, 30px); 
   color: #ffffff;
+  margin: 0;
+  opacity: 0.95; /* Melhora a leitura deixando o texto levemente mais nítido */
 }
 
-/* CARD */
+/* BARRA DE PESQUISA */
+.barra-pesquisa {
+  margin-bottom: 20px;
+}
+
+.barra-pesquisa input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* AÇÕES DO TOPO (BOTÕES SUPERIORES) */
+.acoes-topo {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* CARD DA TABELA */
 .tabela-card {
   background: white;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   padding: 15px;
   overflow-x: auto; 
 }
 
-/* TABELA */
+/* ==========================================================================
+   ESTILIZAÇÃO DA TABELA (DESKTOP)
+   ========================================================================== */
 .tabela-alunos {
   width: 100%;
   border-collapse: collapse;
-  min-width: 700px; 
+}
+
+.tabela-alunos th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  text-align: left;
 }
 
 .tabela-alunos th,
 .tabela-alunos td {
-  padding: 10px;
+  padding: 12px 10px;
   border-bottom: 1px solid #eee;
   font-size: 14px;
 }
@@ -53,15 +94,18 @@
   background: #f8f8f8;
 }
 
-/* BOTÕES */
+/* ==========================================================================
+   BOTÕES
+   ========================================================================== */
 .btn-action {
   border: 1px solid #4a90e2;
   background: none;
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
   color: #4a90e2;
   font-size: 14px;
+  transition: all 0.2s ease;
 }
 
 .btn-action:hover {
@@ -73,11 +117,14 @@
   background: #4a90e2;
   color: white;
   border: none;
-  padding: 10px 16px;
+  padding: 12px 20px;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
   width: 100%;
   max-width: 250px;
+  transition: all 0.2s ease;
 }
 
 .btn-filled:hover {
@@ -87,45 +134,46 @@
 
 .btn-voltar2 {
   margin-top: 15px;
-  padding: 10px 16px;
+  padding: 12px 20px;
   border: none;
   background: #444;
   color: white;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
   width: 100%;
   max-width: 250px;
+  transition: all 0.2s ease;
 }
+
 .btn-voltar2:hover {
   background: #fa0909;
   color: black;
 }
 
-/* TOPO */
-.acoes-topo {
-  margin-bottom: 15px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-/* MODAL */
+/* ==========================================================================
+   MODAL
+   ========================================================================== */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 15px;
+  z-index: 1000;
 }
 
 .modal-content1 {
   background: white;
-  padding: 20px;
+  padding: 24px;
   border-radius: 12px;
   max-width: 500px;
   width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
 .modal-header {
@@ -138,8 +186,9 @@
 .btn-close {
   border: none;
   background: none;
-  font-size: 22px;
+  font-size: 24px;
   cursor: pointer;
+  color: #666;
 }
 
 .modal-body {
@@ -157,54 +206,132 @@
   max-width: 100%;
   width: 300px;
   border-radius: 8px;
+  height: auto;
 }
 
-/* PESQUISA */
-.barra-pesquisa {
-  margin-bottom: 20px;
-}
-
-.barra-pesquisa input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-/* 📱 RESPONSIVIDADE EXTRA */
+/* ==========================================================================
+   📱 DISPOSITIVOS IPADS / TABLETS (Abaixo de 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
   .doc-container {
-    padding: 10px;
+    padding: 12px;
+    margin-top: 10px;
   }
 
-  .tabela-alunos th,
+  /* Transforma a estrutura da tabela em blocos flexíveis/cards */
+  .tabela-alunos, 
+  .tabela-alunos thead, 
+  .tabela-alunos tbody, 
+  .tabela-alunos th, 
+  .tabela-alunos td, 
+  .tabela-alunos tr {
+    display: block;
+  }
+
+  .tabela-alunos thead {
+    display: none; /* Oculta a linha do cabeçalho fixo */
+  }
+
+  .tabela-alunos tr {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fafafa;
+  }
+
   .tabela-alunos td {
-    padding: 8px;
-    font-size: 12px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%; /* Espaço na esquerda para os títulos fixos do CSS */
+    text-align: right; /* Conteúdo dinâmico alinhado à direita */
+    font-size: 13px;
+    min-height: 35px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .tabela-alunos td:last-child {
+    border-bottom: none;
+    justify-content: center;
+    padding-left: 10px;
+    padding-top: 15px;
+  }
+
+  /* 🔥 MÁGICA DO CSS PURO:
+     Injeta os títulos baseado na ordem exata das suas colunas originais!
+  */
+  .tabela-alunos td::before {
+    position: absolute;
+    left: 10px;
+    width: 45%;
+    font-weight: bold;
+    text-align: left;
+    color: #555;
+  }
+
+  /* Define o texto da 1ª coluna */
+  .tabela-alunos td:nth-of-type(1)::before { 
+    content: "Nome"; 
+  }
+  
+  /* Define o texto da 2ª coluna */
+  .tabela-alunos td:nth-of-type(2)::before { 
+    content: "Matrícula"; 
+  }
+  
+  /* Define o texto da 3ª coluna (Ações) */
+  .tabela-alunos td:nth-of-type(3)::before { 
+    content: "Ações"; 
+  }
+
+  .acoes-topo {
+    width: 100%;
+  }
+
+  .acoes-topo .btn-filled {
+    max-width: 100%;
+    flex-grow: 1;
+  }
+
+  .modal-content1 {
+    padding: 20px;
+  }
+}
+
+/* ==========================================================================
+   📱 SMARTPHONES PEQUENOS (Abaixo de 480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .doc-header {
+    padding: 15px 10px;
+  }
+
+  .tabela-alunos td {
+    padding-left: 40%;
+  }
+  
+  /* Empilha os botões internos caso venha a ter mais de um no futuro */
+  .tabela-alunos td:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
   }
 
   .btn-action {
-    font-size: 12px;
-    padding: 5px 8px;
-  }
-
-  .modal-content {
-    padding: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .doc-header h2 {
-    font-size: 22px;
-  }
-
-  .doc-header p {
-    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    text-align: center;
   }
 
   .btn-filled,
-  .btn-voltar {
+  .btn-voltar2 {
+    max-width: 100%;
     width: 100%;
   }
 }

@@ -184,3 +184,76 @@
     }
   }
   
+    
+/* ESTILOS DO SISTEMA DE PAGINAÇÃO (RESPONSIVO) */
+  
+.paginacao-container-partituras {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 30px 0;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn-paginacao-partituras {
+  background-color: #b89720;
+  color: white;
+  border: none;
+  padding: 10px 20px; 
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  user-select: none; 
+}
+
+.btn-paginacao-partituras:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.btn-paginacao-partituras:active:not(:disabled) {
+  transform: scale(0.98); 
+}
+
+.btn-paginacao-partituras:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.info-paginacao-partituras {
+  font-size: 15px;
+  color: red;  
+
+  white-space: nowrap; 
+}
+
+.info-paginacao-partituras strong {
+  color: white;
+}
+
+
+@media (max-width: 480px) {
+  .paginacao-container-partituras {
+    gap: 8px; 
+    margin: 20px 0;
+  }
+
+  .btn-paginacao-partituras {
+    padding: 12px 16px; 
+    font-size: 13px;
+    flex: 1; 
+    max-width: 100px;
+    text-align: center;
+  }
+
+  .info-paginacao-partituras {
+    font-size: 13px; 
+  }
+}
+  
