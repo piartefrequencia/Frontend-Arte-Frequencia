@@ -1,16 +1,12 @@
 import React, { Suspense } from 'react';
-import MenuLateral from '../../Componentes/MenuLateral';
 import Rodape from '../../Componentes/Rodape';
 import Carousel from '../../Componentes/Carousel';
-
-
 
 
 function Home() {
   return (
     <><div className="home-container">
-      <MenuLateral />
-
+  
       <main className="home-heading">
         
         <h2>

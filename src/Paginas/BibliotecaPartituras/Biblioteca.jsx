@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Api from "../../Servico/APIservico";
@@ -9,6 +7,11 @@ function Biblioteca() {
   const navigate = useNavigate();
   const [arquivos, setArquivos] = useState([]);
   const [busca, setBusca] = useState('');
+  
+  // Estados adicionados para gerenciar a paginação
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const itensPorPagina = 12;
+
   const [modal, setModal] = useState({ aberto: false, url: '', tipo: '' });
   const [blobUrl, setBlobUrl] = useState('');
 
@@ -40,6 +43,11 @@ function Biblioteca() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Reseta para a primeira página sempre que uma nova busca for feita
+  useEffect(() => {
+    setPaginaAtual(1);
+  }, [busca]);
+
   // Upload de arquivos
   const handleUpload = async (e) => {
     const files = Array.from(e.target.files);
@@ -64,24 +72,21 @@ function Biblioteca() {
     }
   };
 
-  // --- FUNÇÃO DE DOWNLOAD CORRIGIDA ---
+  // --- FUNÇÃO DE DOWNLOAD ---
   const handleDownload = async (id, nomeArquivo) => {
     try {
       const response = await Api.get(`/partitura/${id}/download`, {
-        responseType: 'blob', // Essencial para arquivos
+        responseType: 'blob',
       });
 
-      // Cria a URL do arquivo na memória do navegador
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
       
-      // Força o download com o nome original
       link.setAttribute('download', nomeArquivo); 
       document.body.appendChild(link);
       link.click();
 
-      // Limpa a memória
       link.parentNode.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (error) {
@@ -114,31 +119,45 @@ function Biblioteca() {
     try {
       await Api.delete(`/partitura/${id}`);
       setArquivos(prev => prev.filter(arq => arq.id !== id));
+      
+      // Ajuste para não ficar preso em uma página vazia caso exclua o último item dela
+      const totalItensRestantes = arquivos.length - 1;
+      const novoTotalPaginas = Math.ceil(totalItensRestantes / itensPorPagina);
+      if (paginaAtual > novoTotalPaginas && novoTotalPaginas > 0) {
+        setPaginaAtual(novoTotalPaginas);
+      }
     } catch (error) {
       alert('Erro ao excluir.');
     }
   };
 
+  // 1. Filtro inicial baseado no termo de busca
   const arquivosFiltrados = arquivos.filter(arq =>
     arq.nome.toLowerCase().includes(busca.toLowerCase())
   );
+
+  // 2. Cálculos e fatiamento dos dados para exibir apenas 12 por vez
+  const indiceUltimoItem = paginaAtual * itensPorPagina;
+  const indicePrimeiroItem = indiceUltimoItem - itensPorPagina;
+  const itensDaPaginaAtual = arquivosFiltrados.slice(indicePrimeiroItem, indiceUltimoItem);
+  const totalPaginas = Math.ceil(arquivosFiltrados.length / itensPorPagina);
 
   return (
     <div className="galeria-container">
       <h2>Biblioteca de Partituras</h2>
 
-       <div className="upload-area">
-          <label className="botao-upload">
-            Upload de Arquivos
-            <input
-              type="file"
-              multiple
-              accept=".pdf, .png, .jpg, .jpeg"
-              onChange={handleUpload}
-              hidden
-            />
-          </label>
-        </div>
+      <div className="upload-area">
+        <label className="botao-upload">
+          Upload de Arquivos
+          <input
+            type="file"
+            multiple
+            accept=".pdf, .png, .jpg, .jpeg"
+            onChange={handleUpload}
+            hidden
+          />
+        </label>
+      </div>
 
       <input
         type="text"
@@ -149,32 +168,61 @@ function Biblioteca() {
       />
 
       <div className="lista-arquivos">
-        {arquivosFiltrados.map((arq) => {
-          const ext = arq.nome.split('.').pop().toLowerCase();
-          const icone = ext === 'pdf' ? '📕' : '🖼️';
+        {itensDaPaginaAtual.length > 0 ? (
+          itensDaPaginaAtual.map((arq) => {
+            const ext = arq.nome.split('.').pop().toLowerCase();
+            const icone = ext === 'pdf' ? '📕' : '🖼️';
 
-          return (
-            <div key={arq.id} className="arquivo">
-              <p onClick={() => abrirModal(arq.id, arq.tipo)} style={{ cursor: 'pointer' }}>
-                {icone} {arq.nome}
-              </p>
+            return (
+              <div key={arq.id} className="arquivo">
+                <p onClick={() => abrirModal(arq.id, arq.tipo)} style={{ cursor: 'pointer' }}>
+                  {icone} {arq.nome}
+                </p>
 
-              <div className="acoes">
-                <button 
-                  className="btn-download" 
-                  onClick={() => handleDownload(arq.id, arq.nome)}
-                >
-                  📥 Download
-                </button>
+                <div className="acoes">
+                  <button 
+                    className="btn-download" 
+                    onClick={() => handleDownload(arq.id, arq.nome)}
+                  >
+                    📥 Download
+                  </button>
 
-                <button className="btn-excluir" onClick={() => handleExcluir(arq.id, arq.nome)}>
-                  🗑️ Excluir
-                </button>
+                  <button className="btn-excluir" onClick={() => handleExcluir(arq.id, arq.nome)}>
+                    🗑️ Excluir
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <p>Nenhum arquivo encontrado.</p>
+        )}
       </div>
+
+      {/* BLOCO DA PAGINAÇÃO IDENTICO AO OUTRO COMPONENTE */}
+      {totalPaginas > 1 && (
+        <div className="paginacao-container">
+          <button 
+            className="btn-paginacao" 
+            onClick={() => setPaginaAtual(prev => Math.max(prev - 1, 1))}
+            disabled={paginaAtual === 1}
+          >
+            Anterior
+          </button>
+          
+          <span className="info-paginacao">
+            Página <strong>{paginaAtual}</strong> de {totalPaginas}
+          </span>
+
+          <button 
+            className="btn-paginacao" 
+            onClick={() => setPaginaAtual(prev => Math.min(prev + 1, totalPaginas))}
+            disabled={paginaAtual === totalPaginas}
+          >
+            Próxima
+          </button>
+        </div>
+      )}
 
       {modal.aberto && (
         <div className="modal-overlay" onClick={fecharModal}>
@@ -188,13 +236,12 @@ function Biblioteca() {
           </div>
         </div>
       )}
-            <div className="fechar-container">
-              <button className="btn-voltar" onClick={() => navigate("/")}>FECHAR</button>
-            </div>
+      
+      <div className="fechar-container">
+        <button className="btn-voltar" onClick={() => navigate("/")}>FECHAR</button>
+      </div>
     </div>
   );
 }
 
 export default Biblioteca;
-
-

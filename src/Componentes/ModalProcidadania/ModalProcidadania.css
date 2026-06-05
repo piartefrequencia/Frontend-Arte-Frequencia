@@ -2,12 +2,12 @@
   padding: 20px;
   font-family: Arial, sans-serif;
   background: rgb(20, 19, 19);
-  width: 17%;
-  margin-left: 0;
-  margin-top: 10px;
+  width: 280px; /* Altere de 17% para uma largura fixa estável no desktop */
   border-radius: 12px;
   box-shadow: 0 0 20px #000;
+  box-sizing: border-box;
 }
+
 
 .container-modal-procidadania h2 {
   color: #b89720;
@@ -90,6 +90,12 @@
   flex: 1;
 }
 
+.texto-livro-modal{
+
+color: #000;
+
+}
+
 /* RESPONSIVO */
 @media (max-width: 768px) {
   .container-modal-procidadania {
@@ -107,5 +113,12 @@
   .modal-content-procidadania {
     width: 95%;
     padding: 20px;
+  }
+}
+
+
+@media (max-width: 992px) {
+  .container-modal-procidadania {
+    width: 100%; /* No mobile ele estica para preencher a tela acima do histórico */
   }
 }
