@@ -37,7 +37,7 @@ function ModalProcidadania() {
                 <div className="texto">
                 <h3>Musicalização Infantil</h3>
         
-        <p className="texto-livro">
+        <p className="texto-livro-modal">
               O Projeto Música, Dança e Teatro Instrumentos de Cidadania 
         tem como objetivo promover inclusão social e cidadania, 
         a crianças e adolescentes oriundo de couminidades carentes e em 
@@ -63,7 +63,7 @@ function ModalProcidadania() {
   <div className="texto">
 <h3>Pratica Instrumental</h3>
         
-        <p className="texto-livro">
+        <p className="texto-livro-modal">
               O Projeto Música, Dança e Teatro Instrumentos de Cidadania 
         tem como objetivo promover inclusão social e cidadania, 
         a crianças e adolescentes oriundo de couminidades carentes e em 
@@ -88,7 +88,7 @@ function ModalProcidadania() {
   <img src={img3} alt="imagem 3"/>
   <div className="texto">
 	<h3>Percussão Popular</h3>
-            <p className="texto-livro">
+            <p className="texto-livro-modal">
                     A Associação pro-cidadania, Agencia e promove de artistas, 
               músicos, grupos culturais de Igarassu, formados por ex-alunos 
               ou integrados por eles, propiciando visibilidade, 
@@ -116,7 +116,7 @@ function ModalProcidadania() {
   <img src={img4} alt="imagem 3"/>
   <div className="texto">
 	<h3>Danças e Teatro</h3>
-            <p className="texto-livro">
+            <p className="texto-livro-modal">
                 Projeto que visa o aproveitamento e valorização de jovens, 
                 em situação de carência, na faixa etária de 08 a 17 anos, 
                 moradores de Igarassu, priorizando alunos de escolas públicas. 
@@ -146,7 +146,7 @@ function ModalProcidadania() {
 		<div className="modal-body-procidadania">
   <img src={img6} alt="imagem 3"/>
   <div className="texto">
-    <p className="texto-livro">
+    <p className="texto-livro-modal">
         Banda Marcial localizada na cidade de Igarassu, estado de Pernambuco, 
       rasil. Com uma Formação instrumental baseada em metais e percussão, 
       contando com um contigente médio de 60 jovens, na faixa etária entre 10 e 16 anos 
