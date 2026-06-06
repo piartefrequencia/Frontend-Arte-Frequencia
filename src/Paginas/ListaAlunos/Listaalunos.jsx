@@ -1,10 +1,16 @@
-
 import React, { useEffect, useState } from "react";
 import "./Listaalunos.css";
 import { useNavigate } from "react-router-dom";
 
 import Api from "../../Servico/APIservico";
 
+// ✅ Adicionado apenas o mapa para converter os nomes técnicos para os bonitos
+const nomesOficinas = {
+  musicalizacao: "Musicalização",
+  praticaInstrumental: "Prática Instrumental",
+  danca: "Dança",
+  percussaoPopular: "Percussão Popular",
+};
 
 function ListaAlunos() {
   const [alunos, setAlunos] = useState([]);
@@ -27,7 +33,17 @@ function ListaAlunos() {
         const alunosFormatados = response.data.map((aluno) => ({
           ...aluno,
           oficina: aluno.oficinas
-            ? Object.keys(JSON.parse(aluno.oficinas)).join(", ")
+            ? (() => {
+                try {
+                  const oficinasObj = JSON.parse(aluno.oficinas);
+                  return Object.entries(oficinasObj)
+                    .filter(([_, valor]) => valor === true) // ✅ Filtra apenas o que for true
+                    .map(([chave]) => nomesOficinas[chave] || chave) // ✅ Converte para o nome bonito
+                    .join(", ");
+                } catch {
+                  return "";
+                }
+              })()
             : "",
         }));
         setAlunos(alunosFormatados);

@@ -1,9 +1,15 @@
-
 import React, { useEffect, useState } from "react";
 import "./Listaalunos.css";
 
 import Api from "../../Servico/APIservico";
 
+// ✅ Mapa das oficinas adicionado com segurança fora do componente
+const nomesOficinas = {
+  musicalizacao: "Musicalização",
+  praticaInstrumental: "Prática Instrumental",
+  danca: "Dança",
+  percussaoPopular: "Percussão Popular",
+};
 
 function ListaPublico () {
 
@@ -19,6 +25,7 @@ function ListaPublico () {
       }, [alunoSelecionadoModal]);
     
       
+      // ✅ Atualizado com segurança apenas o tratamento das oficinas
       useEffect(() => {
         async function getAlunos() {
           try {
@@ -26,7 +33,17 @@ function ListaPublico () {
             const alunosFormatados = response.data.map((aluno) => ({
               ...aluno,
               oficina: aluno.oficinas
-                ? Object.keys(JSON.parse(aluno.oficinas)).join(", ")
+                ? (() => {
+                    try {
+                      const oficinasObj = JSON.parse(aluno.oficinas);
+                      return Object.entries(oficinasObj)
+                        .filter(([_, valor]) => valor === true)
+                        .map(([chave]) => nomesOficinas[chave] || chave)
+                        .join(", ");
+                    } catch {
+                      return "";
+                    }
+                  })()
                 : "",
             }));
             setAlunos(alunosFormatados);
@@ -39,7 +56,7 @@ function ListaPublico () {
       }, []);
     
     
-      const oficinas = ["Todas", ...new Set(alunos.map((aluno) => aluno.oficina))];
+      const oficinas = ["Todas", ...new Set(alunos.map((aluno) => aluno.oficina))].filter(Boolean);
     
       const alunosFiltrados =
         oficinaSelecionada === "Todas"
@@ -229,6 +246,5 @@ function ListaPublico () {
     );
     
 }
-    
 
 export default ListaPublico;
