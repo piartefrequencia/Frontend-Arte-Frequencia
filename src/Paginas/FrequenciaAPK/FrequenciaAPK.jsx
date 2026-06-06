@@ -1,8 +1,14 @@
-
 import { useState, useEffect } from "react";
 import "./Frequencia.css";
 import ModalFrequencia from "../../Componentes/ModalFrequencia/ModalFrequencia";
 import Api from "../../Servico/APIservico";
+
+const nomesOficinas = {
+  musicalizacao: "Musicalização",
+  praticaInstrumental: "Prática Instrumental",
+  danca: "Dança",
+  percussaoPopular: "Percussão Popular",
+};
 
 function FrequenciaAPK() {
   const [alunos, setAlunos] = useState([]);
@@ -35,10 +41,7 @@ function FrequenciaAPK() {
     carregarAlunos();
   }, []);
 
-
   function abrirModal(aluno) {
-    console.log("Abrindo modal");
-    console.log(aluno);
     setAlunoSelecionado(aluno);
     setModalOpen(true);
   }
@@ -54,16 +57,14 @@ function FrequenciaAPK() {
         obterOficinasArray(aluno.oficinas)
       )
     ),
-  ].sort((a, b) =>
-    a.localeCompare(b, "pt-BR", {
-      sensitivity: "base",
-    })
-  );
+  ].sort((a, b) => {
+    const nomeA = nomesOficinas[a] || a;
+    const nomeB = nomesOficinas[b] || b;
+    return nomeA.localeCompare(nomeB, "pt-BR", { sensitivity: "base" });
+  });
 
   const alunosFiltrados = alunos.filter((aluno) => {
-    const oficinasAluno = obterOficinasArray(
-      aluno.oficinas
-    );
+    const oficinasAluno = obterOficinasArray(aluno.oficinas);
 
     const passaOficina =
       !filtroOficina ||
@@ -81,17 +82,31 @@ function FrequenciaAPK() {
     alunosFiltrados.length / ITENS_POR_PAGINA
   );
 
-  const indiceInicial =
-    (paginaAtual - 1) * ITENS_POR_PAGINA;
+  const indiceInicial = (paginaAtual - 1) * ITENS_POR_PAGINA;
+  const indiceFinal = indiceInicial + ITENS_POR_PAGINA;
+  const alunosPaginados = alunosFiltrados.slice(indiceInicial, indiceFinal);
 
-  const indiceFinal =
-    indiceInicial + ITENS_POR_PAGINA;
+  function renderizarBadgesOficinas(oficinasRaw) {
+    const listaChaves = obterOficinasArray(oficinasRaw);
+    
+    if (listaChaves.length === 0) return <span className="sem-oficina">-</span>;
 
-  const alunosPaginados =
-    alunosFiltrados.slice(
-      indiceInicial,
-      indiceFinal
+    return (
+      <div className="oficinas-badges-container">
+        {listaChaves.map((chave) => {
+          
+          const nomeAmigavel = nomesOficinas[chave] || chave;
+          const classeFormatada = `badge-oficina badge-${chave}`;
+          
+          return (
+            <span key={chave} className={classeFormatada}>
+              {nomeAmigavel}
+            </span>
+          );
+        })}
+      </div>
     );
+  }
 
   return (
     <div className="container-frequencia">
@@ -119,16 +134,10 @@ function FrequenciaAPK() {
             setPaginaAtual(1);
           }}
         >
-          <option value="">
-            Todas as Oficinas
-          </option>
-
-          {oficinasDisponiveis.map((oficina) => (
-            <option
-              key={oficina}
-              value={oficina}
-            >
-              {oficina}
+          <option value="">Todas as Oficinas</option>
+          {oficinasDisponiveis.map((oficinaChave) => (
+            <option key={oficinaChave} value={oficinaChave}>
+              {nomesOficinas[oficinaChave] || oficinaChave}
             </option>
           ))}
         </select>
@@ -155,16 +164,13 @@ function FrequenciaAPK() {
                     <td>{aluno.matricula}</td>
                     <td>{aluno.nome}</td>
                     <td>
-                      {formatarOficinas(
-                        aluno.oficinas
-                      )}
+                      {/* Mudança aqui: renderiza os componentes estilizados */}
+                      {renderizarBadgesOficinas(aluno.oficinas)}
                     </td>
                     <td>
                       <button
                         className="btn-frequencia"
-                        onClick={() =>
-                          abrirModal(aluno)
-                        }
+                        onClick={() => abrirModal(aluno)}
                       >
                         Ver Frequência
                       </button>
@@ -193,29 +199,18 @@ function FrequenciaAPK() {
         <div className="paginacao">
           <button
             disabled={paginaAtual === 1}
-            onClick={() =>
-              setPaginaAtual(
-                paginaAtual - 1
-              )
-            }
+            onClick={() => setPaginaAtual(paginaAtual - 1)}
           >
             Anterior
           </button>
 
           <span>
-            Página {paginaAtual} de{" "}
-            {totalPaginas}
+            Página {paginaAtual} de {totalPaginas}
           </span>
 
           <button
-            disabled={
-              paginaAtual === totalPaginas
-            }
-            onClick={() =>
-              setPaginaAtual(
-                paginaAtual + 1
-              )
-            }
+            disabled={paginaAtual === totalPaginas}
+            onClick={() => setPaginaAtual(paginaAtual + 1)}
           >
             Próxima
           </button>
@@ -230,17 +225,6 @@ function FrequenciaAPK() {
       )}
     </div>
   );
-}
-
-function formatarOficinas(oficinas) {
-  if (!oficinas) return "";
-
-  try {
-    const oficinasObj = JSON.parse(oficinas);
-    return Object.keys(oficinasObj).join(", ");
-  } catch {
-    return oficinas;
-  }
 }
 
 function obterOficinasArray(oficinas) {
@@ -258,3 +242,4 @@ function obterOficinasArray(oficinas) {
 }
 
 export default FrequenciaAPK;
+
