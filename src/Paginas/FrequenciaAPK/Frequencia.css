@@ -96,7 +96,6 @@
     background:  rgb(81, 243, 32);
 }
 
-/* Scrollbar */
 .table-responsive::-webkit-scrollbar {
     height: 8px;
 }

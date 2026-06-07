@@ -1,48 +1,97 @@
-
-
 import axios from "axios";
 import { triggerLogout } from "./authService";
 
 const api = axios.create({
-  baseURL:"https://apiartefrequencia.onrender.com/api/artefrequencia",
+  baseURL: "https://apiartefrequencia.onrender.com/api/artefrequencia",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-//  INTERCEPTA REQUEST → envia o token
+let isRefreshing = false;
+
 api.interceptors.request.use(
   (config) => {
     const token = sessionStorage.getItem("token");
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error) => Promise.reject(error)
 );
 
-// INTERCEPTA RESPONSE → token expirado
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response && error.response.status === 401) {
-      
-      sessionStorage.removeItem("token");  
-    }
-    return Promise.reject(error);
-  }
-);
 
-  // REMOVE O USUÁRIO DO CABEÇALHO
+  async (error) => {
+    const originalRequest = error.config;
 
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-     alert("Sua sessão expirou. Faça login novamente.");
+    if (
+      error.response?.status === 401 &&
+      !originalRequest?._retry
+    ) {
+      originalRequest._retry = true;
 
-      triggerLogout(); 
+      const perfil =
+        sessionStorage.getItem("perfil");
+
+      const refreshToken =
+        sessionStorage.getItem("refreshToken");
+
+      const podeRenovar =
+        perfil === "ADMIN" ||
+        perfil === "COLAB";
+
+      if (
+        podeRenovar &&
+        refreshToken &&
+        !isRefreshing
+      ) {
+        try {
+          isRefreshing = true;
+
+          const response = await axios.post(
+            "https://apiartefrequencia.onrender.com/api/artefrequencia/auth/refresh",
+            {
+              refreshToken,
+            }
+          );
+
+          const novoToken =
+            response.data.token;
+
+          sessionStorage.setItem(
+            "token",
+            novoToken
+          );
+
+          api.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${novoToken}`;
+
+          originalRequest.headers.Authorization =
+            `Bearer ${novoToken}`;
+
+          isRefreshing = false;
+
+          return api(originalRequest);
+
+        } catch (err) {
+
+          isRefreshing = false;
+
+          triggerLogout();
+
+          return Promise.reject(err);
+        }
+      }
+
+      alert("Sua sessão expirou. Faça login novamente.");
+
+      triggerLogout();
     }
 
     return Promise.reject(error);
@@ -50,5 +99,3 @@ api.interceptors.response.use(
 );
 
 export default api;
-
- 
