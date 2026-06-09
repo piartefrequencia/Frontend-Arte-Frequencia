@@ -1,6 +1,7 @@
 import React, { useContext, useState, useMemo } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "@/context/AuthContext";
+import logo from "/public/Assets/img/favicon_.png";
 import {
   Music2,
   ChevronDown,
@@ -67,7 +68,7 @@ export default function Layout({ children }: LayoutProps) {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
             <div className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-primary to-accent shadow-gold">
-              <Music2 className="h-5 w-5 text-background" />
+              <img src={logo} alt="" />
             </div>
             <div className="leading-tight">
               <div className="font-display text-lg font-bold tracking-tight">
@@ -384,7 +385,7 @@ export default function Layout({ children }: LayoutProps) {
             <div>
               <div className="flex items-center gap-3">
                 <div className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-primary to-accent">
-                  <Music2 className="h-5 w-5 text-background" />
+                 <img src={logo} alt="" />
                 </div>
                 <div className="font-display text-lg font-bold">
                   Arte <span className="text-primary">&</span> Frequência

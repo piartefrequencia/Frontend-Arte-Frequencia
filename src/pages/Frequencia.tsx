@@ -291,7 +291,7 @@ export default function Frequencia() {
                 <SelectValue placeholder="Todas as Oficinas" />
               </SelectTrigger>
               <SelectContent className="bg-card">
-                <SelectItem value="">Todas as Oficinas</SelectItem>
+                <SelectItem value="all">Todas as Oficinas</SelectItem>
                 {oficinasDisponiveis.map((oficinaChave) => (
                   <SelectItem key={oficinaChave} value={oficinaChave}>
                     {nomesOficinas[oficinaChave] || oficinaChave}

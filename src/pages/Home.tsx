@@ -21,6 +21,7 @@ import programDance from "../assets/program-dance.jpg";
 import programPercussion from "../assets/program-percussion.jpg";
 import programMarching from "../assets/program-marching.jpg";
 import aboutCommunity from "../assets/about-community.jpg";
+import fotoHero from "../../public/Assets/img/Missao.jpg"
 
 const programs = [
   {
@@ -157,7 +158,7 @@ export default function Home() {
           <div className="relative hidden md:block">
             <div className="animate-float relative aspect-[4/5] overflow-hidden rounded-3xl border border-border shadow-glow">
               <img
-                src={heroBand}
+                src={fotoHero}
                 alt="Banda Marcial Heitor Villa Lobos"
                 className="h-full w-full object-cover"
               />
@@ -170,9 +171,6 @@ export default function Home() {
                   Heitor Villa Lobos
                 </div>
               </div>
-            </div>
-            <div className="absolute -left-6 -top-6 grid h-20 w-20 place-items-center rounded-full bg-accent text-accent-foreground shadow-glow">
-              <Music2 className="h-9 w-9" />
             </div>
           </div>
         </div>
