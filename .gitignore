@@ -11,6 +11,10 @@
 
 # production
 /build
+/dist
+/dist-ssr
+/out-tsc
+
 
 # misc
 .DS_Store
