@@ -152,7 +152,7 @@ export default function Home() {
                 </a>
               )}
               <a
-                href="https://youtu.be/fIFbDPtJbtc"
+                href="https://www.youtube.com/watch?v=FEnHPe5FDtk"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-3 rounded-full border border-border bg-card/40 px-6 py-3.5 text-sm font-semibold backdrop-blur transition hover:border-primary"
