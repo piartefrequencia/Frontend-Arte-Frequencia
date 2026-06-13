@@ -1,4 +1,4 @@
-import logoRedondo from "../assets/about-community.jpg"; // Using a local image as illustration or fallback
+import logoRedondo from "../../public/Assets/img/juntos.jpg"; // Using a local image as illustration or fallback
 import { Heart, Music2, Users, Sparkles, Target, Compass } from "lucide-react";
 
 export default function QuemSomos() {
@@ -79,7 +79,6 @@ export default function QuemSomos() {
             <li>🎵 Educação e Cultura</li>
             <li>🤝 Responsabilidade Social</li>
             <li>🎨 Liberdade Criativa</li>
-            <li>🌱 Desenvolvimento Sustentável</li>
           </ul>
         </div>
       </div>

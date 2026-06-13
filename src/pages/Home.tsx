@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "@/context/AuthContext";
 import {
   Music2,
   Drum,
@@ -15,20 +16,27 @@ import {
   Play,
 } from "lucide-react";
 
-import heroBand from "../assets/hero-band.jpg";
-import programMusic from "../assets/program-music.jpg";
-import programDance from "../assets/program-dance.jpg";
-import programPercussion from "../assets/program-percussion.jpg";
-import programMarching from "../assets/program-marching.jpg";
-import aboutCommunity from "../assets/about-community.jpg";
-import fotoHero from "../../public/Assets/img/Missao.jpg"
+import heroBand from "../../public/Assets/img/imagem-banda4.jpg";
+import programInstument from "../../public/Assets/img/musicalizacaoinfantil.png";
+import programMusic from "../../public/Assets/img/imagem-banda2.jpg";
+import programDance from "../../public/Assets/img/imagem-banda7.jpg";
+import programPercussion from "../../public/Assets/img/imagem-banda8.jpg";
+import programMarching from "../../public/Assets/img/HVL_0003.jpeg";
+import aboutCommunity from "../../public/Assets/img/imagem-banda.jpg";
+
+import galeria1 from "../../public/Assets/img/galeria1.jpg"
+import galeria2 from "../../public/Assets/img/galeria2.jpg"
+import galeria3 from "../../public/Assets/img/galeria5.jpg"
+import galeria4 from "../../public/Assets/img/galeria4.jpg"
+import galeria5 from "../../public/Assets/img/imagem-banda6.jpg"
+
 
 const programs = [
   {
     icon: Music2,
     title: "Musicalização Infantil",
     desc: "Primeiros passos no universo musical, desenvolvendo ritmo, percepção e expressão.",
-    image: programMusic,
+    image: programInstument,
     tag: "Crianças",
     link: "/musicalizacao",
   },
@@ -77,6 +85,13 @@ const values = [
 export default function Home() {
   const [idx, setIdx] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
+  const { user, isAuthenticated } = useContext(AuthContext);
+
+  const isAuthorized = isAuthenticated && (user?.perfil === "ADMIN" || user?.perfil === "COLAB");
+
+  const whatsappUrl = `https://wa.me/5581994644959?text=${encodeURIComponent(
+    "Olá estava vendo o site de vocês e gostaria de saber mais informações para realizar minha inscrição."
+  )}`;
 
   const go = (dir: number) => {
     const next = Math.max(0, Math.min(programs.length - 1, idx + dir));
@@ -117,13 +132,25 @@ export default function Home() {
               pertencimento.
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-4">
-              <Link
-                to="/cadastro-aluno"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition hover:translate-y-[-2px]"
-              >
-                Fazer inscrição
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              {isAuthorized ? (
+                <Link
+                  to="/cadastro-aluno"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition hover:translate-y-[-2px]"
+                >
+                  Fazer inscrição
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              ) : (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition hover:translate-y-[-2px]"
+                >
+                  Fazer inscrição
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              )}
               <a
                 href="https://youtu.be/fIFbDPtJbtc"
                 target="_blank"
@@ -158,7 +185,7 @@ export default function Home() {
           <div className="relative hidden md:block">
             <div className="animate-float relative aspect-[4/5] overflow-hidden rounded-3xl border border-border shadow-glow">
               <img
-                src={fotoHero}
+                src={heroBand}
                 alt="Banda Marcial Heitor Villa Lobos"
                 className="h-full w-full object-cover"
               />
@@ -379,8 +406,8 @@ export default function Home() {
             Momentos que viram <span className="text-gradient-gold">história</span>.
           </h2>
         </div>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:[grid-auto-rows:160px]">
-          {[programMarching, programMusic, aboutCommunity, programDance].map((src, i) => (
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:[grid-auto-rows:200px]">
+          {[galeria1, galeria2,galeria4, galeria5, galeria3 ].map((src, i) => (
             <div
               key={i}
               className={`group relative overflow-hidden rounded-2xl border border-border/40 ${
@@ -418,13 +445,25 @@ export default function Home() {
               de forma simples e rápida pelo nosso portal de matrículas.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <Link
-                to="/cadastro-aluno"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground shadow-gold transition hover:translate-y-[-2px]"
-              >
-                Iniciar inscrição
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              {isAuthorized ? (
+                <Link
+                  to="/cadastro-aluno"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground shadow-gold transition hover:translate-y-[-2px]"
+                >
+                  Iniciar inscrição
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              ) : (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground shadow-gold transition hover:translate-y-[-2px]"
+                >
+                  Iniciar inscrição
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              )}
               <Link
                 to="/quemsomos"
                 className="inline-flex items-center gap-2 rounded-full border border-border px-8 py-4 text-sm font-semibold transition hover:border-primary text-foreground bg-card/20 backdrop-blur"

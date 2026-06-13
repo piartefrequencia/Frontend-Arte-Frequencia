@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import dancaImg from "../../assets/program-dance.jpg";
+import dancaImg from "../../../public/Assets/img/banda1.jpg";
 
 export default function Danca() {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import musicalizacaoImg from "../../assets/program-music.jpg"; // Using program-music as illustration
+import musicalizacaoImg from "../../../public/Assets/img/imagem-banda5.jpg"; // Using program-music as illustration
 
 export default function Musicalizacao() {
   const navigate = useNavigate();
