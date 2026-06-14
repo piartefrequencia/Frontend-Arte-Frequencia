@@ -2,6 +2,9 @@ import React, { useContext, useState, useMemo } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "@/context/AuthContext";
 import logo from "/public/Assets/img/favicon_.png";
+import logoComdica from "../../public/Assets/img/Logo_Apoio/COMDICA_IGA.png";
+import logoHvl from "../../public/Assets/img/Logo_Apoio/HVL.png";
+import logoProCidadania from "../../public/Assets/img/Logo_Apoio/ProCidadania.png";
 import {
   Music2,
   ChevronDown,
@@ -380,7 +383,7 @@ export default function Layout({ children }: LayoutProps) {
       {/* FOOTER */}
       <footer id="footer" className="border-t border-border bg-card/40 py-12 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1fr_1.8fr]">
             
             <div>
               <div className="flex items-center gap-3">
@@ -417,7 +420,7 @@ export default function Layout({ children }: LayoutProps) {
                   <MapPin className="h-4 w-4 text-primary shrink-0" /> Igarassu, PE
                 </li>
                 <li className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-primary shrink-0" /> contato@artefrequencia.com.br
+                  <Mail className="h-4 w-4 text-primary shrink-0" /> procidadania1@gmail.com
                 </li>
               </ul>
             </div>
@@ -428,7 +431,7 @@ export default function Layout({ children }: LayoutProps) {
               </div>
               <div className="mt-4 flex gap-3">
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/bandamarcialheitorvillalobos/"
                   target="_blank"
                   rel="noreferrer"
                   className="grid h-10 w-10 place-items-center rounded-full border border-border transition hover:border-primary hover:text-primary bg-card/60"
@@ -436,13 +439,36 @@ export default function Layout({ children }: LayoutProps) {
                   <Instagram className="h-4 w-4" />
                 </a>
                 <a
-                  href="https://youtu.be/fIFbDPtJbtc"
+                  href="https://www.youtube.com/@BandaMarcialHeitorVillaLobos"
                   target="_blank"
                   rel="noreferrer"
                   className="grid h-10 w-10 place-items-center rounded-full border border-border transition hover:border-primary hover:text-primary bg-card/60"
                 >
                   <Youtube className="h-4 w-4" />
                 </a>
+              </div>
+            </div>
+
+            <div>
+              <div className="text-xs uppercase tracking-[0.25em] text-primary font-semibold">
+                Apoio
+              </div>
+              <div className="mt-4 flex flex-wrap gap-3 items-center">
+                <img
+                  src={logoComdica}
+                  alt="Apoio COMDICA Igarassu"
+                  className="h-15 w-auto object-contain p-1.5 rounded-lg hover:bg-white transition"
+                />
+                <img
+                  src={logoHvl}
+                  alt="Apoio HVL"
+                  className="h-15 w-auto object-contain p-1.5 rounded-lg hover:bg-white transition"
+                />
+                <img
+                  src={logoProCidadania}
+                  alt="Apoio Pró-Cidadania"
+                  className="h-15 w-auto object-contain p-1.5 rounded-lg hover:bg-white transition"
+                />
               </div>
             </div>
 

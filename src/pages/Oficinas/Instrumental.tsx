@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import instrumentalImg from "../../assets/program-music.jpg";
+import instrumentalImg from "../../../public/Assets/img/HVL_0002.jpeg";
 
 export default function Instrumental() {
   const navigate = useNavigate();

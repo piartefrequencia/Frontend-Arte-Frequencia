@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import percussaoImg from "../../assets/program-percussion.jpg";
+import percussaoImg from "../../../public/Assets/img/percussao.jpg";
 
 export default function Percussao() {
   const navigate = useNavigate();
