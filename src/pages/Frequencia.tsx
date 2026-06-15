@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 
 import { Bar } from "react-chartjs-2";
@@ -79,8 +79,8 @@ function GraficoFrequencia({ dados }: { dados: PresencaResponse | null }) {
       {
         label: "Presenças",
         data: dados.meses.map((mes) => mes.dias?.length || 0),
-        backgroundColor: "rgba(197, 160, 89, 0.45)", // Soft Gold translucent
-        borderColor: "rgb(197, 160, 89)", // Gold border
+        backgroundColor: "rgba(197, 160, 89, 0.45)",
+        borderColor: "rgb(197, 160, 89)",
         borderWidth: 1.5,
         borderRadius: 4,
       },
@@ -185,7 +185,6 @@ export default function Frequencia() {
     carregarAlunos();
   }, []);
 
-  // Load attendance data when student changes
   useEffect(() => {
     async function carregarDados() {
       if (!alunoSelecionado) return;
@@ -235,36 +234,30 @@ export default function Frequencia() {
   const indiceFinal = indiceInicial + ITENS_POR_PAGINA;
   const alunosPaginados = alunosFiltrados.slice(indiceInicial, indiceFinal);
 
-  // Renderizador de Badges convertido exatamente com o seu estilo CSS para o Tailwind
   function renderizarBadgesOficinas(oficinasRaw: string) {
     const listaChaves = obterOficinasArray(oficinasRaw);
     
-    // Equivalente à classe .sem-oficina
     if (listaChaves.length === 0) {
       return <span className="text-[#bbb] italic text-xs">Nenhuma</span>;
     }
 
-    // Mapeamento das cores em hexadecimal fornecidas no seu CSS (.badge-xxx)
-    const coresCustomizadas: Record<string, string> = {
-      musicalizacao: "bg-[#4361ee]",
-      praticaInstrumental: "bg-[#2ec4b6]",
-      danca: "bg-[#ff006e]",
-      percussaoPopular: "bg-[#f77f00]",
+    const estilosCustomizados: Record<string, string> = {
+      musicalizacao: "bg-[#4361ee]/15 text-[#4361ee] border-[#4361ee]/40",
+      praticaInstrumental: "bg-[#2ec4b6]/15 text-[#2ec4b6] border-[#2ec4b6]/40",
+      danca: "bg-[#ff006e]/15 text-[#ff006e] border-[#ff006e]/40",
+      percussaoPopular: "bg-[#f77f00]/15 text-[#f77f00] border-[#f77f00]/40",
     };
 
     return (
-      // Equivalente à classe .oficinas-badges-container
       <div className="flex flex-wrap gap-[6px] max-w-[300px]">
         {listaChaves.map((chave) => {
           const nomeAmigavel = nomesOficinas[chave] || chave;
-          
-          // Se a oficina não tiver cor mapeada, usa o cinza padrão #6c757d do seu CSS
-          const corDeFundo = coresCustomizadas[chave] || "bg-[#6c757d]";
+          const estiloBadge = estilosCustomizados[chave] || "bg-muted/30 text-muted-foreground border-muted-foreground/30";
 
           return (
             <span
               key={chave}
-              className={`inline-block px-[10px] py-[4px] rounded-[16px] text-[0.85rem] font-semibold text-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] white-space-nowrap ${corDeFundo}`}
+              className={`inline-block px-[10px] py-[3px] rounded-[16px] text-[0.8rem] font-semibold border backdrop-blur-[2px] whitespace-nowrap tracking-wide transition-all ${estiloBadge}`}
             >
               {nomeAmigavel}
             </span>

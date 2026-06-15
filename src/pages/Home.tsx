@@ -16,20 +16,19 @@ import {
   Play,
 } from "lucide-react";
 
-import heroBand from "../../public/Assets/img/imagem-banda4.jpg";
-import programInstument from "../../public/Assets/img/musicalizacaoinfantil.png";
-import programMusic from "../../public/Assets/img/imagem-banda2.jpg";
-import programDance from "../../public/Assets/img/imagem-banda7.jpg";
-import programPercussion from "../../public/Assets/img/imagem-banda8.jpg";
-import programMarching from "../../public/Assets/img/HVL_0003.jpeg";
-import aboutCommunity from "../../public/Assets/img/imagem-banda.jpg";
+const heroBand = "/Assets/img/imagem-banda4.jpg";
+const programInstument = "/Assets/img/musicalizacaoinfantil.png";
+const programMusic = "/Assets/img/imagem-banda2.jpg";
+const programDance = "/Assets/img/imagem-banda7.jpg";
+const programPercussion = "/Assets/img/imagem-banda8.jpg";
+const programMarching = "/Assets/img/HVL_0003.jpeg";
+const aboutCommunity = "/Assets/img/imagem-banda.jpg";
 
-import galeria1 from "../../public/Assets/img/galeria1.jpg"
-import galeria2 from "../../public/Assets/img/galeria2.jpg"
-import galeria3 from "../../public/Assets/img/galeria5.jpg"
-import galeria4 from "../../public/Assets/img/galeria4.jpg"
-import galeria5 from "../../public/Assets/img/imagem-banda6.jpg"
-
+const galeria1 = "/Assets/img/galeria1.jpg";
+const galeria2 = "/Assets/img/galeria2.jpg";
+const galeria3 = "/Assets/img/galeria5.jpg";
+const galeria4 = "/Assets/img/galeria4.jpg";
+const galeria5 = "/Assets/img/imagem-banda6.jpg";
 
 const programs = [
   {
