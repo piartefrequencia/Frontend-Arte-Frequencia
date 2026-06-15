@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "@/services/api";
-import { Send, Copy, Search, ArrowLeft } from "lucide-react";
+import { Send, Copy, Search, ArrowLeft, Trash2, CheckCircle2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -13,8 +13,19 @@ interface AlunoData {
   nome: string;
 }
 
+interface StatusResponsavel {
+  PAI: boolean;
+  MAE: boolean;
+  RESPONSAVEL: boolean;
+}
+
+interface StatusGeral {
+  [alunoId: number]: StatusResponsavel;
+}
+
 export default function GestaoTelegram() {
   const [alunos, setAlunos] = useState<AlunoData[]>([]);
+  const [statusContatos, setStatusContatos] = useState<StatusGeral>({});
   const [busca, setBusca] = useState("");
   const [paginaAtual, setPaginaAtual] = useState(1);
   const alunosPorPagina = 20;
@@ -25,9 +36,38 @@ export default function GestaoTelegram() {
   const carregarAlunos = async () => {
     try {
       const res = await api.get("/aluno");
-      setAlunos(res.data || []);
+      const listaAlunos: AlunoData[] = res.data || [];
+      setAlunos(listaAlunos);
+
+      listaAlunos.forEach((aluno) => {
+        buscarStatusTelegram(aluno.id);
+      });
     } catch (err) {
       console.error("Erro ao carregar alunos:", err);
+    }
+  };
+
+  const buscarStatusTelegram = async (alunoId: number) => {
+    try {
+      const res = await api.get(`/status/${alunoId}`);
+      setStatusContatos((prev) => ({
+        ...prev,
+        [alunoId]: res.data || { PAI: false, MAE: false, RESPONSAVEL: false },
+      }));
+    } catch (error) {
+      console.error(`Erro ao buscar status do aluno ${alunoId}:`, error);
+    }
+  };
+
+  const removerVinculoTelegram = async (alunoId: number, tipo: "PAI" | "MAE" | "RESPONSAVEL") => {
+    // Mensagem de confirmação customizada conforme seu pedido
+    if (!confirm("tem certeza que quer remover de receber as mensagens")) return;
+    
+    try {
+      await api.delete(`/remover/${alunoId}/${tipo}`);
+      buscarStatusTelegram(alunoId);
+    } catch (error) {
+      console.error("Erro ao remover vínculo:", error);
     }
   };
 
@@ -118,83 +158,140 @@ export default function GestaoTelegram() {
                   <TableHead className="w-16">ID</TableHead>
                   <TableHead className="w-32">Matrícula</TableHead>
                   <TableHead>Nome do Aluno</TableHead>
-                  <TableHead className="text-right">Vincular Responsáveis via Telegram</TableHead>
+                  {/* ADICIONADO: Nova coluna de status */}
+                  <TableHead className="text-center w-64">Status das Mensagens</TableHead>
+                  <TableHead className="text-right w-64">Vincular Responsáveis via Telegram</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {alunosPaginados.length > 0 ? (
-                  alunosPaginados.map((aluno) => (
-                    <TableRow key={aluno.id}>
-                      <TableCell className="font-bold">{aluno.id}</TableCell>
-                      <TableCell>{aluno.matricula}</TableCell>
-                      <TableCell className="font-semibold text-foreground">{aluno.nome}</TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-2 flex-wrap">
-                          
-                          {/* PAI */}
-                          <div className="inline-flex items-center rounded-full border border-border bg-background overflow-hidden h-8">
-                            <a
-                              href={gerarLinkTelegram(aluno.id, "PAI")}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-3 text-xs font-semibold text-muted-foreground hover:text-primary transition"
-                            >
-                              Pai
-                            </a>
-                            <button
-                              onClick={() => copiarLink(aluno.id, "PAI")}
-                              className="h-full px-2 border-l border-border hover:bg-primary/10 transition cursor-pointer text-xs"
-                              title="Copiar link do Pai"
-                            >
-                              🟢💬
-                            </button>
-                          </div>
+                  alunosPaginados.map((aluno) => {
+                    const status = statusContatos[aluno.id] || { PAI: false, MAE: false, RESPONSAVEL: false };
 
-                          {/* MAE */}
-                          <div className="inline-flex items-center rounded-full border border-border bg-background overflow-hidden h-8">
-                            <a
-                              href={gerarLinkTelegram(aluno.id, "MAE")}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-3 text-xs font-semibold text-muted-foreground hover:text-primary transition"
-                            >
-                              Mãe
-                            </a>
-                            <button
-                              onClick={() => copiarLink(aluno.id, "MAE")}
-                              className="h-full px-2 border-l border-border hover:bg-primary/10 transition cursor-pointer text-xs"
-                              title="Copiar link da Mãe"
-                            >
-                              🟢💬
-                            </button>
-                          </div>
+                    return (
+                      <TableRow key={aluno.id}>
+                        <TableCell className="font-bold">{aluno.id}</TableCell>
+                        <TableCell>{aluno.matricula}</TableCell>
+                        <TableCell className="font-semibold text-foreground">{aluno.nome}</TableCell>
+                        
+                        {/* COLUNA 1: STATUS DO TELEGRAM E REMOÇÃO */}
+                        <TableCell>
+                          <div className="flex flex-col items-center gap-2 py-2">
+                            
+                            {/* Status Pai */}
+                            <div className={`inline-flex items-center justify-between rounded-full border h-8 w-56 px-3 text-xs font-semibold ${status.PAI ? 'border-green-500/30 bg-green-500/10 text-green-400' : 'border-red-500/30 bg-red-500/10 text-red-400'}`}>
+                              <span>Pai: {status.PAI ? " Ativo" : " Inativo"}</span>
+                              {status.PAI && (
+                                <button
+                                  onClick={() => removerVinculoTelegram(aluno.id, "PAI")}
+                                  className="p-1 rounded hover:bg-red-500/20 text-red-400 transition cursor-pointer"
+                                  title="Remover recebimento de mensagens"
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
+                                </button>
+                              )}
+                            </div>
 
-                          {/* RESPONSAVEL */}
-                          <div className="inline-flex items-center rounded-full border border-border bg-background overflow-hidden h-8">
-                            <a
-                              href={gerarLinkTelegram(aluno.id, "RESPONSAVEL")}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-3 text-xs font-semibold text-muted-foreground hover:text-primary transition"
-                            >
-                              Responsável
-                            </a>
-                            <button
-                              onClick={() => copiarLink(aluno.id, "RESPONSAVEL")}
-                              className="h-full px-2 border-l border-border hover:bg-primary/10 transition cursor-pointer text-xs"
-                              title="Copiar link do Responsável"
-                            >
-                              🟢💬
-                            </button>
-                          </div>
+                            {/* Status Mãe */}
+                            <div className={`inline-flex items-center justify-between rounded-full border h-8 w-56 px-3 text-xs font-semibold ${status.MAE ? 'border-green-500/30 bg-green-500/10 text-green-400' : 'border-red-500/30 bg-red-500/10 text-red-400'}`}>
+                              <span>Mãe: {status.MAE ? " Ativo" : " Inativo"}</span>
+                              {status.MAE && (
+                                <button
+                                  onClick={() => removerVinculoTelegram(aluno.id, "MAE")}
+                                  className="p-1 rounded hover:bg-red-500/20 text-red-400 transition cursor-pointer"
+                                  title="Remover recebimento de mensagens"
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
+                                </button>
+                              )}
+                            </div>
 
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                            {/* Status Responsável */}
+                            <div className={`inline-flex items-center justify-between rounded-full border h-8 w-56 px-3 text-xs font-semibold ${status.RESPONSAVEL ? 'border-green-500/30 bg-green-500/10 text-green-400' : 'border-red-500/30 bg-red-500/10 text-red-400'}`}>
+                              <span>Responsável: {status.RESPONSAVEL ? " Ativo" : " Inativo"}</span>
+                              {status.RESPONSAVEL && (
+                                <button
+                                  onClick={() => removerVinculoTelegram(aluno.id, "RESPONSAVEL")}
+                                  className="p-1 rounded hover:bg-red-500/20 text-red-400 transition cursor-pointer"
+                                  title="Remover recebimento de mensagens"
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
+                                </button>
+                              )}
+                            </div>
+
+                          </div>
+                        </TableCell>
+
+                        {/* COLUNA 2: BOTÕES COLORIDOS DE VINCULAR */}
+                        <TableCell className="text-right">
+                          <div className="flex flex-col items-end gap-2 py-2">
+                            
+                            {/* PAI (Azul) */}
+                            <div className="inline-flex items-center rounded-full border border-blue-500/30 bg-blue-500/10 overflow-hidden h-8 w-56 justify-between">
+                              <a
+                               
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-3 text-xs font-semibold text-blue-300/90 hover:text-blue-200 transition flex-1 text-left"
+                              >
+                                Pai Telegram
+                              </a>
+                              <button
+                                onClick={() => copiarLink(aluno.id, "PAI")}
+                                className="h-full px-2 border-l border-blue-500/30 hover:bg-blue-500/20 transition cursor-pointer text-xs"
+                                title="Copiar link do Pai"
+                              >
+                                🟢💬
+                              </button>
+                            </div>
+
+                            {/* MAE (Rosa/Pink) */}
+                            <div className="inline-flex items-center rounded-full border border-pink-500/30 bg-pink-500/10 overflow-hidden h-8 w-56 justify-between">
+                              <a
+                      
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-3 text-xs font-semibold text-pink-300/90 hover:text-pink-200 transition flex-1 text-left"
+                              >
+                                Mãe Telegram
+                              </a>
+                              <button
+                                onClick={() => copiarLink(aluno.id, "MAE")}
+                                className="h-full px-2 border-l border-pink-500/30 hover:bg-pink-500/20 transition cursor-pointer text-xs"
+                                title="Copiar link da Mãe"
+                              >
+                                🟢💬
+                              </button>
+                            </div>
+
+                            {/* RESPONSAVEL (Amarelo/Amber) */}
+                            <div className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-500/10 overflow-hidden h-8 w-56 justify-between">
+                              <a
+                             
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-3 text-xs font-semibold text-amber-300/90 hover:text-amber-200 transition flex-1 text-left"
+                              >
+                                Responsável Telegram
+                              </a>
+                              <button
+                                onClick={() => copiarLink(aluno.id, "RESPONSAVEL")}
+                                className="h-full px-2 border-l border-amber-500/30 hover:bg-amber-500/20 transition cursor-pointer text-xs"
+                                title="Copiar link do Responsável"
+                              >
+                                🟢💬
+                              </button>
+                            </div>
+
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                       Nenhum aluno encontrado.
                     </TableCell>
                   </TableRow>

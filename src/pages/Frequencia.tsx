@@ -225,7 +225,7 @@ export default function Frequencia() {
 
   const alunosFiltrados = alunos.filter((aluno) => {
     const oficinasAluno = obterOficinasArray(aluno.oficinas);
-    const passaOficina = !filtroOficina || oficinasAluno.includes(filtroOficina);
+    const passaOficina = !filtroOficina || filtroOficina === "all" || oficinasAluno.includes(filtroOficina);
     const passaNome = aluno.nome?.toLowerCase().includes(buscaNome.toLowerCase());
     return passaOficina && passaNome;
   });
@@ -235,17 +235,41 @@ export default function Frequencia() {
   const indiceFinal = indiceInicial + ITENS_POR_PAGINA;
   const alunosPaginados = alunosFiltrados.slice(indiceInicial, indiceFinal);
 
+  // Renderizador de Badges convertido exatamente com o seu estilo CSS para o Tailwind
   function renderizarBadgesOficinas(oficinasRaw: string) {
     const listaChaves = obterOficinasArray(oficinasRaw);
-    if (listaChaves.length === 0) return <span className="text-muted-foreground">-</span>;
+    
+    // Equivalente à classe .sem-oficina
+    if (listaChaves.length === 0) {
+      return <span className="text-[#bbb] italic text-xs">Nenhuma</span>;
+    }
+
+    // Mapeamento das cores em hexadecimal fornecidas no seu CSS (.badge-xxx)
+    const coresCustomizadas: Record<string, string> = {
+      musicalizacao: "bg-[#4361ee]",
+      praticaInstrumental: "bg-[#2ec4b6]",
+      danca: "bg-[#ff006e]",
+      percussaoPopular: "bg-[#f77f00]",
+    };
 
     return (
-      <div className="flex flex-wrap gap-1">
-        {listaChaves.map((chave) => (
-          <span key={chave} className="px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider bg-primary/10 text-primary border border-primary/20">
-            {nomesOficinas[chave] || chave}
-          </span>
-        ))}
+      // Equivalente à classe .oficinas-badges-container
+      <div className="flex flex-wrap gap-[6px] max-w-[300px]">
+        {listaChaves.map((chave) => {
+          const nomeAmigavel = nomesOficinas[chave] || chave;
+          
+          // Se a oficina não tiver cor mapeada, usa o cinza padrão #6c757d do seu CSS
+          const corDeFundo = coresCustomizadas[chave] || "bg-[#6c757d]";
+
+          return (
+            <span
+              key={chave}
+              className={`inline-block px-[10px] py-[4px] rounded-[16px] text-[0.85rem] font-semibold text-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] white-space-nowrap ${corDeFundo}`}
+            >
+              {nomeAmigavel}
+            </span>
+          );
+        })}
       </div>
     );
   }
@@ -382,14 +406,33 @@ export default function Frequencia() {
       {modalOpen && alunoSelecionado && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" onClick={() => setModalOpen(false)}>
           <div className="relative w-full max-w-xl max-h-[85vh] bg-card border border-border rounded-2xl overflow-y-auto flex flex-col p-6 space-y-6" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between border-b border-border/40 pb-4">
-              <h2 className="font-display text-2xl font-bold text-foreground truncate max-w-md flex items-center gap-2">
+            
+            {/* Header com a Associação */}
+            <div className="flex flex-col border-b border-border/40 pb-4 gap-1">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Associação Pró-Cidadania
+                </span>
+                <button onClick={() => setModalOpen(false)} className="text-muted-foreground hover:text-foreground cursor-pointer">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              <h2 className="font-display text-2xl font-bold text-foreground truncate max-w-md flex items-center gap-2 mt-1">
                 <CalendarDays className="h-5 w-5 text-primary" />
                 Histórico: {alunoSelecionado.nome}
               </h2>
-              <button onClick={() => setModalOpen(false)} className="text-muted-foreground hover:text-foreground cursor-pointer">
-                <X className="h-5 w-5" />
-              </button>
+            </div>
+
+            {/* Sub-header com Matrícula e Oficina do Aluno */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3 rounded-xl bg-background/40 border border-border/30 text-sm">
+              <div>
+                <span className="text-muted-foreground block text-xs">Nº da Matrícula:</span>
+                <span className="font-mono font-medium text-foreground">{alunoSelecionado.matricula || "Não informada"}</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground block text-xs mb-1">Oficina(s):</span>
+                {renderizarBadgesOficinas(alunoSelecionado.oficinas)}
+              </div>
             </div>
 
             <div className="space-y-6 flex-grow">
