@@ -115,7 +115,7 @@ export default function Listapublico() {
         </p>
       </div>
 
-      {/* Workshop filter buttons */}
+   
       <div className="flex flex-wrap gap-2">
         {oficinas.map((oficina) => (
           <Button
