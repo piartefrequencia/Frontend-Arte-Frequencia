@@ -2,7 +2,7 @@ import axios from "axios";
 import { triggerLogout } from "./auth";
 
 const api = axios.create({
-  baseURL: "https://apiartefrequencia.onrender.com/api/artefrequencia",
+  baseURL: "https://backendartefrequencia.squareweb.app/api/artefrequencia/",
   headers: {
     "Content-Type": "application/json",
   },
@@ -36,7 +36,7 @@ api.interceptors.response.use(
         try {
           isRefreshing = true;
           const response = await axios.post(
-            "https://apiartefrequencia.onrender.com/api/artefrequencia/auth/refresh",
+            "https://backendartefrequencia.squareweb.app/auth/refresh",
             { refreshToken }
           );
 
