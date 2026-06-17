@@ -18,6 +18,7 @@ import {
   Youtube,
   Mail,
   MapPin,
+  Download, // Importei o ícone de Download caso queira uma identidade visual bacana
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -61,6 +62,9 @@ export default function Layout({ children }: LayoutProps) {
   const podeVerControle = isAuthenticated && user?.perfil === "ADMIN";
   const podeVerAdmin =
     isAuthenticated && ["ADMIN", "COLAB"].includes(user?.perfil || "");
+
+  // Link do Google Drive convertido para Download Direto utilizando o ID fornecido
+  const linkDownloadDireto = "https://drive.google.com/uc?export=download&id=1fBv29QofH5eoMY6rly-inY0meXySMlIw";
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col bg-hero">
@@ -196,6 +200,18 @@ export default function Layout({ children }: LayoutProps) {
                   <DropdownMenuItem onClick={() => navigate("/listacolaborador")}>
                     Lista dos Educadores
                   </DropdownMenuItem>
+                  
+                  {/* Divisor Visual Opcional para dar destaque ao Botão de Download */}
+                  <DropdownMenuSeparator />
+                  
+                  {/* NOVO BOTÃO DE DOWNLOAD: Totalmente integrado aos estilos do dropdown */}
+                  <DropdownMenuItem asChild className="cursor-pointer text-primary font-semibold focus:bg-primary/10 focus:text-primary">
+                    <a href={linkDownloadDireto} download>
+                      <Download className="mr-2 h-4 w-4" />
+                      Baixar Aplicativo
+                    </a>
+                  </DropdownMenuItem>
+
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
@@ -338,6 +354,11 @@ export default function Layout({ children }: LayoutProps) {
                 <Link to="/listacolaborador" onClick={() => setMobileMenuOpen(false)} className="text-base text-muted-foreground pl-2">
                   Lista dos Educadores
                 </Link>
+                
+                {/* Botão de Download na versão Mobile também */}
+                <a href={linkDownloadDireto} download onClick={() => setMobileMenuOpen(false)} className="text-base text-primary font-semibold pl-2 flex items-center gap-2">
+                  <Download className="h-4 w-4" /> Baixar Aplicativo
+                </a>
               </>
             )}
 
