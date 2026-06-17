@@ -46,7 +46,7 @@ export default function Login() {
             Acesso ao Portal
           </CardTitle>
           <CardDescription className="text-muted-foreground text-sm">
-            Entre com seus dados para acessar Biblioteca de Partituras pra estuda em sua casa.
+            Entre com seus dados para acessar Biblioteca de Partituras para estuda em sua casa.
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
