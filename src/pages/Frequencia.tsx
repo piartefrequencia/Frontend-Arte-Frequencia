@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import api from "@/services/api";
-import { Search, ArrowLeft, BarChart2, CalendarDays, X } from "lucide-react";
+import { Search, ArrowLeft, BarChart2, CalendarDays, X, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
+
+// Imports necessários para a geração do PDF institucional
+import { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from "@react-pdf/renderer";
 
 import { Bar } from "react-chartjs-2";
 import {
@@ -67,7 +70,272 @@ interface PresencaResponse {
   meses: PresencaMes[];
 }
 
-// Sub-component: GraficoFrequencia
+// Sub-componente interno para buscar dados de um aluno específico de forma isolada e gerar o PDF na linha
+function BotaoLinhaPDF({ aluno }: { aluno: AlunoData }) {
+  const [dados, setDados] = useState<PresencaResponse | null>(null);
+  const [carregando, setCarregando] = useState(false);
+
+  function obterOficinasTexto(oficinasRaw: string) {
+    if (!oficinasRaw) return "";
+    try {
+      const oficinasObj = JSON.parse(oficinasRaw);
+      return Object.keys(oficinasObj).map((key) => nomesOficinas[key] || key).join(", ");
+    } catch {
+      return oficinasRaw.split(",").map((item) => item.trim()).filter(Boolean).join(", ");
+    }
+  }
+
+  const buscarDadosEPresentar = async () => {
+    if (dados) return; // Se já tiver os dados carregados, não busca de novo
+    try {
+      setCarregando(true);
+      const anoAtual = new Date().getFullYear();
+      const response = await api.get(`/presenca/aluno/${aluno.id}?ano=${anoAtual}`);
+      setDados(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar dados para PDF em lote:", error);
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  return (
+    <div onMouseEnter={buscarDadosEPresentar} onClick={buscarDadosEPresentar}>
+      <PDFDownloadLink
+        document={
+          <DocumentoFrequenciaPDF
+            aluno={aluno}
+            dadosFrequencia={dados}
+            oficinasTexto={obterOficinasTexto(aluno.oficinas)}
+          />
+        }
+        fileName={`Frequencia_${aluno.nome.trim().replace(/\s+/g, "_")}.pdf`}
+      >
+        {/* @ts-ignore */}
+        {({ loading }) => (
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={loading || carregando}
+            className="rounded-full text-xs font-semibold gap-1.5 border-primary/30 hover:border-primary bg-primary/5 hover:bg-primary/10 text-foreground transition-all"
+          >
+            <FileText className="h-3.5 w-3.5 text-primary" />
+            {loading || carregando ? "Preparando..." : "Baixar PDF"}
+          </Button>
+        )}
+      </PDFDownloadLink>
+    </div>
+  );
+}
+
+// ============================================================================
+// COMPONENTE DO ARQUIVO PDF (ESTRUTURAÇÃO FORMAL INSTITUCIONAL)
+// ============================================================================
+const pdfStyles = StyleSheet.create({
+  page: {
+    padding: 45,
+    fontSize: 11,
+    fontFamily: "Helvetica",
+    color: "#222222",
+    lineHeight: 1.6,
+  },
+  header: {
+    borderBottomWidth: 2,
+    borderBottomColor: "#c5a059", 
+    paddingBottom: 12,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  institutionName: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#111111",
+    textTransform: "uppercase",
+    letterSpacing: 1,
+  },
+  docType: {
+    fontSize: 9,
+    color: "#666666",
+    marginTop: 3,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  title: {
+    fontSize: 13,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 22,
+    textTransform: "uppercase",
+    color: "#111111",
+  },
+  studentInfoBox: {
+    backgroundColor: "#fafafa",
+    borderWidth: 1,
+    borderColor: "#e5e5e5",
+    borderRadius: 6,
+    padding: 14,
+    marginBottom: 25,
+  },
+  infoRow: {
+    flexDirection: "row",
+    marginBottom: 6,
+  },
+  infoLabel: {
+    width: 95,
+    fontWeight: "bold",
+    color: "#555555",
+  },
+  infoValue: {
+    flex: 1,
+    color: "#111111",
+  },
+  sectionTitle: {
+    fontSize: 11,
+    fontWeight: "bold",
+    marginBottom: 12,
+    color: "#c5a059",
+    textTransform: "uppercase",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e5e5e5",
+    paddingBottom: 4,
+  },
+  table: {
+    width: "auto",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: "#e5e5e5",
+    borderRadius: 5,
+    overflow: "hidden",
+    marginBottom: 30,
+  },
+  tableRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    minHeight: 28,
+  },
+  tableHeader: {
+    backgroundColor: "#f5f5f5",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e5e5e5",
+  },
+  tableCellHeader: {
+    margin: 8,
+    fontSize: 10,
+    fontWeight: "bold",
+    color: "#333333",
+  },
+  tableCell: {
+    margin: 8,
+    fontSize: 10,
+  },
+  colMonth: {
+    width: "30%",
+    borderRightWidth: 1,
+    borderRightColor: "#e5e5e5",
+  },
+  colDays: {
+    width: "70%",
+  },
+  footer: {
+    position: "absolute",
+    bottom: 35,
+    left: 45,
+    right: 45,
+    borderTopWidth: 1,
+    borderTopColor: "#e5e5e5",
+    paddingTop: 12,
+    textAlign: "center",
+    fontSize: 8,
+    color: "#888888",
+  },
+});
+
+interface PDFProps {
+  aluno: AlunoData;
+  dadosFrequencia: PresencaResponse | null;
+  oficinasTexto: string;
+}
+
+function DocumentoFrequenciaPDF({ aluno, dadosFrequencia, oficinasTexto }: PDFProps) {
+  const anoAtual = new Date().getFullYear();
+
+  return (
+    <Document>
+      <Page size="A4" style={pdfStyles.page}>
+        {/* Cabeçalho Oficial */}
+        <View style={pdfStyles.header}>
+          <Text style={pdfStyles.institutionName}>Associação Pró-Cidadania</Text>
+          <Text style={pdfStyles.docType}>Registro de Frequência e Acompanhamento de Oficinas</Text>
+        </View>
+
+        {/* Título de Documentação */}
+        <Text style={pdfStyles.title}>Relatório de Frequência Individual — Ano Letivo {anoAtual}</Text>
+
+        {/* Quadro de Informações do Aluno */}
+        <View style={pdfStyles.studentInfoBox}>
+          <View style={pdfStyles.infoRow}>
+            <Text style={pdfStyles.infoLabel}>Nome do Aluno:</Text>
+            <Text style={pdfStyles.infoValue}>{aluno.nome}</Text>
+          </View>
+          <View style={pdfStyles.infoRow}>
+            <Text style={pdfStyles.infoLabel}>Nº Matrícula:</Text>
+            <Text style={pdfStyles.infoValue}>{aluno.matricula || "Não informada"}</Text>
+          </View>
+          <View style={pdfStyles.infoRow}>
+            <Text style={pdfStyles.infoLabel}>Oficina(s):</Text>
+            <Text style={pdfStyles.infoValue}>{oficinasTexto}</Text>
+          </View>
+        </View>
+
+        {/* Histórico Analítico */}
+        <Text style={pdfStyles.sectionTitle}>Histórico de Chamadas por Período Mensal</Text>
+        
+        <View style={pdfStyles.table}>
+          {/* Header da Tabela */}
+          <View style={[pdfStyles.tableRow, pdfStyles.tableHeader]}>
+            <View style={pdfStyles.colMonth}>
+              <Text style={pdfStyles.tableCellHeader}>Mês de Referência</Text>
+            </View>
+            <View style={pdfStyles.colDays}>
+              <Text style={pdfStyles.tableCellHeader}>Dias de Presença Confirmada</Text>
+            </View>
+          </View>
+
+          {/* Registros de Chamada */}
+          {dadosFrequencia?.meses && dadosFrequencia.meses.length > 0 ? (
+            dadosFrequencia.meses.map((mes) => (
+              <View style={pdfStyles.tableRow} key={mes.mes}>
+                <View style={pdfStyles.colMonth}>
+                  <Text style={pdfStyles.tableCell}>{nomesMeses[mes.mes]}</Text>
+                </View>
+                <View style={pdfStyles.colDays}>
+                  <Text style={pdfStyles.tableCell}>
+                    {mes.dias && mes.dias.length > 0 ? mes.dias.join(", ") : "Sem registros de presença"}
+                  </Text>
+                </View>
+              </View>
+            ))
+          ) : (
+            <View style={pdfStyles.tableRow}>
+              <View style={{ width: "100%", padding: 12 }}>
+                <Text style={{ textAlign: "center", color: "#666", fontSize: 10 }}>Nenhum registro encontrado no sistema.</Text>
+              </View>
+            </View>
+          )}
+        </View>
+
+        {/* Rodapé de autenticação */}
+        <Text style={pdfStyles.footer}>
+          Documento institucional oficial emitido via sistema em {new Date().toLocaleDateString("pt-BR")} às {new Date().toLocaleTimeString("pt-BR")} | Associação Pró-Cidadania
+        </Text>
+      </Page>
+    </Document>
+  );
+}
+
+// ============================================================================
+// COMPONENTE SUB-ELEMENTO: GRAFICO
+// ============================================================================
 function GraficoFrequencia({ dados }: { dados: PresencaResponse | null }) {
   if (!dados || !dados.meses) {
     return <p className="text-center text-xs text-muted-foreground py-4">Sem dados para o gráfico.</p>;
@@ -125,7 +393,9 @@ function GraficoFrequencia({ dados }: { dados: PresencaResponse | null }) {
   );
 }
 
-// Sub-component: TabelaFrequencia
+// ============================================================================
+// COMPONENTE SUB-ELEMENTO: TABELA
+// ============================================================================
 function TabelaFrequencia({ dados }: { dados: PresencaResponse | null }) {
   if (!dados || !dados.meses) {
     return <p className="text-center text-xs text-muted-foreground py-4">Sem registros de chamada.</p>;
@@ -155,6 +425,9 @@ function TabelaFrequencia({ dados }: { dados: PresencaResponse | null }) {
   );
 }
 
+// ============================================================================
+// COMPONENTE PRINCIPAL
+// ============================================================================
 export default function Frequencia() {
   const [alunos, setAlunos] = useState<AlunoData[]>([]);
   const [alunoSelecionado, setAlunoSelecionado] = useState<AlunoData | null>(null);
@@ -327,6 +600,8 @@ export default function Frequencia() {
                   <TableHead className="w-32">Matrícula</TableHead>
                   <TableHead>Nome</TableHead>
                   <TableHead>Oficinas</TableHead>
+                  {/* Nova coluna solicitada pela Gestão da Associação */}
+                  <TableHead className="w-48 text-center">Documentação de Frequência</TableHead>
                   <TableHead className="text-right w-40">Ações</TableHead>
                 </TableRow>
               </TableHeader>
@@ -338,6 +613,14 @@ export default function Frequencia() {
                       <TableCell>{aluno.matricula}</TableCell>
                       <TableCell className="font-semibold text-foreground">{aluno.nome}</TableCell>
                       <TableCell>{renderizarBadgesOficinas(aluno.oficinas)}</TableCell>
+                      
+                      {/* Célula do Botão Direto para Baixar o PDF */}
+                      <TableCell className="text-center">
+                        <div className="flex justify-center">
+                          <BotaoLinhaPDF aluno={aluno} />
+                        </div>
+                      </TableCell>
+
                       <TableCell className="text-right">
                         <Button
                           variant="outline"
@@ -349,14 +632,14 @@ export default function Frequencia() {
                           className="rounded-full text-xs font-semibold border-border hover:border-primary gap-1"
                         >
                           <BarChart2 className="h-3.5 w-3.5" />
-                          Ver Presenças
+                          Ver Frequência
                         </Button>
                       </TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                       Nenhum aluno encontrado.
                     </TableCell>
                   </TableRow>
@@ -442,6 +725,7 @@ export default function Frequencia() {
               )}
             </div>
 
+            {/* Rodapé do Modal */}
             <div className="flex justify-end pt-4 border-t border-border/40">
               <Button onClick={() => setModalOpen(false)} className="rounded-full px-6">
                 Fechar
