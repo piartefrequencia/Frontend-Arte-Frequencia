@@ -63,8 +63,8 @@ export default function Layout({ children }: LayoutProps) {
   const podeVerAdmin =
     isAuthenticated && ["ADMIN", "COLAB"].includes(user?.perfil || "");
 
-  // Link do Google Drive convertido para Download Direto utilizando o ID fornecido
-  const linkDownloadDireto = "https://drive.google.com/uc?export=download&id=1fBv29QofH5eoMY6rly-inY0meXySMlIw";
+  // Link do Google Drive convertido para Download Direto utilizando o ID fornecido 
+  const linkDownloadDireto = "https://drive.google.com/file/d/1aeBTgts7a6eHwVed3CE08ffTxqqVLUYU/view?usp=drive_link";
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col bg-hero">
@@ -355,7 +355,7 @@ export default function Layout({ children }: LayoutProps) {
                   Lista dos Educadores
                 </Link>
                 
-                {/* Botão de Download na versão Mobile também */}
+                {/* Botão de Download na versão Mobile também APK Arte Fraquência */}
                 <a href={linkDownloadDireto} download onClick={() => setMobileMenuOpen(false)} className="text-base text-primary font-semibold pl-2 flex items-center gap-2">
                   <Download className="h-4 w-4" /> Baixar Aplicativo
                 </a>
