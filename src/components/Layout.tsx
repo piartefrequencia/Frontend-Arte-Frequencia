@@ -64,7 +64,7 @@ export default function Layout({ children }: LayoutProps) {
     isAuthenticated && ["ADMIN", "COLAB"].includes(user?.perfil || "");
 
   // Link do Google Drive convertido para Download Direto utilizando o ID fornecido 
-  const linkDownloadDireto = "https://drive.google.com/file/d/1aeBTgts7a6eHwVed3CE08ffTxqqVLUYU/view?usp=drive_link";
+  const linkDownloadDireto = "https://drive.usercontent.google.com/download?id=1GopzWOpPlGES1SpYj9cc_7mUBEozfj5B&export=download&authuser=1";
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col bg-hero">
