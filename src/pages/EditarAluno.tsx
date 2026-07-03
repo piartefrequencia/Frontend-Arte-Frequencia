@@ -241,42 +241,42 @@ export default function EditarAluno() {
               </div>
             </div>
 
-            {/* SELEÇÃO DE TIPO SANGUÍNEO PADRONIZADA COM SELECT OPTION */}
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-muted-foreground">Tipo Sanguíneo</label>
-              <select 
-                name="tipoSanguineo" 
-                value={formData.tipoSanguineo} 
-                onChange={handleChange}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <option value="">Não informado / Selecione...</option>
-                <option value="1">A+</option>
-                <option value="2">A-</option>
-                <option value="3">B+</option>
-                <option value="4">B-</option>
-                <option value="5">AB+</option>
-                <option value="6">AB-</option>
-                <option value="7">O+</option>
-                <option value="8">O-</option>
-              </select>
-            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-muted-foreground">Tipo Sanguíneo</label>
+                <select 
+                  name="tipoSanguineo" 
+                  value={formData.tipoSanguineo} 
+                  onChange={handleChange}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <option value="">Não informado / Selecione...</option>
+                  <option value="1">A+</option>
+                  <option value="2">A-</option>
+                  <option value="3">B+</option>
+                  <option value="4">B-</option>
+                  <option value="5">AB+</option>
+                  <option value="6">AB-</option>
+                  <option value="7">O+</option>
+                  <option value="8">O-</option>
+                </select>
+              </div>
 
-            {/* SELEÇÃO DE OFICINAS CORRIGIDA PARA SELECT OPTION */}
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-muted-foreground">Oficina Vinculada</label>
-              <select 
-                name="oficinas" 
-                value={formData.oficinas} 
-                onChange={handleChange}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <option value="">Selecione uma oficina...</option>
-                <option value="1">Musicalização</option>
-                <option value="2">Prática Instrumental</option>
-                <option value="3">Dança</option>
-                <option value="4">Percussão Popular</option>
-              </select>
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-muted-foreground">Oficina Vinculada</label>
+                <select 
+                  name="oficinas" 
+                  value={formData.oficinas} 
+                  onChange={handleChange}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <option value="">Selecione uma oficina...</option>
+                  <option value="1">Musicalização</option>
+                  <option value="2">Prática Instrumental</option>
+                  <option value="3">Dança</option>
+                  <option value="4">Percussão Popular</option>
+                </select>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -479,3 +479,4 @@ export default function EditarAluno() {
     </div>
   );
 }
+
