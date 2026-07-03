@@ -81,9 +81,7 @@ export default function Layout({ children }: LayoutProps) {
               <div className="font-display text-lg font-bold tracking-tight">
                 Arte <span className="text-primary">&</span> Frequência
               </div>
-              <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                Pró-Cidadania
-              </div>
+           
             </div>
           </Link>
 
