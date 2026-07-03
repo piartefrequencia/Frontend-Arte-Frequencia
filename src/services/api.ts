@@ -36,7 +36,7 @@ api.interceptors.response.use(
         try {
           isRefreshing = true;
           const response = await axios.post(
-            "https://backendartefrequencia.squareweb.app/auth/refresh",
+            "https://backendartefrequencia.squareweb.app/api/artefrequencia/auth/refresh",
             { refreshToken }
           );
 
