@@ -7,6 +7,26 @@ import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 
+// Mapeamento seguro entre os IDs numéricos do <select> e as chaves do banco de dados para Oficinas
+const mapeamentoOficinas: Record<string, string> = {
+  "1": "musicalizacao",
+  "2": "praticaInstrumental",
+  "3": "danca",
+  "4": "percussaoPopular",
+};
+
+// Mapeamento seguro para Tipo Sanguíneo para evitar digitação errada
+const mapeamentoTipoSanguineo: Record<string, string> = {
+  "1": "A+",
+  "2": "A-",
+  "3": "B+",
+  "4": "B-",
+  "5": "AB+",
+  "6": "AB-",
+  "7": "O+",
+  "8": "O-",
+};
+
 export default function EditarAluno() {
   const { matricula } = useParams();
   const navigate = useNavigate();
@@ -17,11 +37,12 @@ export default function EditarAluno() {
     telefonePai: "", filiacaoMae: "", telefoneMae: "",
     responsavel: "", telefoneResponsavel: "",
     emailResponsavel: "", possuiDoenca: false, qualDoenca: "",
-    medicacao: "", tipoSanguineo: "", escola: "", serieturma: "",
+    medicacao: "", tipoSanguineo: "", // Guardará o ID numérico ("1" a "8") selecionado
+    escola: "", serieturma: "",
     turnoesc: "", autorizacaoImagem: false,
     atividadesExtras: false, descricaoAtividadesExtras: "",
     necessidadesEspeciais: false, descricaoNecessidadesEspeciais: "",
-    oficinas: "",
+    oficinas: "", // Guardará o ID numérico ("1" a "4") selecionado
   });
 
   const [loading, setLoading] = useState(true);
@@ -30,13 +51,40 @@ export default function EditarAluno() {
     const fetchAluno = async () => {
       try {
         const res = await api.get(`/aluno/${matricula}`);
-        const alunoFormatado = {
+        
+        // 1. TRATAMENTO DE OFICINAS
+        let idOficinaSelecionada = "";
+        if (res.data.oficinas) {
+          try {
+            const oficinasObj = JSON.parse(res.data.oficinas);
+            const chaveAtiva = Object.keys(oficinasObj).find(key => oficinasObj[key] === true);
+            if (chaveAtiva) {
+              const idEncontrado = Object.keys(mapeamentoOficinas).find(
+                (id) => mapeamentoOficinas[id] === chaveAtiva
+              );
+              if (idEncontrado) idOficinaSelecionada = idEncontrado;
+            }
+          } catch {
+            const idDireto = String(res.data.oficinas).trim();
+            if (mapeamentoOficinas[idDireto]) idOficinaSelecionada = idDireto;
+          }
+        }
+
+        // 2. TRATAMENTO DE TIPO SANGUÍNEO
+        let idTipoSanguineoSelecionado = "";
+        if (res.data.tipoSanguineo) {
+          const tipoDoBanco = String(res.data.tipoSanguineo).trim().toUpperCase();
+          const idEncontrado = Object.keys(mapeamentoTipoSanguineo).find(
+            (id) => mapeamentoTipoSanguineo[id].toUpperCase() === tipoDoBanco
+          );
+          if (idEncontrado) idTipoSanguineoSelecionado = idEncontrado;
+        }
+
+        setFormData({
           ...res.data,
-          oficinas: res.data.oficinas
-            ? Object.keys(JSON.parse(res.data.oficinas)).join(", ")
-            : "",
-        };
-        setFormData(alunoFormatado);
+          oficinas: idOficinaSelecionada,
+          tipoSanguineo: idTipoSanguineoSelecionado,
+        });
       } catch (error) {
         console.error("Erro ao carregar aluno:", error);
         alert("Erro ao carregar dados do aluno.");
@@ -50,7 +98,9 @@ export default function EditarAluno() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const target = e.target as HTMLInputElement;
-    const { name, value, type, checked } = target;
+    const { name, value, type } = target;
+    const checked = (target as HTMLInputElement).checked;
+    
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -90,17 +140,25 @@ export default function EditarAluno() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      // Reconverte o ID numérico das oficinas para JSON String para o backend
+      let oficinasParaEnviar = "";
+      if (formData.oficinas && mapeamentoOficinas[formData.oficinas]) {
+        const chaveOficina = mapeamentoOficinas[formData.oficinas];
+        oficinasParaEnviar = JSON.stringify({ [chaveOficina]: true });
+      }
+
+      // Reconverte o ID numérico do tipo sanguíneo para a string correspondente ("A+", "O-", etc.)
+      let tipoSanguineoParaEnviar = "";
+      if (formData.tipoSanguineo && mapeamentoTipoSanguineo[formData.tipoSanguineo]) {
+        tipoSanguineoParaEnviar = mapeamentoTipoSanguineo[formData.tipoSanguineo];
+      }
+
       const enviarForm = {
         ...formData,
-        oficinas: formData.oficinas
-          ? JSON.stringify(
-              formData.oficinas
-                .split(",")
-                .map((o) => o.trim())
-                .reduce((acc, cur) => ({ ...acc, [cur]: true }), {})
-            )
-          : "",
+        oficinas: oficinasParaEnviar,
+        tipoSanguineo: tipoSanguineoParaEnviar,
       };
+
       await api.put(`/aluno/${matricula}`, enviarForm);
       alert("Aluno atualizado com sucesso!");
       navigate("/listaalunos");
@@ -183,14 +241,42 @@ export default function EditarAluno() {
               </div>
             </div>
 
+            {/* SELEÇÃO DE TIPO SANGUÍNEO PADRONIZADA COM SELECT OPTION */}
             <div className="space-y-1">
               <label className="text-xs font-semibold text-muted-foreground">Tipo Sanguíneo</label>
-              <Input type="text" name="tipoSanguineo" value={formData.tipoSanguineo || ""} onChange={handleChange} />
+              <select 
+                name="tipoSanguineo" 
+                value={formData.tipoSanguineo} 
+                onChange={handleChange}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="">Não informado / Selecione...</option>
+                <option value="1">A+</option>
+                <option value="2">A-</option>
+                <option value="3">B+</option>
+                <option value="4">B-</option>
+                <option value="5">AB+</option>
+                <option value="6">AB-</option>
+                <option value="7">O+</option>
+                <option value="8">O-</option>
+              </select>
             </div>
 
+            {/* SELEÇÃO DE OFICINAS CORRIGIDA PARA SELECT OPTION */}
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-muted-foreground">Oficinas (Separadas por vírgula)</label>
-              <Input type="text" name="oficinas" value={formData.oficinas} placeholder="musicalizacao, praticaInstrumental, danca, percussaoPopular" onChange={handleChange} />
+              <label className="text-xs font-semibold text-muted-foreground">Oficina Vinculada</label>
+              <select 
+                name="oficinas" 
+                value={formData.oficinas} 
+                onChange={handleChange}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="">Selecione uma oficina...</option>
+                <option value="1">Musicalização</option>
+                <option value="2">Prática Instrumental</option>
+                <option value="3">Dança</option>
+                <option value="4">Percussão Popular</option>
+              </select>
             </div>
           </CardContent>
         </Card>

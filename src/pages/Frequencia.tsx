@@ -1,3 +1,5 @@
+
+
 import { useState, useEffect } from "react";
 import api from "@/services/api";
 import { Search, ArrowLeft, BarChart2, CalendarDays, X, FileText } from "lucide-react";
@@ -19,12 +21,8 @@ import {
 } from "chart.js";
 
 ChartJS.register(
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  ChartTitle,
-  ChartTooltip,
-  ChartLegend
+  BarElement, CategoryScale, LinearScale,
+  ChartTitle, ChartTooltip, ChartLegend
 );
 
 const nomesOficinas: Record<string, string> = {
@@ -66,7 +64,7 @@ function obterOficinasTexto(oficinasRaw: string) {
   }
 }
 
-// Sub-componente Otimizado: Evita travamento carregando o PDF sob demanda de verdade
+// Sub-componente Ajustado: Só processa e monta o PDF APÓS o clique real do usuário
 function BotaoLinhaPDF({ aluno }: { aluno: AlunoData }) {
   const [dados, setDados] = useState<PresencaResponse | null>(null);
   const [carregando, setCarregando] = useState(false);
@@ -79,7 +77,7 @@ function BotaoLinhaPDF({ aluno }: { aluno: AlunoData }) {
       const anoAtual = new Date().getFullYear();
       const response = await api.get(`/presenca/aluno/${aluno.id}?ano=${anoAtual}`);
       setDados(response.data);
-      // Ativa a montagem do componente PDFDownloadLink apenas agora
+      // Libera o gatilho para o link do PDF renderizar
       setProntoParaBaixar(true);
     } catch (error) {
       console.error("Erro ao buscar dados para PDF:", error);
@@ -88,13 +86,12 @@ function BotaoLinhaPDF({ aluno }: { aluno: AlunoData }) {
     }
   };
 
-  // Estado Inicial: Renderiza apenas um botão HTML leve, sem instanciar o PDF
+  // 1º Estado: Botão limpo e leve. Nenhum comportamento ao passar o mouse (onMouseEnter removido).
   if (!prontoParaBaixar) {
     return (
       <Button
         variant="outline"
         size="sm"
-        onMouseEnter={buscarDadosEPresentar}
         onClick={buscarDadosEPresentar}
         disabled={carregando}
         className="rounded-full text-xs font-semibold gap-1.5 border-primary/30 hover:border-primary bg-primary/5 hover:bg-primary/10 text-foreground transition-all"
@@ -105,7 +102,7 @@ function BotaoLinhaPDF({ aluno }: { aluno: AlunoData }) {
     );
   }
 
-  // Estado Pronto: Os dados existem, renderiza o Download Link liberando para salvar o arquivo
+  // 2º Estado: Ativado apenas após o clique. Monta o PDF assincronamente na hora.
   return (
     <PDFDownloadLink
       document={
@@ -472,3 +469,4 @@ export default function Frequencia() {
     </div>
   );
 }
+
