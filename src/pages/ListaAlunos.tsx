@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "@/services/api";
-import { User, ShieldAlert, Heart, Calendar, GraduationCap, Phone, Mail, MapPin, X, Trash2, Edit2, FileSpreadsheet } from "lucide-react";
+import { User, ShieldAlert, Heart, Calendar, GraduationCap, Phone, Mail, MapPin, X, Trash2, Edit2, FileSpreadsheet, Search } from "lucide-react"; // Adicionado Search aqui
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 
@@ -47,6 +47,7 @@ interface AlunoData {
 export default function ListaAlunos() {
   const [alunos, setAlunos] = useState<AlunoData[]>([]);
   const [oficinaSelecionada, setOficinaSelecionada] = useState("Todas");
+  const [busca, setBusca] = useState(""); // Novo estado para a pesquisa por nome
   const [alunoSelecionadoModal, setAlunoSelecionadoModal] = useState<AlunoData | null>(null);
   const [paginaAtual, setPaginaAtual] = useState(1);
   const navigate = useNavigate();
@@ -100,10 +101,24 @@ export default function ListaAlunos() {
 
   const oficinas = ["Todas", ...new Set(alunos.map((aluno) => aluno.oficina).filter(Boolean))];
 
-  const alunosFiltrados =
-    oficinaSelecionada === "Todas"
-      ? alunos
-      : alunos.filter((aluno) => aluno.oficina.includes(oficinaSelecionada));
+  // Filtro combinado: Oficina + Busca por Nome (Ignorando maiúsculas/minúsculas e acentos)
+  const alunosFiltrados = alunos.filter((aluno) => {
+    const correspondeOficina =
+      oficinaSelecionada === "Todas" || aluno.oficina.includes(oficinaSelecionada);
+
+    const nomeFormatado = aluno.nome
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+    const buscaFormatada = busca
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+
+    const correspondeNome = nomeFormatado.includes(buscaFormatada);
+
+    return correspondeOficina && correspondeNome;
+  });
 
   const alunosOrdenados = [...alunosFiltrados].sort((a, b) =>
     a.nome.localeCompare(b.nome, "pt", { sensitivity: "base" })
@@ -128,22 +143,40 @@ export default function ListaAlunos() {
         </p>
       </div>
 
-      {/* Workshop filter buttons */}
-      <div className="flex flex-wrap gap-2">
-        {oficinas.map((oficina) => (
-          <Button
-            key={oficina}
-            variant={oficinaSelecionada === oficina ? "default" : "outline"}
-            size="sm"
-            onClick={() => {
-              setOficinaSelecionada(oficina);
-              setPaginaAtual(1);
+      {/* Seção de Filtros: Oficinas + Barra de Busca */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        {/* Workshop filter buttons */}
+        <div className="flex flex-wrap gap-2">
+          {oficinas.map((oficina) => (
+            <Button
+              key={oficina}
+              variant={oficinaSelecionada === oficina ? "default" : "outline"}
+              size="sm"
+              onClick={() => {
+                setOficinaSelecionada(oficina);
+                setPaginaAtual(1);
+              }}
+              className="rounded-full text-xs font-semibold"
+            >
+              {oficina}
+            </Button>
+          ))}
+        </div>
+
+        {/* Input de Pesquisa */}
+        <div className="relative w-full md:max-w-xs">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Buscar aluno por nome..."
+            value={busca}
+            onChange={(e) => {
+              setBusca(e.target.value);
+              setPaginaAtual(1); // Volta para a primeira página ao digitar
             }}
-            className="rounded-full text-xs font-semibold"
-          >
-            {oficina}
-          </Button>
-        ))}
+            className="w-full h-9 rounded-full border border-input bg-background pl-9 pr-4 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          />
+        </div>
       </div>
 
       {/* Grid of students */}
