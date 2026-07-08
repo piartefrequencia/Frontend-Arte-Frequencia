@@ -26,9 +26,10 @@ const aboutCommunity = "/Assets/img/imagem-banda.jpg";
 
 const galeria1 = "/Assets/img/galeria1.jpg";
 const galeria2 = "/Assets/img/galeria2.jpg";
-const galeria3 = "/Assets/img/galeria5.jpg";
+const galeria3 = "/Assets/img/galeria6.jpg";
 const galeria4 = "/Assets/img/galeria4.jpg";
 const galeria5 = "/Assets/img/imagem-banda6.jpg";
+const galeria6 = "/Assets/img/galeria5.jpg";
 
 const programs = [
   {
@@ -57,7 +58,7 @@ const programs = [
   },
   {
     icon: Sparkles,
-    title: "Danças e Teatro",
+    title: "Dança e Teatro",
     desc: "Corpo, voz e cena: expressão artística que liberta e conecta.",
     image: programDance,
     tag: "Cena",
@@ -89,7 +90,7 @@ export default function Home() {
   const isAuthorized = isAuthenticated && (user?.perfil === "ADMIN" || user?.perfil === "COLAB");
 
   const whatsappUrl = `https://wa.me/5581994644959?text=${encodeURIComponent(
-    "Olá estava vendo o site de vocês e gostaria de saber mais informações para realizar minha inscrição."
+    "Olá, gostaria de saber mais informações para realizar minha inscrição."
   )}`;
 
   const go = (dir: number) => {
@@ -123,11 +124,11 @@ export default function Home() {
             </span>
             <h1 className="font-display text-4xl font-bold leading-tight md:text-6xl text-foreground">
               A arte como
-              <span className="block text-gradient-gold">instrumento de cidadania.</span>
+              <span className="block text-gradient-gold">Instrumentos de cidadania.</span>
             </h1>
             <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
               Música, dança e teatro transformando a vida de crianças e
-              adolescentes — abrindo caminhos de aprendizado, expressão e
+              adolescentes — abrindo caminhos de aprendizados, expressão e
               pertencimento.
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-4">
@@ -146,12 +147,12 @@ export default function Home() {
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold transition hover:translate-y-[-2px]"
                 >
-                  Fazer inscrição
+                  FAÇA SUA INSCRIÇÃO!
                   <ArrowRight className="h-4 w-4" />
                 </a>
               )}
               <a
-                href="https://www.youtube.com/watch?v=FEnHPe5FDtk"
+                href="https://youtu.be/NGSHrdqLxTE?si=iULOoOUpiDat2suC"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-3 rounded-full border border-border bg-card/40 px-6 py-3.5 text-sm font-semibold backdrop-blur transition hover:border-primary"
@@ -159,15 +160,15 @@ export default function Home() {
                 <span className="grid h-7 w-7 place-items-center rounded-full bg-primary text-primary-foreground">
                   <Play className="h-3.5 w-3.5 fill-current" />
                 </span>
-                Assistir o projeto
+                Vídeo do Projeto BMHVL
               </a>
             </div>
 
             <dl className="grid max-w-lg grid-cols-3 gap-6 pt-8">
               {[
                 { n: "34+", l: "anos de história" },
-                { n: "5", l: "áreas artísticas" },
-                { n: "1000+", l: "vidas transformadas" },
+                { n: "3", l: "áreas artísticas" },
+                { n: "5.000+", l: "vidas transformadas" },
               ].map((s) => (
                 <div key={s.l}>
                   <dt className="font-display text-3xl font-bold text-primary md:text-4xl">
@@ -194,7 +195,7 @@ export default function Home() {
                   Banda Marcial
                 </div>
                 <div className="font-display text-2xl font-bold">
-                  Heitor Villa Lobos
+                  HEITOR VILLA LOBOS
                 </div>
               </div>
             </div>
@@ -338,12 +339,12 @@ export default function Home() {
           <p className="text-muted-foreground leading-relaxed">
             A Associação Pró-Cidadania é uma entidade sem fins lucrativos criada
             em 26 de junho de 1991, com a finalidade inicial de promover socialmente
-            crianças e adolescentes em risco social, através do estudo da música,
+            crianças e adolescentes com tempo ocioso ou em risco social, através do estudo da música,
             dança e teatro.
           </p>
           <p className="text-muted-foreground leading-relaxed">
             Desde sua fundação, formalizou diversos projetos e convênios com
-            entidades municipais e estaduais, hoje focando em fomentar e valorizar
+            entidades municipais, estaduais e federais. Hoje, focando em fomentar e valorizar
             o crescimento da educação e da cidadania na sociedade.
           </p>
 
@@ -355,10 +356,10 @@ export default function Home() {
                   Nosso público
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Pessoas em situação de carência, vulnerabilidade e exclusão
+                  Crianças e adolescentes em situação de carência, vulnerabilidade e exclusão
                   social — seja por falta de recursos financeiros, intelectuais,
-                  geográficos ou de oportunidade. Somos o elo entre o Poder Público,
-                  a Iniciativa Privada e a sociedade.
+                  geográficos ou de oportunidades. Somos o elo entre o Poder Público,
+                  a Iniciativa Privada e a Sociedade.
                 </p>
               </div>
             </div>
@@ -406,7 +407,7 @@ export default function Home() {
           </h2>
         </div>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:[grid-auto-rows:200px]">
-          {[galeria1, galeria2,galeria4, galeria5, galeria3 ].map((src, i) => (
+          {[galeria1, galeria2, galeria4, galeria5, galeria3, galeria6 ].map((src, i) => (
             <div
               key={i}
               className={`group relative overflow-hidden rounded-2xl border border-border/40 ${

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +25,7 @@ export default function Login() {
 
     setLoading(true);
     try {
-      await login(email, senha);
+      await login(cpf, senha);
       alert("Login realizado com sucesso!");
       navigate("/");
     } catch (error) {
@@ -46,21 +46,21 @@ export default function Login() {
             Acesso ao Portal
           </CardTitle>
           <CardDescription className="text-muted-foreground text-sm">
-            Entre com seus dados para acessar Biblioteca de Partituras para estuda em sua casa.
+            ALUNO, faça o login para acesso à Biblioteca de Partituras.
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
             <div className="space-y-1">
-              <label htmlFor="email" className="text-xs font-semibold text-muted-foreground">
-                Endereço de E-mail
+              <label htmlFor="cpf" className="text-xs font-semibold text-muted-foreground">
+                CPF
               </label>
               <Input
-                id="email"
-                type="email"
-                placeholder="nome@exemplo.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                id="cpf"
+                type="cpf"
+                placeholder="•••••••••••"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
                 required
                 className="bg-background/40 border-border/40"
               />
