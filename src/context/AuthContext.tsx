@@ -5,13 +5,13 @@ import api from "../services/api";
 export interface User {
   perfil: string | null;
   usuario: string | null;
-  email: string | null;
+  cpf: string | null;
 }
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, senha: string) => Promise<void>;
+  login: (cpf: string, senha: string) => Promise<void>;
   logout: () => void;
   loading: boolean;
 }
@@ -29,42 +29,44 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUser({
         perfil: sessionStorage.getItem("perfil"),
         usuario: sessionStorage.getItem("usuario"),
-        email: sessionStorage.getItem("email"),
+        cpf: sessionStorage.getItem("cpf"),
       });
     }
     setLoading(false);
   }, []);
 
-  const login = async (email: string, senha: string) => {
-    const { data } = await api.post("auth/login", {
-      email,
-      senha,
-    });
+  const login = async (cpf: string, senha: string) => {
+  const cpfLimpo = cpf.replace(/\D/g, "");
 
-    sessionStorage.setItem("token", data.token);
-    sessionStorage.setItem("perfil", data.perfil);
-    sessionStorage.setItem("usuario", data.usuario);
-    sessionStorage.setItem("email", data.email);
+  const { data } = await api.post("auth/login", {
+    cpf: cpfLimpo,
+    senha,
+  });
 
-    if (data.refreshToken) {
-      sessionStorage.setItem("refreshToken", data.refreshToken);
-    }
+  sessionStorage.setItem("token", data.token);
+  sessionStorage.setItem("perfil", data.perfil);
+  sessionStorage.setItem("usuario", data.usuario);
+  sessionStorage.setItem("cpf", data.cpf);
 
-    api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+  if (data.refreshToken) {
+    sessionStorage.setItem("refreshToken", data.refreshToken);
+  }
 
-    setUser({
-      perfil: data.perfil,
-      usuario: data.usuario,
-      email: data.email,
-    });
-  };
+  api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+
+  setUser({
+    perfil: data.perfil,
+    usuario: data.usuario,
+    cpf: data.cpf,
+  });
+};
 
   const logout = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("refreshToken");
     sessionStorage.removeItem("perfil");
     sessionStorage.removeItem("usuario");
-    sessionStorage.removeItem("email");
+    sessionStorage.removeItem("cpf");
 
     delete api.defaults.headers.common["Authorization"];
     setUser(null);

@@ -29,7 +29,7 @@ export default function Login() {
       alert("Login realizado com sucesso!");
       navigate("/");
     } catch (error) {
-      alert("Credenciais inválidas. Verifique seu e-mail e senha.");
+      alert("Credenciais inválidas. Verifique seu CPF e senha.");
     } finally {
       setLoading(false);
     }
