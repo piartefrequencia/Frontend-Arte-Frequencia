@@ -11,7 +11,6 @@ export default function CadastroUsuario() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    cpf: "",
     email: "",
     login: "",
     usuario: "",
@@ -50,7 +49,7 @@ export default function CadastroUsuario() {
     } catch (error: any) {
       console.error(error);
       if (error.response && error.response.status === 409) {
-        setErro("Já existe um usuário com esse CPF.");
+        setErro("Já existe um usuário com esse e-mail.");
       } else {
         setErro("Erro ao cadastrar usuário.");
       }
@@ -94,21 +93,6 @@ export default function CadastroUsuario() {
                 type="text"
                 name="usuario"
                 value={formData.usuario}
-                onChange={handleChange}
-                required
-                className="bg-background/40 border-border/40"
-              />
-            </div>
-
-             <div className="space-y-1">
-              <label htmlFor="cpf" className="text-xs font-semibold text-muted-foreground">
-                CPF
-              </label>
-              <Input
-                id="cpf"
-                type="text"
-                name="cpf"
-                value={formData.cpf}
                 onChange={handleChange}
                 required
                 className="bg-background/40 border-border/40"

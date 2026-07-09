@@ -64,7 +64,7 @@ export default function Layout({ children }: LayoutProps) {
     isAuthenticated && ["ADMIN", "COLAB"].includes(user?.perfil || "");
 
   // Link do Google Drive convertido para Download Direto utilizando o ID fornecido 
-  const linkDownloadDireto = "https://drive.usercontent.google.com/download?id=1GopzWOpPlGES1SpYj9cc_7mUBEozfj5B&export=download&authuser=1";
+  const linkDownloadDireto = "https://drive.usercontent.google.com/download?id=184N0cJWf5E4Y2cT_dDPP8VJTMWHeRvDj&export=download&authuser=1";
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col bg-hero">
@@ -228,7 +228,7 @@ export default function Layout({ children }: LayoutProps) {
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none text-foreground">{user.usuario}</p>
-                      <p className="text-xs leading-none text-muted-foreground">{user.cpf}</p>
+                      <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
                       <span className="inline-block w-fit mt-1 px-2 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wider bg-accent/20 text-primary">
                         {user.perfil}
                       </span>
