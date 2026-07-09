@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
 
 export default function Login() {
-  const [cpf, setCpf] = useState("");
+  const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -25,11 +25,13 @@ export default function Login() {
 
     setLoading(true);
     try {
-      await login(cpf, senha);
+      await login(email, senha);
       alert("Login realizado com sucesso!");
       navigate("/");
-    } catch (error) {
-      alert("Credenciais inválidas. Verifique seu CPF e senha.");
+    } catch (error: any) {
+      const mensagem = error.response?.data || 
+      "Credenciais inválidas. Verifique seu e-mail e senha.";
+      alert(mensagem);
     } finally {
       setLoading(false);
     }
@@ -46,21 +48,21 @@ export default function Login() {
             Acesso ao Portal
           </CardTitle>
           <CardDescription className="text-muted-foreground text-sm">
-            ALUNO, faça o login para acesso à Biblioteca de Partituras.
+            Entre com seus dados para acessar Biblioteca de Partituras para estuda em sua casa.
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
             <div className="space-y-1">
-              <label htmlFor="cpf" className="text-xs font-semibold text-muted-foreground">
-                CPF
+              <label htmlFor="email" className="text-xs font-semibold text-muted-foreground">
+                Endereço de E-mail
               </label>
               <Input
-                id="cpf"
-                type="cpf"
-                placeholder="•••••••••••"
-                value={cpf}
-                onChange={(e) => setCpf(e.target.value)}
+                id="email"
+                type="email"
+                placeholder="nome@exemplo.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="bg-background/40 border-border/40"
               />
