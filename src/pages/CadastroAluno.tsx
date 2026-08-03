@@ -23,31 +23,12 @@ export default function CadastroAluno() {
       danca: false,
       percussaoPopular: false,
     },
-    nome: "",
-    cpf: "",
-    rg: "",
-    orgaoExp: "",
-    dataExpedRg: "",
-    rn: "",
-    dataNascimento: "",
-    idade: "",
-    escola: "",
-    estado: "",
-    cidade: "",
-    bairro: "",
-    filiacaoPai: "",
-    filiacaoMae: "",
-    telefonePai: "",
-    telefoneMae: "",
-    responsavel: "",
-    telefoneResponsavel: "",
-    emailResponsavel: "",
-    possuiDoenca: "",
-    qualDoenca: "",
-    medicacao: "",
-    tipoSanguineo: "",
-    serieturma: "",
-    turnoesc: "",
+    nome: "", cpf: "", rg: "", orgaoExp: "", dataExpedRg: "", rn: "",
+    dataNascimento: "", idade: "", escola: "", estado: "", cidade: "",
+    bairro: "", filiacaoPai: "", filiacaoMae: "", telefonePai: "", telefoneMae: "",
+    responsavel: "", telefoneResponsavel: "", emailResponsavel: "",
+    possuiDoenca: "", qualDoenca: "", medicacao: "", tipoSanguineo: "",
+    serieturma: "", turnoesc: "",
     autorizacaoImagem: false,
     atividadesExtras: false,
     descricaoAtividadesExtras: "",
@@ -378,7 +359,23 @@ export default function CadastroAluno() {
                     <label className="text-xs font-semibold text-muted-foreground">Reg. Nascimento (Menores)</label>
                     <Input type="text" name="rn" value={formData.rn} onChange={handleChange} disabled={Number(formData.idade) >= 18} />
                   </div>
-                </div>
+                  
+                 
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-muted-foreground">Estado</label>
+                    <Input type="text" name="estado" value={formData.estado} onChange={handleChange} />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-muted-foreground">Cidade</label>
+                    <Input type="text" name="cidade" value={formData.cidade} onChange={handleChange} />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-muted-foreground">Bairro</label>
+                    <Input type="text" name="bairro" value={formData.bairro} onChange={handleChange} />
+                  </div>
+
+                 </div>
+               
 
                 {/* Sanguineous Type */}
                 <div className="space-y-2">
@@ -458,25 +455,11 @@ export default function CadastroAluno() {
               <CardHeader className="p-6">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <School className="h-5 w-5 text-accent" />
-                  Informações de Endereço e Escola
+                  Informações da Escola
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6 pt-0 space-y-4">
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-muted-foreground">Estado</label>
-                    <Input type="text" name="estado" value={formData.estado} onChange={handleChange} />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-muted-foreground">Cidade</label>
-                    <Input type="text" name="cidade" value={formData.cidade} onChange={handleChange} />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-muted-foreground">Bairro</label>
-                    <Input type="text" name="bairro" value={formData.bairro} onChange={handleChange} />
-                  </div>
-                </div>
-
+                
                 <div className="space-y-1">
                   <label className="text-xs font-semibold text-muted-foreground">Nome da Escola</label>
                   <Input type="text" name="escola" value={formData.escola} onChange={handleChange} />
